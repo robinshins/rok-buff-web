@@ -15,6 +15,7 @@
   "error.existingID" : "check your input or use other ID",
   "error.serverExisting" : "not existing server",
   "error.wrongid":"please check your id or password",
+  "apply.info":"If you don't come before 5 minutes, other people will take the chance",
   "buff.duke":"duke",
   "buff.scientist":"scientist",
   "buff.architecture":"architecture",

@@ -56,6 +56,7 @@ componentDidMount() {
       <main className="Home">
         <div className="title2">
           Waiting List
+
           </div>
         <section className="form-wrapper">
           {divItems}

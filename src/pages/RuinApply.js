@@ -4,7 +4,7 @@ import './RuinApply.css';
 import qs from 'qs';
 
 class RuinApply extends Component {
-  state = { items : [], flag:''};
+  state = { items : [], flag:'',is_admin:this.props.match.params.isadmin};
     
 componentDidMount() { 
   this.getRuintime();
@@ -77,18 +77,18 @@ handleApplyclick = async text => {
     console.log(response)
     if(response.status===201){
       alert("apply success")
-      window.location.href = `/ruinresult/${this.state.items[0].id}`
+      window.location.href = `/ruinresult/${this.state.items[0].id}/${this.state.is_admin}`
     }else{
        alert("apply failed")
-       window.location.href = `/ruinresult/${this.state.items[0].id}`
+       window.location.href = `/ruinresult/${this.state.items[0].id}/${this.state.is_admin}`
     }
 
   }catch(error){
     if (error.response.status === 406){
       alert("already registered or full")
-      window.location.href = `/ruinresult/${this.state.items[0].id}`
+      window.location.href = `/ruinresult/${this.state.items[0].id}/${this.state.is_admin}`
    }
-   window.location.href = `/ruinresult/${this.state.items[0].id}`
+   window.location.href = `/ruinresult/${this.state.items[0].id}/${this.state.is_admin}`
     console.log(error.response)
     //console.log(response.error)
     //alert("아이디와 비밀번호를 확인해주세요")

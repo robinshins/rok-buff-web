@@ -8,9 +8,9 @@ const config = {
   };
 
 export default axios.create({
-    baseURL: 'https://www.bearbear.co.kr/',
+    baseURL: 'http://35.238.162.67/',
     headers: config,
-    withCredentials: true,
+    //withCredentials: true,
 
     // header: {
     // 	Authorization: 'bearer accessKey'
