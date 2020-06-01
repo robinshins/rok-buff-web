@@ -1,8 +1,4 @@
 import React, { Fragment, Component } from 'react';
-import MemberItemList from "../components/MemberItemList"
-import MemberItem from "../components/MemberItem"
-import MemberListForm from "../components/MemberListForm"
-import MemberList from "../components/MemberList.js";
 import axios from '../api';
 import https from 'https';
 import './Home.css';
@@ -13,7 +9,10 @@ import i18n from "i18next";
 
 class Home extends Component {
   
-  state = { Userid: '', Userpassword:'',flag:'',userinfo:{x:'',y:"",name:"",code:""},redirect:false};
+  state = { Userid: '', Userpassword:'',flag:'',userinfo:{x:'',y:"",name:"",code:""},redirect:false,is_admin:-1};
+
+
+
     
   onClickLogin = async text => {
     try{
@@ -23,10 +22,15 @@ class Home extends Component {
       );
       console.log(this.state.flag)
       if(response.status===200){
-        const info = {x:response.data.info.account.x,y:response.data.info.account.x,name:response.data.info.account.user_ingameID,code:response.data.info.account.user_ingamecode}
+        const info = {x:response.data.info.account.x,y:response.data.info.account.y,name:response.data.info.account.user_ingameID,code:response.data.info.account.user_ingamecode}
         this.setState({userinfo:info})
         console.log(this.state.userinfo)
+        console.log(response.data.info)
+        if(response.data.info.account.is_serveradmin===1){
+          this.setState({is_admin:1})
+        }
         this.setState({redirect: true});
+
         //window.location.href = '/buffmain'
       }else{
        
@@ -43,19 +47,25 @@ class Home extends Component {
       //this.setState({ images: response.data.result });
   }
 
-  handleEmailChange = (e) => {
+  handleEmailChange = (e) => {  
     this.setState({Userid: e.target.value});
  }
  
  handlePasswordChange = (e) => {
-    this.setState({Userpassword: e.target.value});
+  const idReg =  /^[A-Za-z0-9]*$/ ;  
+  if (e.target.value === '' || idReg.test(e.target.value)) {
+      this.setState({Userpassword: e.target.value})
+   }
+ 
  }
 
 
   render() {
     const { t } = this.props;
-    if (this.state.redirect) {
-      return <Redirect push to={`/ruinapply/${this.state.userinfo.code}/${this.state.userinfo.name}`} />;
+    if (this.state.redirect && this.state.is_admin!==1) {
+      return <Redirect push to={`/buffmain/${this.state.userinfo.name}/${this.state.userinfo.x}/${this.state.userinfo.y}`} />;
+    } else if (this.state.redirect && this.state.is_admin===1) {
+      return <Redirect push to={`/setbuff/`} />;
     }
 
     const {
@@ -63,7 +73,7 @@ onClickLogin,handleEmailChange,handlePasswordChange
     } = this;
 
     return (
-      <main className="Home">
+      <main className="Home2">
         <div className="title2">
           {t("login")}
           </div>
@@ -77,7 +87,7 @@ onClickLogin,handleEmailChange,handlePasswordChange
           <div className="create-button" onClick={onClickLogin}>
           {t("login")}
       </div>
-          <div className="create-button" onClick={event => window.location.href = '/register'}>
+          <div className="create-button" onClick={event => window.location.href = '/register/'}>
           {t("register")}
       </div>
       { this.state.flag === 2 && <p style = {{color:'#ff4040', textAlign:'center'}}> {t("error.wrongid")}</p>}

@@ -43,7 +43,11 @@ class Register extends Component{
       }
 
       handleEmailChange = (e) => {
-        this.setState({Userid: e.target.value});
+     
+        const idReg =  /^[a-z0-9]*$/ ;  
+        if (e.target.value === '' || idReg.test(e.target.value)) {
+            this.setState({Userid: e.target.value});
+         }
      }
      
      handlePasswordChange = (e) => {
@@ -86,19 +90,19 @@ class Register extends Component{
           </div>
           <section className = "form-wrapper">
 
-            <div className="email">
+            <div className="email2">
                 <input id="Username" value ={this.state.Userid}  onChange = {handleEmailChange} placeholder= {t("id")} />
             </div>
-            <div className="password">
+            <div className="password2">
                 <input type='text' id="Userpassword" value ={this.state.Userpassword}  onChange = {handlePasswordChange} placeholder= {t("password")} />
             </div>
-            <div className="password">
+            <div className="password2">
                 <input type='text' id="UserNickName" value ={this.state.user_ingameID}  onChange = {handleIngameNameChange} placeholder= {t("ingameNickName")} />
             </div>
-            <div className="password">
+            <div className="password2">
                 <input type='number'  id="UserId" value ={this.state.user_ingamecode}  onChange = {handleIngameCodeChange} placeholder= {t("ingameCode")} />
             </div>
-            <div className="password">
+            <div className="password2">
                 <input type='number' id="UserServerId" value ={this.state.server_number}  onChange = {handleServerNumberChange} placeholder= {t("serverNumber")} />
             </div>
             <div className="create-button" onClick = {onClickRegister}>

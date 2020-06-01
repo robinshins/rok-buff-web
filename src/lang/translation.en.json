@@ -14,7 +14,14 @@
   "serverNumber" :"Server number",
   "error.existingID" : "check your input or use other ID",
   "error.serverExisting" : "not existing server",
-  "error.wrongid":"please check your id or password"
+  "error.wrongid":"please check your id or password",
+  "buff.duke":"duke",
+  "buff.scientist":"scientist",
+  "buff.architecture":"architecture",
+  "buff.lostkingdom":"lost kingdom",
+  "buff.normalkingdom":"normal kingdom",
+  "buff.apply":"Apply"
+  
 
 
 }

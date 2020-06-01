@@ -22,7 +22,6 @@
   .inputBox {
     width:90%;
     margin:20px;
-    margin-bottom: 30px;
     border: none;
     }
     .inputBox input {
@@ -40,13 +39,21 @@
     display: flex;
     margin:20px;
     margin-bottom: 30px;
-    border: 1px solid skyblue; 
+    border: 1px solid rgb(55, 148, 185); 
     background-color: rgba(0,0,0,0);
     color:skyblue; 
     padding: 5px;
     border-radius: 10px;
 
   }
+  .selectBox waitNumber{
+    font-size: 0.8rem;
+    margin:auto 0;
+    margin-left: auto;
+    color: rgb(138, 135, 135);
+  }
+
+  
 .selectKingdom {
         display: flex;
         }
@@ -55,7 +62,7 @@
             margin:15px;
             margin-bottom: 30px;
             text-align: center;
-            border: 2px solid black; 
+            border: 1px solid gray; 
             background-color:linear-gradient(#FFFFFF, #B0B0B0);
             color: gray; 
             padding: 10px;

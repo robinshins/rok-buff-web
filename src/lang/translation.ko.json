@@ -13,5 +13,11 @@
     "serverNumber" :"서버 번호",
     "error.existingID" : "입력을 확인해 주시거나 다른아이디를 사용해 주세요",
     "error.serverExisting" : "가입되지 않은 서버 입니다",
-    "error.wrongid":"아이디와 비밀번호를 확인해주세요"
+    "error.wrongid":"아이디나 비밀번호를 확인해주세요",
+    "buff.duke":"공작",
+    "buff.scientist":"과학자",
+    "buff.architecture":"건축가",
+    "buff.lostkingdom":"잃어버린 왕국",
+    "buff.normalkingdom":"그냥 왕국",
+    "buff.apply":"버프 신청"
   }

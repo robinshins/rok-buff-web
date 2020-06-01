@@ -1,6 +1,6 @@
 import React, { Fragment, Component,useState } from 'react';
 import Http from '../api';
-import './Home.css';
+import './RuinApply.css';
 import qs from 'qs';
 
 class RuinApply extends Component {
@@ -77,18 +77,18 @@ handleApplyclick = async text => {
     console.log(response)
     if(response.status===201){
       alert("apply success")
-      window.location.href = `/ruinresult`
+      window.location.href = `/ruinresult/${this.state.items[0].id}`
     }else{
        alert("apply failed")
-       window.location.href = `/ruinresult`
+       window.location.href = `/ruinresult/${this.state.items[0].id}`
     }
 
   }catch(error){
     if (error.response.status === 406){
-      alert("already fulled")
-      window.location.href = `/ruinresult`
+      alert("already registered or full")
+      window.location.href = `/ruinresult/${this.state.items[0].id}`
    }
-   window.location.href = `/ruinresult`
+   window.location.href = `/ruinresult/${this.state.items[0].id}`
     console.log(error.response)
     //console.log(response.error)
     //alert("아이디와 비밀번호를 확인해주세요")

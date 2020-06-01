@@ -5,13 +5,13 @@ import https from 'https';
 
 const config = {
     "Content-Type": "application/x-www-form-urlencoded"
-    //"Content-Type": "application/json"
   };
 
 export default axios.create({
     baseURL: 'https://www.bearbear.co.kr/',
     headers: config,
-    withCredentials: true
+    withCredentials: true,
+
     // header: {
     // 	Authorization: 'bearer accessKey'
     // }

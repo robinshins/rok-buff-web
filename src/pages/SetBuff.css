@@ -1,0 +1,57 @@
+.Home2{
+    background: white;
+    width: 350px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
+    margin: 0 auto; /* 페이지 중앙 정렬 */
+    margin-top: 4rem;
+  }
+
+  main{display: block;}
+
+  .title2 {
+    padding: 0.7rem;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 100;
+    background: #22b8cf;;
+    color: white;
+  }
+  
+  .form-wrapper {
+    padding: 1  rem;
+  }
+  
+  .members-wrapper {
+    min-height: 3rem;
+  }
+  
+.create-button {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 1rem;
+    background: #22b8cf;
+    text-align: center;
+    margin: 20px;
+    border-radius: 3px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }  
+  .create-button:hover {
+    background: #3bc9db;
+  }
+
+  
+  .inputBox2 {
+    margin:auto;
+    border: 20px;
+   
+  
+    
+   
+    }
+    .inputBox2 input {
+      font-size: 1rem;  
+    }

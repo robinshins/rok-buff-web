@@ -1,17 +1,10 @@
-.Register{
+.Home{
     background: white;
     width: 350px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
     margin: 0 auto; /* 페이지 중앙 정렬 */
     margin-top: 4rem;
   }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
 
   .title2 {
     padding: 0.7rem;
@@ -48,13 +41,13 @@
     background: #3bc9db;
   }
 
-.email2 {
+.email {
   display: flex;
   border-bottom: 1px solid #c5f6fa;
   margin:20px;
   margin-bottom: 30px;
   }
-  .email2 input {
+  .email input {
     flex: 1; /* 버튼을 뺀 빈 공간을 모두 채워줍니다 */
     font-size: 1rem;
     outline: none;
@@ -62,14 +55,14 @@
     border-bottom: 1px solid #c5f6fa;
   }
 
-.password2 {
+.password {
   display: flex;
   border-bottom: 1px solid #c5f6fa;
   margin:20px;
   margin-bottom: 30px;
   }
 
-  .password2 input {
+  .password input {
     flex: 1; /* 버튼을 뺀 빈 공간을 모두 채워줍니다 */
     font-size: 1rem;
     outline: none;
@@ -87,8 +80,17 @@
     }
     .inputBox input {
       flex: 1; /* 버튼을 뺀 빈 공간을 모두 채워줍니다 */
-      font-size: 0.8rem;
+      font-size: 1rem;
       outline: none;
       border: none;
       border-bottom: 1px solid #c5f6fa;
     }
+
+    .selectBox2 {
+        display: flex;
+        margin:20px;
+        border-bottom: 1px solid black; 
+        background-color: rgba(0,0,0,0);
+        color:black; 
+        padding: 5px;
+      }
