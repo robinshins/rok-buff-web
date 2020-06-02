@@ -13,6 +13,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+
 class TabPanel extends Component {
     render() {
         return (
@@ -31,8 +32,8 @@ class TabPanel extends Component {
 class BuffMain extends Component {
     state = {
         ruinitems: [], flag: -1,
-        tabno: 0, lasttime: NaN, name: this.props.location.state.name, x: this.props.location.state.xcoor,
-        y: this.props.location.state.ycoor, ischeck0: false, ischeck1: false, ischeck2: false, lostkingdom: false,
+        tabno: 0, lasttime: NaN, name: this.props.location.state.name, x: this.props.location.state.xcoor, code: this.props.location.state.code,
+        y: this.props.location.state.ycoor, lostkingdom: false,
         backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null
     };
 
@@ -67,12 +68,14 @@ class BuffMain extends Component {
                 }
             } else if (response.status) {
                 console.log(response)
+                this.setState({ flag: -3 })
+
             }
 
         } catch (error) {
-            this.setState({ flag: 2 })
-            alert("server not connected redirect to home")
-            window.location.href = '/'
+            this.setState({ flag: -3 })
+            //TODO// alert("server not connected redirect to home")
+            // window.location.href = '/'
         }
 
     }
@@ -111,32 +114,35 @@ class BuffMain extends Component {
             }
 
         } catch (error) {
+            //TODO// alert("server not connected redirect to home")
+            // window.location.href = '/'
             console.log(error.response)
         }
     }
-    handleTimeClick = (e, id) => {
-        const { items } = this.state;
 
 
-        // 파라미터로 받은 id 를 가지고 몇번째 아이템인지 찾습니다.
-        const index = items.findIndex(item => item.id === id);
-        const selected = items[index]; // 선택한 객체
-        const nextItems = [...items]; // 배열을 복사
-        // 기존의 값들을 복사하고, checked 값을 덮어쓰기
-        nextItems[index] = {
-            ...selected,
-            ruinchecked: !selected.ruinchecked
-        };
+    onModifyUser = async text => {
+        try {
+            const response = await Http.patch('userresponse/', qs.stringify({
+                'mode': 'USER_management', 'mode_type': 'info',
+                'code': this.state.code, 'name': this.state.name
+            })
+            );
+            if (response.status === 201) {
+                alert("modify success!")
+            } else {
+                console.log(response)
+            }
 
-        this.setState({
-            ruinitems: nextItems
-        });
+        } catch (error) {
+            alert("something wrong to server....!")
+
+            console.log(error)
+        }
     }
-
-
     handleApplyclick = async text => {
         console.log(this.state.flag)
-        if (this.state.flag === -1) {
+        if (this.state.flag === -3) {
             alert("apply failed ask juissy")
         } else {
             if (this.state.ruinitems[0].ruinchecked) {
@@ -167,43 +173,6 @@ class BuffMain extends Component {
             }
         }
     }
-
-
-    handleGongzakChange = (e) => {
-        this.setState({ backgroundColor: '#87ceeb', textcolor: '#ffffff', ischeck0: true, ischeck1: false, ischeck2: false, titleType: 1 });
-    }
-
-
-    handleScientistChange = () => {
-        this.setState({ backgroundColor: '#87ceeb', textcolor: '#ffffff', ischeck1: true, ischeck0: false, ischeck2: false, titleType: 2 });
-        //this.setState({Userid: e.target.value});
-    }
-
-    handleArchitectureChange = () => {
-        this.setState({ backgroundColor: '#87ceeb', textcolor: '#ffffff', ischeck2: true, ischeck1: false, ischeck0: false, titleType: 3 });
-        //this.setState({Userid: e.target.value});
-    }
-
-    handleXChange = (e) => {
-        this.setState({ x: e.target.value })
-        console.log(e.target.value);
-    }
-
-    handleYChange = (e) => {
-        this.setState({ y: e.target.value })
-        console.log(e.target.value);
-    }
-
-    handleKingdomChange = () => {
-        this.setState({ backgroundColor: '#87ceeb', textcolor: '#ffffff', lostkingdom: true, is_kvk: 1 });
-        //this.setState({Userid: e.target.value});
-    }
-
-    handleKingdomChange2 = () => {
-        this.setState({ backgroundColor: '#87ceeb', textcolor: '#ffffff', lostkingdom: false, is_kvk: 0 });
-        //this.setState({Userid: e.target.value});
-    }
-
     handleSubmit = async text => {
         console.log(this.state);
         if (this.state.titleType !== -1) {
@@ -229,21 +198,55 @@ class BuffMain extends Component {
             alert("받을 칭호를 먼저 선택해주세요")
         }
     }
+    handleTimeClick = (e, id) => {
+        const { items } = this.state;
 
 
+        // 파라미터로 받은 id 를 가지고 몇번째 아이템인지 찾습니다.
+        const index = items.findIndex(item => item.id === id);
+        const selected = items[index]; // 선택한 객체
+        const nextItems = [...items]; // 배열을 복사
+        // 기존의 값들을 복사하고, checked 값을 덮어쓰기
+        nextItems[index] = {
+            ...selected,
+            ruinchecked: !selected.ruinchecked
+        };
 
+        this.setState({
+            ruinitems: nextItems
+        });
+    }
+    handleBuffChange = (e, newValue) => {
+        this.setState({ titleType: newValue });
+        //this.setState({Userid: e.target.value});
+    }
+
+    handleKingdomChange = (e, newValue) => {
+        if (newValue === true) {
+            this.setState({ lostkingdom: true, is_kvk: 1 });
+            //this.setState({Userid: e.target.value});
+        }
+        else {
+            this.setState({ lostkingdom: false, is_kvk: 0 });
+        }
+    }
+
+    handleChange = (event, newValue) => {
+        this.setState({ tabno: newValue });
+    }
+    handleSimpleStateChange = (stateInstance, e) => {
+
+        this.setState({ [stateInstance]: e.target.value });
+    }
     a11yProps = (index) => {
         return {
             id: `simple-tab-${index}`,
             'aria-controls': `simple-tabpanel-${index}`,
         };
     }
-    handleChange = (event, newValue) => {
-        this.setState({ tabno: newValue });
-    }
     render() {
         const { t } = this.props;
-        const { changeColor, handleGongzakChange, handleTimeClick, handleApplyclick, handleChange } = this;
+        const { handleBuffChange, handleTimeClick, handleApplyclick, handleSimpleStateChange, handleKingdomChange } = this;
         let bgColor = this.state.color_black ? this.props.color : this.props.color2
         let divItems = this.state.ruinitems.map((item) => {
             console.log(item.ruinchecked)
@@ -260,9 +263,10 @@ class BuffMain extends Component {
                 <div>
                     <AppBar position="static">
                         <Tabs value={this.state.tabno} onChange={this.handleChange} aria-label="simple tabs example" >
-                            <Tab label="BUFF" {...this.a11yProps(0)} />
+                            <Tab label="TITLE" {...this.a11yProps(0)} />
                             <Tab label="register ruin" {...this.a11yProps(1)} />
-                            <Tab label="extras" {...this.a11yProps(1)} disabled />
+                            <Tab label="extras" {...this.a11yProps(2)} disabled />
+                            <Tab label="settings" {...this.a11yProps(3)} />
 
                         </Tabs>
                     </AppBar>
@@ -273,42 +277,39 @@ class BuffMain extends Component {
                         <section className="form-wrapper">
                             <div className="inputBox">
                                 <p>X : </p>
-                                <input type='number' value={this.state.x} id="x" placeholder="" onChange={this.handleXChange}></input>
+                                <input type='number' value={this.state.x} id="x" placeholder="" onChange={(e) => handleSimpleStateChange("x", e)}></input>
                                 <p>Y : </p>
-                                <input type='number' value={this.state.y} onChange={this.handleYChange} id="y" placeholder="" />
+                                <input type='number' value={this.state.y} onChange={(e) => handleSimpleStateChange("y", e)} id="y" placeholder="" />
                             </div>
-                            {this.state.ischeck0 === true &&
-                                <div className="selectBox" onClick={handleGongzakChange} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
+                            {this.state.titleType === 1 &&
+                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.duke") + this.state.duke_wait}
                                 </div>
-
                             }
-                            {this.state.ischeck0 === false &&
-                                <div className="selectBox" onClick={handleGongzakChange}>
+                            {this.state.titleType !== 1 &&
+                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)}>
                                     {t("buff.duke")}
                                     <waitNumber> {this.state.duke_wait} 명 대기중</waitNumber>
                                 </div>
                             }
-                            {this.state.ischeck1 === true &&
-                                <div className="selectBox" onClick={this.handleScientistChange} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
+                            {this.state.titleType === 2 &&
+                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.scientist")}
                                 </div>
-
                             }
-                            {this.state.ischeck1 === false &&
-                                <div className="selectBox" onClick={this.handleScientistChange}>
+                            {this.state.titleType !== 2 &&
+                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)}>
                                     {t("buff.scientist")}
                                     <waitNumber> {this.state.scientist_wait} 명 대기중</waitNumber>
                                 </div>
                             }
-                            {this.state.ischeck2 === true &&
-                                <div className="selectBox" onClick={this.handleArchitectureChange} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
+                            {this.state.titleType === 3 &&
+                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.architecture")}
                                 </div>
-
                             }
-                            {this.state.ischeck2 === false &&
-                                <div className="selectBox" onClick={this.handleArchitectureChange}>
+                            {this.state.titleType !== 3 &&
+                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)}>
                                     {t("buff.architecture")}
                                     <waitNumber> {this.state.architecture_wait} 명 대기중</waitNumber>
                                 </div>
@@ -316,17 +317,17 @@ class BuffMain extends Component {
 
                             <div className="selectKingdom">
                                 {this.state.lostkingdom === true &&
-                                    <box id="Userpassword" onClick={this.handleKingdomChange} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.lostkingdom")} </box>
+                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, false)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.lostkingdom")} </box>
                                 }
                                 {this.state.lostkingdom === false &&
-                                    <box id="Userpassword" onClick={this.handleKingdomChange}> {t("buff.lostkingdom")} </box>
+                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, true)}> {t("buff.lostkingdom")} </box>
                                 }
 
                                 {this.state.lostkingdom === false &&
-                                    <box id="Userpassword" onClick={this.handleKingdomChange2} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.normalkingdom")} </box>
+                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, true)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.normalkingdom")} </box>
                                 }
                                 {this.state.lostkingdom === true &&
-                                    <box id="Userpassword" onClick={this.handleKingdomChange2}> {t("buff.normalkingdom")} </box>
+                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, false)}> {t("buff.normalkingdom")} </box>
                                 }
 
 
@@ -344,9 +345,33 @@ class BuffMain extends Component {
                             {divItems}
                             {this.state.flag === -1 && <p style={{ color: '#ff4040', textAlign: 'center' }}> There is no available time</p>}
                             {this.state.flag === -2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> select time first</p>}
+                            {this.state.flag === -3 && <p style={{ color: '#ff4040', textAlign: 'center' }}> server connection failed</p>}
+
                             <div className="create-button" onClick={handleApplyclick}>
                                 apply
                                 </div>
+                        </section>
+                    </TabPanel>
+                    <TabPanel value={this.state.tabno} index={3}>
+                        <div className="title2">
+                            Modify user info
+                            </div>
+                        <section className="form-wrapper">
+                            {/* <div className="password2">
+                                <input type='text' id="Userpassword" value={this.state.Userpassword} onChange={handlePasswordChange} placeholder={t("password")} />
+                            </div> */}
+                            <div className="password2">
+                                <input type='text' id="UserNickName" value={this.state.name} onChange={(e) => handleSimpleStateChange("name", e)} placeholder={t("ingameNickName")} />
+                            </div>
+                            <div className="password2">
+                                <input type='number' id="UserId" value={this.state.code} onChange={(e) => handleSimpleStateChange("code", e)} placeholder={t("ingameCode")} />
+                            </div>
+                            <div className="create-button" onClick={this.onModifyUser}>
+                                {t("modify")}
+                            </div>
+                            <div className="create-button" onClick={(e) => this.handleChange(e, 0)}>
+                                {t("cancel")}
+                            </div>
                         </section>
                     </TabPanel>
                 </div>

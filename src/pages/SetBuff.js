@@ -7,14 +7,15 @@ import qs from 'qs';
 import { Redirect } from 'react-router';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
+import BuffResult from './BuffResult'
 
 class Home extends Component {
 
   state = {
-    modifyAlliance: true,
+    modifyAlliance: true, showBuff: true,
     makeAlliance: true, showAlliance: true, alliance: [], server_number: 0,
     register_check: true, duke_time: 0, scientist_time: 0, architecture_time: 0,
-    kvk_number: 0, ruinable: false, ruin_basetime: 0, max_capacity: 100, alliance_code: 0, alliance_name: ''
+    kvk_number: 0, ruinable: false, ruin_basetime: 0, max_capacity: 100, alliance_code: 0, alliance_name: '', buffType: 0
   };
 
   componentDidMount() {
@@ -51,8 +52,8 @@ class Home extends Component {
     } catch (error) {
       alert("server not connected redirect to home")
 
-      this.setState({ flag: 2 })
-      window.location.href = '/'
+      //TODO
+      // window.location.href = '/'
     }
 
   }
@@ -80,10 +81,11 @@ class Home extends Component {
       }
 
     } catch (error) {
-      alert("server not connected redirect to home")
-
       this.setState({ flag: 2 })
-      window.location.href = '/'
+
+      alert("server not connected redirect to home")
+      //TODO
+      // window.location.href = '/'
 
     }
 
@@ -151,43 +153,22 @@ class Home extends Component {
     }
   }
 
-  handleDukeChange = (e) => {
-    this.setState({ duke_time: e.target.value });
-  }
+  handleSimpleStateChange = (stateInstance, e) => {
 
-  handleSciChange = (e) => {
-    this.setState({ scientist_time: e.target.value });
+    this.setState({ [stateInstance]: e.target.value });
   }
-
-  handleArcChange = (e) => {
-    this.setState({ architecture_time: e.target.value });
-  }
-  handleAllianceNameChange = (e) => {
-    this.setState({ alliance_name: e.target.value });
-  }
-  handleMaxCapacityChange = (e) => {
-    this.setState({ max_capacity: e.target.value });
-  }
-  handleRuinableChange = (e) => {
-    this.setState({ ruinable: !this.state.ruinable });
-  }
-  handleRuinTimeChange = (e) => {
-    this.setState({ ruin_basetime: e.target.value });
-  }
-  handleKVKServerChange = (e) => {
-    this.setState({ kvk_number: e.target.value });
-  }
-  handleRegisterAllow = (e) => {
-    console.log(e.target)
-    this.setState({ register_check: e.target.value });
+  handleBuffType = (event, newValue) => {
+    if (this.state.buffType === newValue) {
+      this.setState({ buffType: 0 })
+    }
+    else {
+      this.setState({ buffType: newValue });
+    }
   }
   handleChange = (e) => {
     this.setState({
       register_check: !this.state.register_check
     })
-  }
-  handleAllianceMake = (e) => {
-    this.setState({ makeAlliance: !this.state.makeAlliance });
   }
   render() {
     const { t } = this.props;
@@ -199,9 +180,9 @@ class Home extends Component {
     }
 
     const {
-      onClickLogin, handleArcChange, handleDukeChange, handleSciChange, handleKVKServerChange,
-      handleChange, handleAllianceMake, handleAllianceNameChange, handleMaxCapacityChange,
-      handleRuinableChange, handleRuinTimeChange, onClickMakeAlliance
+      onClickLogin,
+      handleChange, handleBuffType,
+      onClickMakeAlliance, handleSimpleStateChange
     } = this;
 
 
@@ -210,20 +191,20 @@ class Home extends Component {
       return <section className="form-wrapper">
         <div className="inputBox2">
           <p style={{ fontSize: 14 }}>alliance name</p>
-          <input id="Username" type="text" onChange={handleAllianceNameChange} defaultValue={state[0]} />
+          <input id="Username" type="text" onChange={(e) => handleSimpleStateChange("alliance_name", e)} defaultValue={state[0]} />
         </div>
         <div className="inputBox2 ">
           <p style={{ fontSize: 14 }}>max_capacity</p>
-          <input id="Username" type="number" onChange={handleMaxCapacityChange} defaultValue={state[1]} />
+          <input id="Username" type="number" onChange={(e) => handleSimpleStateChange("max_capacity", e)} defaultValue={state[1]} />
         </div>
         <div className="inputBox2">
           <p style={{ fontSize: 14 }}>ruinable
-      <input id="Username" type="checkbox" onChange={handleRuinableChange} defaultChecked={state[2]} />
+      <input id="Username" type="checkbox" onChange={(e) => handleSimpleStateChange("ruinable", e)} defaultChecked={state[2]} />
           </p>
         </div>
         <div className="inputBox2">
           <p style={{ fontSize: 14 }}>ruin start time</p>
-          <input id="Username" type="date" onChange={handleRuinTimeChange} />
+          <input id="Username" type="date" onChange={(e) => handleSimpleStateChange("ruin_basetime", e)} />
         </div>
         <div className="create-button" onClick={methodOnClick}>
           {textForButton}
@@ -259,19 +240,19 @@ class Home extends Component {
           </div>
           <div className="inputBox2 ">
             <p style={{ fontSize: 14 }}>duke rotation time</p>
-            <input id="Username" type="number" value={this.state.Userid} onChange={handleDukeChange} placeholder={this.state.duke_time + "secs"} />
+            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("duke_time", e)} placeholder={this.state.duke_time + "secs"} />
           </div>
           <div className="inputBox2">
             <p style={{ fontSize: 14 }}>scientist rotation time</p>
-            <input id="Username" type="number" value={this.state.Userid} onChange={handleSciChange} placeholder={this.state.scientist_time + "secs"} />
+            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("scientist_time", e)} placeholder={this.state.scientist_time + "secs"} />
           </div>
           <div className="inputBox2">
             <p style={{ fontSize: 14 }}>architecture rotation time</p>
-            <input id="Username" type="number" value={this.state.Userid} onChange={handleArcChange} placeholder={this.state.architecture_time + "secs"} />
+            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("architecture_time", e)} placeholder={this.state.architecture_time + "secs"} />
           </div>
           <div className="inputBox2">
             <p style={{ fontSize: 14 }}>KVK server number</p>
-            <input id="Username" type="number" value={this.state.Userid} onChange={handleKVKServerChange} placeholder={this.state.duke_time} />
+            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("kvk_number", e)} placeholder={this.state.duke_time} />
           </div>
           <div className="create-button" onClick={onClickLogin}>
             {"modify"}
@@ -279,9 +260,55 @@ class Home extends Component {
           {this.state.flag === 2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("error.wrongid")}</p>}
         </section>
         <div className="title2">
+          Title management
+          <settingtype>
+            <button onClick={() => this.setState({ showBuff: !this.state.showBuff })}>
+              {this.state.showBuff ? '칭호 목록 보기' : '칭호 목록 가리기'}
+            </button>
+          </settingtype>
+        </div>
+        <div>
+          {this.state.showBuff === false && (
+            <div className="selectBuff">
+              {this.state.buffType === 1 &&
+                <div>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {"duke"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {"architect"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {"scientist"} </box>
+                </div>
+              }
+              {this.state.buffType === 2 &&
+                <div>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {"duke"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} > {"architect"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {"scientist"} </box>
+                </div>
+              }
+              {this.state.buffType === 3 &&
+                <div>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {"duke"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {"architect"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} > {"scientist"} </box>
+                </div>
+              }
+              {this.state.buffType === 0 &&
+                <div>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {"duke"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {"architect"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {"scientist"} </box>
+                </div>
+              }
+              {this.state.buffType !== 0 &&
+                <BuffResult ttype={this.state.buffType} />
+              }
+            </div>)
+          }
+        </div>
+
+        <div className="title2">
           Alliance Setting
           <settingtype>
-            <button onClick={handleAllianceMake}>
+            <button onClick={() => this.setState({ makeAlliance: !this.state.makeAlliance })}>
               {this.state.makeAlliance ? '연맹 만들기' : '만들기 가리기'}
             </button>
             <button onClick={() => this.setState({ showAlliance: !this.state.showAlliance })}>
@@ -290,11 +317,8 @@ class Home extends Component {
           </settingtype>
         </div>
         <div>
-
-
-        </div>
-        <div>
           {this.state.makeAlliance === false && (
+
             alliancedata(onClickMakeAlliance, "make", this.state))}
         </div>
         <div>

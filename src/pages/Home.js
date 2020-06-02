@@ -23,7 +23,10 @@ class Home extends Component {
       );
       console.log(this.state.flag)
       if (response.status === 200) {
-        const info = { x: response.data.info.account.x, y: response.data.info.account.y, name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode }
+        const info = {
+          x: response.data.info.account.x, y: response.data.info.account.y,
+          name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode
+        }
         this.setState({ userinfo: info })
         console.log(this.state.userinfo)
         console.log(response.data.info)
@@ -67,7 +70,7 @@ class Home extends Component {
 
       return <Redirect to={{
         pathname: "/buffmain",
-        state: { name: this.state.userinfo.name, xcoor: this.state.userinfo.x, ycoor: this.state.userinfo.y }
+        state: { name: this.state.userinfo.name, xcoor: this.state.userinfo.x, ycoor: this.state.userinfo.y, code: this.state.userinfo.code }
       }} />;
     } else if (this.state.redirect && this.state.is_admin === 1) {
       return <Redirect push to={`/setbuff/`} />;
