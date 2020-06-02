@@ -20,6 +20,7 @@ class Home extends Component {
   componentDidMount() {
     this.getServerStat();
     this.getAlliance();
+
     console.log(this.state)
   }
 
@@ -48,7 +49,10 @@ class Home extends Component {
       }
       console.log(response)
     } catch (error) {
+      alert("server not connected redirect to home")
+
       this.setState({ flag: 2 })
+      window.location.href = '/'
     }
 
   }
@@ -76,8 +80,11 @@ class Home extends Component {
       }
 
     } catch (error) {
+      alert("server not connected redirect to home")
 
       this.setState({ flag: 2 })
+      window.location.href = '/'
+
     }
 
   }
@@ -185,7 +192,10 @@ class Home extends Component {
   render() {
     const { t } = this.props;
     if (this.state.redirect) {
-      return <Redirect push to={`/buffmain/${this.state.userinfo.name}/${this.state.userinfo.x}/${this.state.userinfo.y}`} />;
+      return <Redirect to={{
+        pathname: "/buffmain",
+        state: { name: this.state.userinfo.name, xcoor: this.state.userinfo.x, ycoor: this.state.userinfo.y }
+      }} />;
     }
 
     const {
