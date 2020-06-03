@@ -45,12 +45,13 @@ class Home extends Component {
           this.setState({ server_number: singleItem.number, duke_time: singleItem.duke_time, scientist_time: singleItem.scientist_time, architecture_time: singleItem.architecture_time, kvk_number: singleItem.kvk_number, register_check: singleItem.register_check })
           console.log(this.state)
         }
-      } else if (response.status) {
+      } else if (response.status === 404) {
+        alert(this.props.t("notice.ServerNotExisting"))
         console.log(response)
       }
       console.log(response)
     } catch (error) {
-      alert("server not connected redirect to home")
+      alert(this.props.t("notice.ServerNotConnected"))
 
       //TODO
       // window.location.href = '/'
@@ -62,12 +63,11 @@ class Home extends Component {
       const response = await Http.get('userresponse/', {
         params: {
           mode: 'ALLIANCE_list',
-          server_number: 1525//this.state.server_number
+          server_number: this.state.server_number //1525
         }
       }
       );
       if (response.status === 201) {
-
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
         } else {
@@ -79,14 +79,11 @@ class Home extends Component {
       } else if (response.status) {
         console.log(response)
       }
-
     } catch (error) {
       this.setState({ flag: 2 })
-
-      alert("server not connected redirect to home")
+      alert(this.props.t("notice.ServerNotConnected"))
       //TODO
       // window.location.href = '/'
-
     }
 
   }
@@ -103,12 +100,15 @@ class Home extends Component {
       );
       console.log(response.data)
       if (response.status === 201) {
-        alert("make success")
+        alert(this.props.t("notice.MakeSuccess"))
         //window.location.href = '/buffmain'
+      } else if (response.status === 406) {
+        alert(this.props.t("notice.CheckInfo"))
       } else {
+        alert(this.props.t("notice.UnknownProb"))
       }
     } catch (error) {
-      alert("change fail")
+      alert(this.props.t("notice.ChangeFail"))
     }
   }
   onClickModifyAlliance = async text => {
@@ -121,35 +121,29 @@ class Home extends Component {
         'ruinable': this.state.ruinable, 'alliance_name': this.state.alliance_name
       })
       );
-      console.log(response.data)
       if (response.status === 200) {
-        alert("make success")
+        alert(this.props.t("notice.MakeSuccess"))
       } else {
       }
     } catch (error) {
-      alert("change fail")
+      alert(this.props.t("notice.MakeFail"))
     }
   }
   onClickLogin = async text => {
     try {
       console.log(this.state)
-
       const response = await axios.patch('userresponse/', qs.stringify({
         'mode': "SERVER_management", 'mode_type': "info", 'kvk_number': this.state.kvk_number
         , 'scientist_time': this.state.scientist_time, 'duke_time': this.state.duke_time, 'architect_time': this.state.architecture_time,
         'register_check': this.state.register_check
       })
       );
-      console.log(response.data)
       if (response.status === 200) {
-        alert("change success")
+        alert(this.props.t("notice.ChangeSuccess"))
       } else {
-
       }
-
     } catch (error) {
-      alert("change fail")
-
+      alert(this.props.t("notice.ChangeFail"))
     }
   }
 
@@ -185,25 +179,23 @@ class Home extends Component {
       onClickMakeAlliance, handleSimpleStateChange
     } = this;
 
-
-
     function alliancedata(methodOnClick, textForButton, state) {
       return <section className="form-wrapper">
         <div className="inputBox2">
-          <p style={{ fontSize: 14 }}>alliance name</p>
+          <p style={{ fontSize: 14 }}>{t("setbuff.Allname")}</p>
           <input id="Username" type="text" onChange={(e) => handleSimpleStateChange("alliance_name", e)} defaultValue={state[0]} />
         </div>
         <div className="inputBox2 ">
-          <p style={{ fontSize: 14 }}>max_capacity</p>
+          <p style={{ fontSize: 14 }}>{t("setbuff.Allcap")}</p>
           <input id="Username" type="number" onChange={(e) => handleSimpleStateChange("max_capacity", e)} defaultValue={state[1]} />
         </div>
         <div className="inputBox2">
-          <p style={{ fontSize: 14 }}>ruinable
-      <input id="Username" type="checkbox" onChange={(e) => handleSimpleStateChange("ruinable", e)} defaultChecked={state[2]} />
+          <p style={{ fontSize: 14 }}>{t("setbuff.Allruinable")}
+            <input id="Username" type="checkbox" onChange={(e) => handleSimpleStateChange("ruinable", e)} defaultChecked={state[2]} />
           </p>
         </div>
         <div className="inputBox2">
-          <p style={{ fontSize: 14 }}>ruin start time</p>
+          <p style={{ fontSize: 14 }}>{t("setbuff.Allruinstarttime")}</p>
           <input id="Username" type="date" onChange={(e) => handleSimpleStateChange("ruin_basetime", e)} />
         </div>
         <div className="create-button" onClick={methodOnClick}>
@@ -218,7 +210,7 @@ class Home extends Component {
           modifyAlliance: !this.state.modifyAlliance, alliance_code: item.alliance_code,
           alliance_name: item.alliance_name, ruinable: item.ruinable, ruin_basetime: item.ruin_basetime, max_capacity: item.max_capacity
         })}>
-          {this.state.modifyAlliance ? '연맹 정보 수정하기' : '취소'}
+          {this.state.modifyAlliance ? t("setbuff.ModifyAllon") : t("setbuff.ModifyAlloff")}
         </button>
         <div>
           {this.state.modifyAlliance === false && (
@@ -231,27 +223,27 @@ class Home extends Component {
     return (
       <main className="Home2">
         <div className="title2">
-          Server Setting
-          </div>
+          {t("setbuff.settingTitle")}
+        </div>
         <section className="form-wrapper">
           <div className="inputBox2">
-            <p style={{ fontSize: 14 }}>register allow
-            <input id="Username" type="checkbox" onChange={handleChange} defaultChecked={this.state.register_check} /></p>
+            <p style={{ fontSize: 14 }}> {t("setbuff.RegisterAllow")}
+              <input id="Username" type="checkbox" onChange={handleChange} defaultChecked={this.state.register_check} /></p>
           </div>
           <div className="inputBox2 ">
-            <p style={{ fontSize: 14 }}>duke rotation time</p>
-            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("duke_time", e)} placeholder={this.state.duke_time + "secs"} />
+            <p style={{ fontSize: 14 }}>{t("setbuff.dukeRotate")}</p>
+            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("duke_time", e)} placeholder={this.state.duke_time + t("setbuff.settingSec")} />
           </div>
           <div className="inputBox2">
-            <p style={{ fontSize: 14 }}>scientist rotation time</p>
-            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("scientist_time", e)} placeholder={this.state.scientist_time + "secs"} />
+            <p style={{ fontSize: 14 }}>{t("setbuff.scientistRotate")}</p>
+            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("scientist_time", e)} placeholder={this.state.scientist_time + t("setbuff.settingSec")} />
           </div>
           <div className="inputBox2">
-            <p style={{ fontSize: 14 }}>architecture rotation time</p>
-            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("architecture_time", e)} placeholder={this.state.architecture_time + "secs"} />
+            <p style={{ fontSize: 14 }}>{t("setbuff.architectureRotate")}</p>
+            <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("architecture_time", e)} placeholder={this.state.architecture_time + t("setbuff.settingSec")} />
           </div>
           <div className="inputBox2">
-            <p style={{ fontSize: 14 }}>KVK server number</p>
+            <p style={{ fontSize: 14 }}>{t("setbuff.kvknumber")}</p>
             <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("kvk_number", e)} placeholder={this.state.duke_time} />
           </div>
           <div className="create-button" onClick={onClickLogin}>
@@ -260,10 +252,10 @@ class Home extends Component {
           {this.state.flag === 2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("error.wrongid")}</p>}
         </section>
         <div className="title2">
-          Title management
+          {t("setbuff.manageTitle")}
           <settingtype>
             <button onClick={() => this.setState({ showBuff: !this.state.showBuff })}>
-              {this.state.showBuff ? '칭호 목록 보기' : '칭호 목록 가리기'}
+              {this.state.showBuff ? t("setbuff.liston") : t("setbuff.listoff")}
             </button>
           </settingtype>
         </div>
@@ -272,30 +264,30 @@ class Home extends Component {
             <div className="selectBuff">
               {this.state.buffType === 1 &&
                 <div>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {"duke"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {"architect"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {"scientist"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.duke")} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {t("buff.architecture")}} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {t("buff.scientist")} </box>
                 </div>
               }
               {this.state.buffType === 2 &&
                 <div>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {"duke"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} > {"architect"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {"scientist"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {t("buff.duke")} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} > {t("buff.architecture")} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {t("buff.scientist")} </box>
                 </div>
               }
               {this.state.buffType === 3 &&
                 <div>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {"duke"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {"architect"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} > {"scientist"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {t("buff.duke")} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {t("buff.architecture")} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} > {t("buff.scientist")} </box>
                 </div>
               }
               {this.state.buffType === 0 &&
                 <div>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {"duke"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {"architect"} </box>
-                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {"scientist"} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 1)}> {t("buff.duke")} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 2)}> {t("buff.architecture")} </box>
+                  <box id="Userpassword" onClick={() => handleBuffType("buffType", 3)}> {t("buff.scientist")} </box>
                 </div>
               }
               {this.state.buffType !== 0 &&
@@ -306,13 +298,13 @@ class Home extends Component {
         </div>
 
         <div className="title2">
-          Alliance Setting
+          {t("setbuff.AllsettingTitle")}
           <settingtype>
             <button onClick={() => this.setState({ makeAlliance: !this.state.makeAlliance })}>
-              {this.state.makeAlliance ? '연맹 만들기' : '만들기 가리기'}
+              {this.state.makeAlliance ? t("setbuff.makeAllon") : t("setbuff.makeAlloff")}
             </button>
             <button onClick={() => this.setState({ showAlliance: !this.state.showAlliance })}>
-              {this.state.showAlliance ? '연맹 목록 보기' : '연맹 목록 가리기'}
+              {this.state.showAlliance ? t("setbuff.Allliston") : t("setbuff.Alllistoff")}
             </button>
           </settingtype>
         </div>

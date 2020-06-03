@@ -119,8 +119,6 @@ class BuffMain extends Component {
             console.log(error.response)
         }
     }
-
-
     onModifyUser = async text => {
         try {
             const response = await Http.patch('userresponse/', qs.stringify({
@@ -131,6 +129,28 @@ class BuffMain extends Component {
             if (response.status === 201) {
                 alert("modify success!")
             } else {
+                console.log(response)
+            }
+
+        } catch (error) {
+            alert("something wrong to server....!")
+
+            console.log(error)
+        }
+    }
+    onModifyUserPassword = async text => {
+        try {
+            const response = await Http.patch('userresponse/', qs.stringify({
+                'mode': 'USER_management', 'mode_type': 'password',
+                'newPassword': this.state.password
+            })
+            );
+            if (response.status === 201) {
+                alert("modify success!")
+            } else if (response.status === 406) {
+                alert("please input password")
+            }
+            else {
                 console.log(response)
             }
 
@@ -181,15 +201,17 @@ class BuffMain extends Component {
                     'mode': "TitleQ_request", 'user_x': this.state.x, 'user_y': this.state.y, 'title_type': this.state.titleType, 'is_kvk': this.state.is_kvk,
                 })
                 );
-                console.log(response)
-
                 if (response.status === 201) {
                     alert("success")
                     window.location.href = `/buffresult/${this.state.titleType}`
-                } else {
-
+                } else if(response.status === 304){
+                    console.log('not modified')
+                } else if(response.status === 406){
+                    alert('please request coordinate')
                 }
-
+                else{
+                    console.log(response)
+                }
             } catch (error) {
                 alert("fail")
                 console.log(error.response)
