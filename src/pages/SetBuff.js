@@ -15,7 +15,7 @@ class Home extends Component {
     modifyAlliance: true, showBuff: true,
     makeAlliance: true, showAlliance: true, alliance: [], server_number: 0,
     register_check: true, duke_time: 0, scientist_time: 0, architecture_time: 0,
-    kvk_number: 0, ruinable: false, ruin_basetime: 0, max_capacity: 100, alliance_code: 0, alliance_name: '', buffType: 0
+    kvk_number: 0, ruinable: 0, ruin_basetime: 0, max_capacity: 100, alliance_code: 0, alliance_name: '', buffType: 0
   };
 
   componentDidMount() {
@@ -37,12 +37,12 @@ class Home extends Component {
 
       if (response.status === 201) {
 
+        console.log(response)
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
         } else {
           const singleItem = response.data.info
-          console.log(response)
-          this.setState({ server_number: singleItem.number, duke_time: singleItem.duke_time, scientist_time: singleItem.scientist_time, architecture_time: singleItem.architecture_time, kvk_number: singleItem.kvk_number, register_check: singleItem.register_check })
+          this.setState({ server_number:singleItem.server_code, duke_time: singleItem.duke_time, scientist_time: singleItem.scientist_time, architecture_time: singleItem.architecture_time, kvk_number: singleItem.kvk_number, register_check: singleItem.register_check })
           console.log(this.state)
         }
       } else if (response.status === 404) {
@@ -67,6 +67,7 @@ class Home extends Component {
         }
       }
       );
+      console.log(response)
       if (response.status === 201) {
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
@@ -95,10 +96,10 @@ class Home extends Component {
       const response = await axios.patch('userresponse/', qs.stringify({
         'mode': "ALLIANCE_management", 'mode_type': "make"
         , 'ruin_basetime': this.state.ruin_basetime, 'max_capacity': this.state.max_capacity,
-        'ruinable': this.state.ruinable, 'alliance_name': this.state.alliance_name
+        'ruinable': this.state.ruinable, 'alliance_name': this.state.alliance_name,'server_code':this.state.server_number
       })
       );
-      console.log(response.data)
+      console.log(response)
       if (response.status === 201) {
         alert(this.props.t("notice.MakeSuccess"))
         //window.location.href = '/buffmain'
@@ -108,6 +109,7 @@ class Home extends Component {
         alert(this.props.t("notice.UnknownProb"))
       }
     } catch (error) {
+      console.log(error.response)
       alert(this.props.t("notice.ChangeFail"))
     }
   }
@@ -196,7 +198,8 @@ class Home extends Component {
         </div>
         <div className="inputBox2">
           <p style={{ fontSize: 14 }}>{t("setbuff.Allruinstarttime")}</p>
-          <input id="Username" type="date" onChange={(e) => handleSimpleStateChange("ruin_basetime", e)} />
+          <input id="Username" type="date" onChange={(e) =>{console.log(e.data)
+            handleSimpleStateChange("ruin_basetime", e)}} />
         </div>
         <div className="create-button" onClick={methodOnClick}>
           {textForButton}

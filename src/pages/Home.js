@@ -25,7 +25,7 @@ class Home extends Component {
       if (response.status === 200) {
         const info = {
           x: response.data.info.account.x, y: response.data.info.account.y,
-          name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode
+          name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode, 
         }
         this.setState({ userinfo: info })
         console.log(this.state.userinfo)

@@ -50,6 +50,7 @@ class BuffMain extends Component {
                 }
             }
             );
+            console.log(response)
             if (response.status === 201) {
 
                 if (response.data.info.length === 0) {
@@ -289,7 +290,6 @@ class BuffMain extends Component {
                             <Tab label="register ruin" {...this.a11yProps(1)} />
                             <Tab label="extras" {...this.a11yProps(2)} disabled />
                             <Tab label="settings" {...this.a11yProps(3)} />
-
                         </Tabs>
                     </AppBar>
                     <TabPanel value={this.state.tabno} index={0}>
