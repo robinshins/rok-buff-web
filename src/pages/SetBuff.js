@@ -18,7 +18,6 @@ class Home extends Component {
     kvk_number: 0, buffType: 0,
     makealliance_name: "연맹이름", makeruin_basetime: '', makemax_capacity: 0, makeruinable: false, makealtar_basetime: '',
     modifyalliance_name: [], modifyruin_basetime: [], modifymax_capacity: [], modifyruinable: [], modifyaltar_basetime: [], modifyalliance_code: []
-
   };
 
   componentDidMount() {
@@ -39,6 +38,7 @@ class Home extends Component {
 
       if (response.status === 201) {
 
+        console.log(response)
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
         } else {
@@ -76,6 +76,7 @@ class Home extends Component {
         }
       }
       );
+      console.log(response)
       if (response.status === 201) {
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
@@ -120,7 +121,7 @@ class Home extends Component {
         'ruinable': ruinableset, 'alliance_name': this.state.makealliance_name, 'server_number': this.state.server_number
       })
       );
-      console.log(response.data)
+      console.log(response)
       if (response.status === 201) {
         alert(this.props.t("notice.MakeSuccess"))
         //window.location.href = '/buffmain'
@@ -130,6 +131,7 @@ class Home extends Component {
         alert(this.props.t("notice.UnknownProb"))
       }
     } catch (error) {
+      console.log(error.response)
       alert(this.props.t("notice.ChangeFail"))
       console.log(error)
     }
@@ -251,6 +253,7 @@ class Home extends Component {
         <div className="inputBox2">
           <p style={{ fontSize: 14 }}>{t("setbuff.Allaltarstarttime")}</p>
           <input id={state[0]} type="datetime-local" onChange={(e) => handleSimpleStateChange("altar_basetime", e, textForButton, index)} defaultValue={state[4]} />
+
         </div>
         <div className="selectKingdom">
           <div className="create-button" onClick={(e) => methodOnClick[0](index)}>
