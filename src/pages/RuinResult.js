@@ -1,73 +1,75 @@
-import React, { Fragment, Component,useState } from 'react';
+import React, { Fragment, Component, useState } from 'react';
 import Http from '../api';
 import './RuinResult.css';
 import qs from 'qs';
-import {withTranslation,useTranslation} from "react-i18next";
+import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
 
 
 class RuinResult extends Component {
-  state = { items : [], flag:'',is_admin:sessionStorage.isadmin};
+  state = { items: [], flag: '', is_admin: sessionStorage.isadmin, ruin_selected: this.props.location.state.ruin_selected };
 
- 
-    
-componentDidMount() { 
-  console.log(this.props)
-  console.log(this.state.is_admin)
-  this.getRuinResult();
-}
 
-handleDeleteclick = async text => {
-  console.log(text.target)
-//   if(this.state.is_admin===1){
-//   try{
-//   const response = await Http.delete('userresponse/', qs.stringify({
-//        'mode': 'RUIN_register', 'ruintimeregister_code': e. 
-//     })
-//     );
-//     console.log(response)
-//     if(response.status===201){
-//       alert("delete success")
-//     }else{
-//        alert("delete failed")
-//     }
 
-//   }catch(error){
-//     alert("delete failed")
-//     console.log(error.response)
-//     //console.log(response.error)
-//     //alert("아이디와 비밀번호를 확인해주세요")
+  componentDidMount() {
+    console.log(this.props)
+    console.log(this.state.is_admin)
+    this.getRuinResult();
+  }
 
-//   }
-// }else{
-  
-// }
-}
+  handleDeleteclick = async text => {
+    console.log(text.target)
+    //   if(this.state.is_admin===1){
+    //   try{
+    //   const response = await Http.delete('userresponse/', qs.stringify({
+    //        'mode': 'RUIN_register', 'ruintimeregister_code': e. 
+    //     })
+    //     );
+    //     console.log(response)
+    //     if(response.status===201){
+    //       alert("delete success")
+    //     }else{
+    //        alert("delete failed")
+    //     }
+
+    //   }catch(error){
+    //     alert("delete failed")
+    //     console.log(error.response)
+    //     //console.log(response.error)
+    //     //alert("아이디와 비밀번호를 확인해주세요")
+
+    //   }
+    // }else{
+
+    // }
+  }
 
 
   getRuinResult = async text => {
-    try{
-    const response = await Http.get('userresponse/', {params:{
-         mode:'RUIN_member_list', ruintime_code: this.props.match.params.ruintimecode
-      }}
+    try {
+      const response = await Http.get('userresponse/', {
+        params: {
+          mode: 'RUIN_member_list', ruintime_code: this.state.ruin_selected
+        }
+      }
       );
-      if(response.status===201){
-        const singleItem = response.data.info[response.data.info.length-1]
+      if (response.status === 201) {
+        const singleItem = response.data.info[response.data.info.length - 1]
         console.log(response)
         let date = new Date(singleItem.ruintime)
         console.log(date.toString())
         const item = []
-        for(var i = 0 ;  i< response.data.info.length ; i++){
-          item.push({name: response.data.info[i]})
+        for (var i = 0; i < response.data.info.length; i++) {
+          item.push({ name: response.data.info[i] })
         }
-        this.setState({items : item})
+        this.setState({ items: item })
         console.log(this.state.items)
-      }else if(response.status){
+      } else if (response.status) {
         console.log(response)
       }
 
-    }catch(error){
-      this.setState({flag : 2})
+    } catch (error) {
+      this.setState({ flag: 2 })
     }
 
   }
@@ -75,36 +77,40 @@ handleDeleteclick = async text => {
   render() {
     const { t } = this.props;
     const {
-      getRuintime,handleEmailChange,handlePasswordChange,handleTimeClick,handleApplyclick,handleDeleteclick
+      handleDeleteclick
     } = this;
 
-    let divItems = this.state.items.map((item,index) => {
-      if(this.state.is_admin===JSON.stringify(1)){
-        return <div className="selectBox2" key={item.id}>{`(${index+1}) `+item.name} <div class="x-box" id ={index} onClick={handleDeleteclick}>
-        X
+    let divItems = this.state.items.map((item, index) => {
+      if (this.state.is_admin === JSON.stringify(1)) {
+        return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name} <div class="x-box" id={index} onClick={handleDeleteclick}>
+          X
       </div></div>
-      }else{
-        return <div className="selectBox2" key={item.id}>{`(${index+1}) `+item.name}</div>
+      } else {
+        return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name}</div>
       }
 
-   });
+    });
 
     return (
       <main className="Home">
         <div className="title2">
           Results
           </div>
-          <p style= {{textAlign:"center"}}>{t("apply.info")} </p>
+
+        <p style={{ textAlign: "center" }}>{t("apply.info")} </p>
+        <div className="selectKingdom">
+          <box className="create-button" style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} onClick={() => this.props.history.goBack()}>
+            okay
+      </box><box className="create-button" style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} onClick={event => window.location.reload()}>
+            reload</box></div>
         <section className="form-wrapper">
           {divItems}
-          <div className="create-button" onClick = {event =>  window.location.href = '/'}>
-            okay 
-      </div>
+
         </section>
       </main>
-      
+
     );
   }
 
 }
-export default  withTranslation()(RuinResult);
+export default withTranslation()(RuinResult);

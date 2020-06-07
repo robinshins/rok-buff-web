@@ -6,21 +6,25 @@ import qs from 'qs';
 class BuffResult extends Component {
   //this component requires:
   //ttype: title_type
-  state = { items: [], flag: '',is_admin:'' };
-
-
-
+  state = {
+    items: [], flag: '', is_admin: '', x: this.props.location.state.xcoor,
+    y: this.props.location.state.ycoor, lostkingdom: this.props.location.state.lostkingdom,
+    titleType: this.props.location.state.titleType, name: this.props.location.state.name
+  };
   componentDidMount() {
     console.log(this.props)
     this.getRuinResult();
+    console.log(this.state)
   }
 
 
   getRuinResult = async text => {
     try {
+      console.log(this.props)
+
       const response = await axios.get('qresponse/', {
         params: {
-          'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': this.props.match.params.ttype
+          'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': this.state.titleType
         }
       }
       );
@@ -32,37 +36,56 @@ class BuffResult extends Component {
         console.log(date.toString())
         const item = []
         for (var i = 0; i < response.data.info.length; i++) {
-          item.push({ name: response.data.info[i][1] })
+          item.push({ name: response.data.info[i][2], server: response.data.info[i][1] })
         }
         this.setState({ items: item })
         console.log(this.state.items)
       } else if (response.status) {
         console.log(response)
+
       }
 
     } catch (error) {
       this.setState({ flag: 2 })
     }
-
   }
 
   render() {
+    let bgColor = this.state.lostkingdom === false ? "#origin kingdom" : "#The Lost Kingdom"
+    let titletype = this.state.titleType === 1 ? "duke" : this.state.titleType === 2 ? "scientist" : "architect"
 
     let divItems = this.state.items.map((item, index) => {
-      return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name}</div>
-
+      return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name} <span>{item.server}</span></div>
     });
+    let myrank = this.state.items.findIndex(item => item.name === this.state.name) + 1
 
     return (
       <main className="Home">
+        <div className="title2">
+          register complete          </div>
+        <ul class="collection">
+
+          <li class="collection-item">
+
+            <div class="row">
+              <p><span class="text-role">title</span> : {titletype}</p>{bgColor}
+              <p><span class="text-coord">coordinate</span>  X:{this.state.x} Y:{this.state.y}</p>
+              <p><span class="text-wait">wait</span> : {myrank}/{this.state.items.length}</p>
+              <div className="selectKingdom">
+                <box className="create-button" style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} onClick={() => this.props.history.goBack()}>
+                  DONE</box>
+                <box className="create-button" style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} onClick={() => window.location.reload()}>
+                  reload</box>
+
+              </div>
+            </div>
+          </li>
+        </ul>
         <div className="title2">
           Waiting List
           </div>
         <section className="form-wrapper">
           {divItems}
-          <div className="create-button" onClick={event => window.location.href = '/'}>
-            okay
-      </div>
         </section>
       </main>
 
