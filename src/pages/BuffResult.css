@@ -94,3 +94,8 @@
         color:black; 
         padding: 5px;
       }
+      .selectBox2 span {
+        display:inline-block;
+        width:150px;
+        text-align:right;
+    }

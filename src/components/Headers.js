@@ -18,7 +18,6 @@ state = {language:""}
 
 componentWillMount(){
     i18n.changeLanguage('ko');
-    console.log(localStorage.language)
     const language = localStorage.language
     //i18n.changeLanguage("ko");
     if(language===JSON.stringify("ko")){
