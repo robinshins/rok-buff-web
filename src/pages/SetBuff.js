@@ -16,7 +16,7 @@ class Home extends Component {
     makeAlliance: true, showAlliance: true, alliance: [], server_number: 0,
     register_check: true, duke_time: 0, scientist_time: 0, architecture_time: 0,
     kvk_number: 0, buffType: 0,
-    makealliance_name: '', makeruin_basetime: 0, makemax_capacity: 0, makeruinable: false, makealtar_basetime: 0,
+    makealliance_name: "연맹이름", makeruin_basetime: '', makemax_capacity: 0, makeruinable: false, makealtar_basetime: '',
     modifyalliance_name: [], modifyruin_basetime: [], modifymax_capacity: [], modifyruinable: [], modifyaltar_basetime: [], modifyalliance_code: []
 
   };
@@ -113,11 +113,11 @@ class Home extends Component {
   onClickMakeAlliance = async text => {
     try {
       console.log(this.state)
-
+      var ruinableset =  this.state.makeruinable === false ? 0 :1 
       const response = await axios.patch('userresponse/', qs.stringify({
         'mode': "ALLIANCE_management", 'mode_type': "make"
         , 'ruin_basetime': this.state.makeruin_basetime, 'max_capacity': this.state.makemax_capacity,
-        'ruinable': this.state.makeruinable, 'alliance_name': this.state.makealliance_name, 'server_number': this.state.server_number
+        'ruinable': ruinableset, 'alliance_name': this.state.makealliance_name, 'server_number': this.state.server_number
       })
       );
       console.log(response.data)
