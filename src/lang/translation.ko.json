@@ -59,6 +59,7 @@
   "notice.checkpassword": "비밀번호를 입력하여 주세요",
   "notice.nocoordinate": "좌표를 입력하여 주세요",
   "notice.notitletype": "받을 칭호를 먼저 선택해주세요",
+  "notice.alreadyregistered": "이미 신청하신 칭호입니다. 현재는 변경만 가능합니다. 추후 업데이트 예정입니다",
   "notice.applysuccess": "신청되었습니다",
   "notice.applyfail": "신청되지 않았습니다ㅠ",
   "notice.applyfull": "이미 신청하셨거나 마감되었습니다",

@@ -59,6 +59,8 @@
   "notice.checkpassword": "check your password",
   "notice.nocoordinate": "please insert coordinate",
   "notice.notitletype": "choose title please",
+  "notice.alreadyregistered": "You already register to this title. Currently you can only change. it will update soon",
+
   "notice.applysuccess": "registered",
   "notice.applyfail": "you're not registered",
   "notice.applyfull": "Already registered or it's full",

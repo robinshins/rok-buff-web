@@ -234,7 +234,7 @@ class BuffMain extends Component {
                     console.log(response)
                 }
             } catch (error) {
-                alert(this.props.t("notice.applyfull"))
+                alert(this.props.t("notice.alreadyregistered"))
                 console.log(error.response)
             }
         } else {
@@ -452,7 +452,7 @@ class BuffMain extends Component {
                             <div className="create-button" onClick={this.onModifyUser}>
                                 {t("setbuff.Allmodify")}
                             </div>
-                            <div className="create-button" onClick={(e) => this.handleChange(e, 0)}>
+                            <div className="create-button" onClick  ={(e) => this.handleChange(e, 0)}>
                                 {t("setbuff.ModifyAlloff")}
                             </div>
                         </section>
