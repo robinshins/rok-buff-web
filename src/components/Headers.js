@@ -5,16 +5,14 @@ import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { sub, add, lang } from '../actions'
 import { render } from '@testing-library/react';
 
 
-const [is_login, is_login] = useState('0');
-useEffect(() => {
-    console.log(name);
-  }, [name]);
+
 
 class Header extends Component {
 
@@ -31,6 +29,12 @@ class Header extends Component {
             i18n.changeLanguage("en");
         }
     }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevProps.value !== this.props.value) {
+    //       doSomething();  
+    //     }
+    //   }
 
 
 
@@ -58,15 +62,17 @@ class Header extends Component {
 
 
     }
-
-
-
-    
-      
+    static propTypes = {
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
+      }
 
 
 
     render() {
+        const { match, location, history } = this.props
+        
         const { t } = this.props;
         const { onSelectFlag, MenuItem } = this
         console.log(localStorage.is_login)
@@ -76,9 +82,15 @@ class Header extends Component {
                     <title2> ROK BUFF</title2>
                 </div>
               
-                {localStorage.is_login ===JSON.stringify('true') && localStorage.is_admin !== JSON.stringify("1") && <div className="menu">
+                {location.pathname!=="/"&& sessionStorage.is_admin!==JSON.stringify('1')&&<div className="menu">
                     <MenuItem to={'/buffmain'}>TITLE</MenuItem>
                     <MenuItem to={'/ruinregister'}>RUIN/ALTAR REGISTER</MenuItem>
+                    <MenuItem to={'/personalsetting'}>PERSONAL INFO</MenuItem>
+                </div>}
+
+                {location.pathname!=="/"&& sessionStorage.is_admin===JSON.stringify('1')&&<div className="menu">
+                    <MenuItem to={'/buffmain'}>TITLE</MenuItem>
+                    <MenuItem to={'/ruinregister'}>Alliance Setting</MenuItem>
                     <MenuItem to={'/personalsetting'}>PERSONAL INFO</MenuItem>
                 </div>}
 
@@ -115,5 +127,5 @@ class Header extends Component {
 
 // Header = connect(mapStateToProps, mapDispatchToProps)(Header);
 //Header = connect(null, mapDispatchToProps)(Header);
-
-export default withTranslation()(Header);;
+const AdaptiveHeader = withRouter(Header)
+export default withTranslation()(AdaptiveHeader);;
