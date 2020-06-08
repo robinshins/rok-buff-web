@@ -1,6 +1,6 @@
 import React,{Component, Children} from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { Home, Register, BuffMain, RuinResult , SetBuff, BuffResult} from './pages';
+import { Home, Register, BuffMain, RuinResult , SetBuff, BuffResult, RuinRegister,PersonalSetting} from './pages';
 import Header from './components/Headers';
 import {withTranslation,useTranslation} from "react-i18next";
 import i18n from "i18next";
@@ -24,6 +24,8 @@ class App extends Component {
       <Route path='/ruinresult' component={RuinResult}/>
       <Route path='/setbuff' component={SetBuff}/>
       <Route path='/buffresult' component={BuffResult}/>
+      <Route path='/ruinregister' component={RuinRegister}/>
+      <Route path='/personalsetting' component={PersonalSetting}/>
       </Switch>
       </Router> 
     )

@@ -32,8 +32,8 @@ class TabPanel extends Component {
 class BuffMain extends Component {
     state = {
         ruinitems: [], flag: -2,
-        tabno: 0, lasttime: NaN, name: this.props.location.state.name, x: this.props.location.state.xcoor, code: this.props.location.state.code,
-        y: this.props.location.state.ycoor, lostkingdom: false, redirect: 0, ruin_selected: -1,
+        tabno: 0, lasttime: NaN, name: localStorage.username, x: localStorage.xcoor, code: localStorage.usercode,
+        y: localStorage.ycoor, lostkingdom: false, redirect: 0, ruin_selected: -1,
         backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null
     };
 
@@ -346,14 +346,14 @@ class BuffMain extends Component {
         return (
             <main className="BuffMain">
                 <div>
-                    <AppBar position="static">
+                    {/* <AppBar position="static">
                         <Tabs value={this.state.tabno} onChange={this.handleChange} aria-label="simple tabs example" >
                             <Tab label={t("buff")} {...this.a11yProps(0)} />
                             <Tab label={t("ruin")} {...this.a11yProps(1)} />
                             <Tab label={t("extra")} {...this.a11yProps(2)} disabled />
                             <Tab label={t("settings")} {...this.a11yProps(3)} />
                         </Tabs>
-                    </AppBar>
+                    </AppBar> */}
                     <TabPanel value={this.state.tabno} index={0}>
                         <div className="title1">
                             {t("buff.lastworkingtime") + ":" + this.state.lasttime}
@@ -367,7 +367,8 @@ class BuffMain extends Component {
                             </div>
                             {this.state.titleType === 1 &&
                                 <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
-                                    {t("buff.duke") + this.state.duke_wait}
+                                    {t("buff.duke")}
+                                    <waitNumber style = {{color:"#ffffff"}}> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
                                 </div>
                             }
                             {this.state.titleType !== 1 &&
@@ -379,6 +380,7 @@ class BuffMain extends Component {
                             {this.state.titleType === 2 &&
                                 <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.scientist")}
+                                    <waitNumber style = {{color:"#ffffff"}}> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
                                 </div>
                             }
                             {this.state.titleType !== 2 &&
@@ -390,6 +392,7 @@ class BuffMain extends Component {
                             {this.state.titleType === 3 &&
                                 <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.architecture")}
+                                    <waitNumber style = {{color:"#ffffff"}}> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
                                 </div>
                             }
                             {this.state.titleType !== 3 &&

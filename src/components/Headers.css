@@ -1,6 +1,6 @@
 .logo {
     height: 3.5rem;
-    background-color: #4577aa;
+    background-color: #445175;
     width: 100vw;
     line-height: 3.5rem;
     color: white;
@@ -53,14 +53,14 @@
   .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 .menu {
-    background-color: #568cc2;
+    background-color: #3d486c;
     height: 3.5rem;
 }
 
 .menu-item {
     display: inline-block;
     color: white;
-    font-size: 1rem;
+    font-size: 0.7rem;
     line-height: 3.5rem;
     width: 33.3333%;
     text-align: center;
@@ -70,11 +70,11 @@
 }
 
 .menu-item:hover {
-    background-color: #495057;
+    background-color: #1e3449;
 }
 
 .menu-item:active, .menu-item.active {
-    background-color: #1862ab;
+    background-color: #1e3449;
 }
 
 .menu-flags {

@@ -39,7 +39,7 @@
     display: flex;
     margin:20px;
     margin-bottom: 30px;
-    border: 1px solid rgb(55, 148, 185); 
+    border: 1px solid #3794b9; 
     background-color: rgba(0,0,0,0);
     color:skyblue; 
     padding: 5px;
@@ -62,7 +62,7 @@
             margin:15px;
             margin-bottom: 30px;
             text-align: center;
-            border: 1px solid gray; 
+            border: 1px solid #3794b9; 
             background-color:linear-gradient(#FFFFFF, #B0B0B0);
             color: gray; 
             padding: 10px;

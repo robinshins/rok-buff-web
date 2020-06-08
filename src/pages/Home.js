@@ -23,15 +23,22 @@ class Home extends Component {
       );
       console.log(this.state.flag)
       if (response.status === 200) {
+        localStorage.is_login = true;
         const info = {
           x: response.data.info.account.x, y: response.data.info.account.y,
           name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode, 
         }
+        localStorage.xcoor = JSON.stringify(response.data.info.account.x)
+        localStorage.ycoor = JSON.stringify(response.data.info.account.y)
+        localStorage.username = JSON.stringify(response.data.info.account.user_ingameID)
+        localStorage.usercode = JSON.stringify(response.data.info.account.user_ingamecode)
+        //localStorage.is_admin = JSON.stringify('1')
         this.setState({ userinfo: info })
         console.log(this.state.userinfo)
         console.log(response.data.info)
         if (response.data.info.account.is_serveradmin === 1) {
           this.setState({ is_admin: 1 })
+          localStorage.is_admin = JSON.stringify('1')
         }
         this.setState({ redirect: true });
 
