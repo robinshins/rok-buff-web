@@ -118,7 +118,8 @@ class Home extends Component {
       const response = await axios.patch('userresponse/', qs.stringify({
         'mode': "ALLIANCE_management", 'mode_type': "make"
         , 'ruin_basetime': this.state.makeruin_basetime, 'max_capacity': this.state.makemax_capacity,
-        'ruinable': ruinableset, 'alliance_name': this.state.makealliance_name, 'server_number': this.state.server_number
+        'ruinable': ruinableset, 'alliance_name': this.state.makealliance_name, 'server_number': this.state.server_number,
+        'altar_basetime': this.state.makealtar_basetime
       })
       );
       console.log(response)

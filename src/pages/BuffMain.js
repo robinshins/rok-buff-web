@@ -122,6 +122,7 @@ class BuffMain extends Component {
                     }
                     let date = new Date(checktime).toString().substring(15)
                     this.setState({ lasttime: date })
+                    console.log(response)
                 }
             } else {
             }
@@ -236,7 +237,7 @@ class BuffMain extends Component {
                 }
             } catch (error) {
                 alert(this.props.t("notice.alreadyregistered"))
-                console.log(error.response)
+                this.setState({ redirect: 1 })
             }
         } else {
             alert("")
@@ -273,7 +274,7 @@ class BuffMain extends Component {
     }
 
     handleKingdomChange = (e, newValue) => {
-        if (newValue === 1 ) {
+        if (newValue === 1) {
             this.setState({ lostkingdom: true, is_kvk: 1 });
             //this.setState({Userid: e.target.value});
         }
@@ -452,7 +453,7 @@ class BuffMain extends Component {
                             <div className="create-button" onClick={this.onModifyUser}>
                                 {t("setbuff.Allmodify")}
                             </div>
-                            <div className="create-button" onClick  ={(e) => this.handleChange(e, 0)}>
+                            <div className="create-button" onClick={(e) => this.handleChange(e, 0)}>
                                 {t("setbuff.ModifyAlloff")}
                             </div>
                         </section>
