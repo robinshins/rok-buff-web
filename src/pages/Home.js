@@ -3,19 +3,32 @@ import axios from '../api';
 import https from 'https';
 import './Home.css';
 import qs from 'qs';
-import { Redirect } from 'react-router';
+import { Redirect} from 'react-router';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
 import { Link } from 'react-router-dom'
+import propTypes from "prop-types"
+import {login} from "../actions/auth"
+import * as actions from '../actions';
+import {connect} from 'react-redux';
 
+
+const mapDispatchToProps = (dispatch) => ({
+  set_ServerNumber: (e) => dispatch(actions.server_code(e))
+});
 class Home extends Component {
 
-  state = { Userid: '', Userpassword: '', flag: '', userinfo: { x: '', y: "", name: "", code: "" }, redirect: false, is_admin: -1 };
+  state = { Userid: '', Userpassword: '', flag: '', userinfo: { x: '', y: "", name: "", code: "" }, redirect: false, is_admin: -1 ,server_code:1};
+  // static propTypes = {
+  //   login: this.propTypes.func.isRequired,
+  //   isAuthenticated : this.propTypes.bool
+  // }
 
 
 
 
   onClickLogin = async text => {
+    console.log(this.props.set_ServerNumber)
     try {
       const response = await axios.patch('loginresponse/', qs.stringify({
         'mode': "login", 'password': this.state.Userpassword, 'account': this.state.Userid
@@ -30,7 +43,8 @@ class Home extends Component {
         }
         localStorage.xcoor = JSON.stringify(response.data.info.account.x)
         localStorage.ycoor = JSON.stringify(response.data.info.account.y)
-        localStorage.username = JSON.stringify(response.data.info.account.user_ingameID)
+
+        localStorage.username = JSON.stringify(response.data.info.account.user_ingameID.replace(/['"]+/g,''))
         localStorage.usercode = JSON.stringify(response.data.info.account.user_ingamecode)
         //localStorage.is_admin = JSON.stringify('1')
         this.setState({ userinfo: info })
@@ -39,8 +53,12 @@ class Home extends Component {
         if (response.data.info.account.is_serveradmin === 1) {
           this.setState({ is_admin: 1 })
           sessionStorage.is_admin = JSON.stringify('1')
+        }else{
+          sessionStorage.is_admin = JSON.stringify('0')
         }
-        this.setState({ redirect: true });
+        this.setState({ redirect: true, server_code:response.data.info.server_code});
+        this.props.set_ServerNumber(response.data.info.account.server_code);
+        sessionStorage.server_code =JSON.stringify(response.data.info.account.server_code);
 
         //window.location.href = '/buffmain'
       } else {
@@ -97,7 +115,7 @@ class Home extends Component {
             <input id="Username" value={this.state.Userid} onChange={handleEmailChange} placeholder={t("id")} />
           </div>
           <div className="password">
-            <input type="text" value={this.state.Userpassword} onChange={handlePasswordChange} id="Userpassword" placeholder={t("password")} />
+            <input type="password" value={this.state.Userpassword} onChange={handlePasswordChange} id="Userpassword" placeholder={t("password")} />
           </div>
           <div className="create-button" onClick={onClickLogin}>
             {t("login")}
@@ -113,4 +131,5 @@ class Home extends Component {
   }
 
 }
-export default withTranslation()(Home);;
+const ReduxHome = connect(null, mapDispatchToProps)(Home)
+export default withTranslation()(ReduxHome);;

@@ -17,7 +17,7 @@ import Box from '@material-ui/core/Box';
 class PersonalSetting extends Component {
 
     state = { flag: -2,
- name: localStorage.username, x: localStorage.xcoor, code: localStorage.usercode,
+ name: localStorage.username.replace(/\"/g,''), x: localStorage.xcoor, code: localStorage.usercode,
         y: localStorage.ycoor
     };
 
@@ -27,6 +27,27 @@ class PersonalSetting extends Component {
     handleSimpleStateChange = (stateInstance, e) => {
 
         this.setState({ [stateInstance]: e.target.value });
+    }
+
+    onModifyUser = async text => {
+        try {
+            const response = await Http.patch('userresponse/', qs.stringify({
+                'mode': 'USER_management', 'mode_type': 'info',
+                'code': this.state.code, 'name': this.state.name
+            })
+            );
+            if (response.status === 201) {
+                localStorage.username = JSON.stringify(this.state.name)
+                alert(this.props.t("notice.ChangeSuccess"))
+            } else {
+                console.log(response)
+            }
+
+        } catch (error) {
+            alert(this.props.t("notice.ServerNotConnect"))
+
+            console.log(error)
+        }
     }
 
 

@@ -7,6 +7,7 @@
   "password": "Password",
   "okay": "okay",
   "cancel": "cancel",
+  "member.delete": "delete",
   "ruinapply": "Ruin Apply",
   "result": "result",
   "ingameNickName": "Ingame NickName",
@@ -52,7 +53,7 @@
   "setbuff.Allaltarstarttime": "altar start time(UTC)",
   "setbuff.Allliston": "see Alliance list",
   "setbuff.Alllistoff": "Close Alliance list",
-  "setbuff.ModifyAllon": "Modify Alliance info",
+  "setbuff.ModifyAllon": "Modify",
   "setbuff.ModifyAlloff": "cancel",
   "setbuff.Alldelete": "delete",
   "setbuff.Allmodify": "modify",
@@ -77,5 +78,11 @@
   "notice.UnknownProb": "unknown problem",
   "notice.ServerNotConnected": "server not connected redirect to home",
   "notice.ServerNotConnect": "server not connected retry please",
-  "notice.ServerNotExisting": "server not existing"
+  "notice.ServerNotExisting": "server not existing",
+
+
+  
+  "allianceList":"Alliance List",
+  "allianceList_none":"There is no information for alliance.",
+  "findmember.info":"Please use ctrl + F to find a specific member"
 }

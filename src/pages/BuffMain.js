@@ -13,6 +13,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import * as actions from '../actions';
+import {connect,useSelector} from 'react-redux';
+
+
 
 class TabPanel extends Component {
     render() {
@@ -297,6 +301,7 @@ class BuffMain extends Component {
         };
     }
     render() {
+        console.log(this.props.state.data)
         const { t } = this.props;
         const { handleBuffChange, handleTimeClick, handleApplyclick, handleSimpleStateChange, handleKingdomChange } = this;
         let bgColor = this.state.color_black ? this.props.color : this.props.color2
@@ -468,4 +473,8 @@ class BuffMain extends Component {
     }
 }
 
-export default withTranslation()(BuffMain);;
+const mapStateToProps = state => ({
+    state: state
+})
+
+export default withTranslation()(connect(mapStateToProps)(BuffMain));;

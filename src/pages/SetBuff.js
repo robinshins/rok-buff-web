@@ -9,7 +9,7 @@ import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
 import BuffResult from './BuffResult'
 
-class Home extends Component {
+class SetBuff extends Component {
 
   state = {
     modifyAlliance: true, showBuff: true,
@@ -204,6 +204,8 @@ class Home extends Component {
       this.setState({ [stateInstance]: e.target.value });
     }
   }
+
+
   handleBuffType = (event, newValue) => {
     if (this.state.buffType === newValue) {
       this.setState({ buffType: 0 })
@@ -319,7 +321,7 @@ class Home extends Component {
           {this.state.flag === 2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("error.wrongid")}</p>}
         </section>
         <div className="title2">
-          {t("setbuff.manageTitle")}
+          {/* {t("setbuff.manageTitle")} */}
           {/* <settingtype>
             <button onClick={() => this.setState({ showBuff: !this.state.showBuff })}>
               {this.state.showBuff ? t("setbuff.liston") : t("setbuff.listoff")}
@@ -364,7 +366,7 @@ class Home extends Component {
           } */}
         </div>
 
-        <div className="title2">
+        {/* <div className="title2">
           {t("setbuff.AllsettingTitle")}
           <settingtype>
             <button onClick={() => this.setState({ makeAlliance: !this.state.makeAlliance })}>
@@ -377,18 +379,17 @@ class Home extends Component {
         </div>
         <div>
           {this.state.makeAlliance === false && (
-
             alliancedata([onClickMakeAlliance], "make", ["연맹이름", 0, false, '', '']))}
         </div>
         <div>
           {this.state.showAlliance === false && (
             divItems
           )}
-        </div>
+        </div> */}
       </main >
 
     );
   }
 
 }
-export default withTranslation()(Home);;
+export default withTranslation()(SetBuff);;

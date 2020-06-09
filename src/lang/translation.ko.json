@@ -6,6 +6,7 @@
   "password": "비밀번호",
   "okay": "확인",
   "cancel": "취소",
+  "member.delete": "회원삭제",
   "ruinapply": "폐허 신청",
   "result": "결과",
   "ingameNickName": "인게임 닉네임",
@@ -51,8 +52,8 @@
   "setbuff.Allaltarstarttime": "제단 시간(UTC기준)",
   "setbuff.Allliston": "연맹 목록 보기",
   "setbuff.Alllistoff": "연맹 목록 가리기",
-  "setbuff.ModifyAllon": "연맹 정보 수정하기",
-  "setbuff.ModifyAlloff": "취소",
+  "setbuff.ModifyAllon": "수정",
+  "setbuff.ModifyAlloff": "닫기",
   "setbuff.Alldelete": "삭제",
   "setbuff.Allmodify": "수정",
   "setbuff.Allmake": "생성",
@@ -75,5 +76,9 @@
   "notice.UnknownProb": "알수 없는 문제가 발생하였습니다.",
   "notice.ServerNotConnected": "서버와의 통신에 실패하였습니다. 처음으로 돌아갑니다",
   "notice.ServerNotConnect": "서버와의 통신에 실패하였습니다. 재시도 해주세요",
-  "notice.ServerNotExisting": "존재하지 않는 서버입니다"
+  "notice.ServerNotExisting": "존재하지 않는 서버입니다",
+
+  "allianceList":"연맹 목록",
+  "allianceList_none":"등록된 연맹이 없습니다",
+  "findmember.info":"ctrl + F 를 통해 특정 회원을 찾아주세요. 자체 검색 기능을 곧 업데이트 하겠습니다."
 }

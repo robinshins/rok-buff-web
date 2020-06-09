@@ -6,3 +6,5 @@ export { default as SetBuff } from './SetBuff';
 export { default as BuffResult } from './BuffResult';
 export { default as RuinRegister } from './RuinRegister';
 export { default as PersonalSetting } from './PersonalSetting';
+export { default as AllianceSetting } from './AllianceSetting';
+export { default as UserManagement } from './UserManagement';

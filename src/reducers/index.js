@@ -1,9 +1,9 @@
 // reducers/index.js
-import { ADD, SUB,LANG } from '../actions'
+import { ADD, SUB,LANG,SERVER_CODE } from '../actions'
 import { combineReducers } from 'redux'
-
+import auth from './auth'
 const initState = {
-    number: 0, lang:".."
+    number: 0, lang:"..",server_code:0
 };
 
 const data = (state = initState, action) => {
@@ -22,14 +22,19 @@ const data = (state = initState, action) => {
             return Object.assign({}, state, {
                 lang: action.e
             });
-
+        case SERVER_CODE:
+            initState.server_code = action.server_code
+            console.log(action)
+            return Object.assign({}, state, {
+                server_code: action.server_code
+            });
         default:
             return state;
     }
 };
 
 const App = combineReducers({
-    data
+    data,auth
 });
 
 export default App;

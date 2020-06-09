@@ -83,15 +83,15 @@ class Header extends Component {
                 </div>
               
                 {location.pathname!=="/"&& sessionStorage.is_admin!==JSON.stringify('1')&&<div className="menu">
-                    <MenuItem to={'/buffmain'}>TITLE</MenuItem>
-                    <MenuItem to={'/ruinregister'}>RUIN/ALTAR REGISTER</MenuItem>
-                    <MenuItem to={'/personalsetting'}>PERSONAL INFO</MenuItem>
+                    <MenuItem to={'/buffmain/'}>TITLE</MenuItem>
+                    <MenuItem to={'/ruinregister/'}>RUIN/ALTAR REGISTER</MenuItem>
+                    <MenuItem to={'/personalsetting/'}>PERSONAL INFO</MenuItem>
                 </div>}
 
                 {location.pathname!=="/"&& sessionStorage.is_admin===JSON.stringify('1')&&<div className="menu">
-                    <MenuItem to={'/buffmain'}>TITLE</MenuItem>
-                    <MenuItem to={'/ruinregister'}>Alliance Setting</MenuItem>
-                    <MenuItem to={'/personalsetting'}>PERSONAL INFO</MenuItem>
+                    <MenuItem to={'/setbuff/'}>TITLE Setting</MenuItem>
+                    <MenuItem to={'/alliancesetting/'}>Alliance Setting</MenuItem>
+                    <MenuItem to={'/usermanagement/'}>User Management</MenuItem>
                 </div>}
 
                 <ReactFlagsSelect
