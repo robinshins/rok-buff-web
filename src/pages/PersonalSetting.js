@@ -15,7 +15,7 @@ class PersonalSetting extends Component {
     state = {
         flag: -2,
         name: localStorage.username.replace(/\"/g, ''), x: localStorage.xcoor, code: localStorage.usercode,
-        y: localStorage.ycoor, password: localStorage.password.replace(/\"/g, '')
+        y: localStorage.ycoor, password: sessionStorage.password.replace(/\"/g, '')
     };
 
     handleChange = (event, newValue) => {

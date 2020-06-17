@@ -24,40 +24,37 @@ class App extends Component {
 
   state = {authenticate : sessionStorage.islogin, loading:false}
 
-//   signIn = async ( email, password )=> {
-//     try {
-//       const response = await axios.patch('loginresponse/', qs.stringify({
-//         'mode': "login", 'password':password , 'account': email
-//       })
-//       );
-//       console.log(response.data)
-//       if (response.status === 200) {
-//         if (response.data.info.account.is_serveradmin === 1) {
-//             this.setState({authenticate : 2}) 
-//         }else{
-//           this.setState({authenticate : 1}) 
-//         }
+  signIn = async ( email, password )=> {
+    try {
+      const response = await axios.patch('loginresponse/', qs.stringify({
+        'mode': "login", 'password':password , 'account': email
+      })
+      );
+      console.log(response.data)
+      if (response.status === 200) {
+        localStorage.xcoor = JSON.stringify(response.data.info.account.x)
+        localStorage.ycoor = JSON.stringify(response.data.info.account.y)
+      } else {
+       
+      }
 
-//       } else {
-//         this.setState({authenticate : -1}) 
-//       }
-
-//     } catch (error) {
-//       console.log(error.response)
-//       this.setState({authenticate : -1})
-//     }
+    } catch (error) {
+      console.log(error.response)
+    
+    }
   
-// }
+}
 
-// componentDidMount(){
-//   var self = this;
-//   setTimeout(() => {
-//     self.setState({loading: false}); }, 0);
-//   // if(localStorage.id !== undefined && localStorage.password !==undefined){
-//   // this.signIn(localStorage.id,localStorage.password)
-//   // }
-//   //console.log(this.state.authenticate)
-// }
+componentDidMount(){
+  // var self = this;
+  // setTimeout(() => {
+  //   self.setState({loading: false}); }, 0);
+  // if(sessionStorage.id !== undefined && sessionStorage.password !==undefined){
+  //   console.log(sessionStorage.id.replace(/\"/g, ''))
+  // this.signIn(sessionStorage.id.replace(/\"/g, ''),sessionStorage.password.replace(/\"/g, ''))
+  // }
+  //console.log(this.state.authenticate)
+}
 
 // componentWillMount(){
 //   if(localStorage.id !== undefined && localStorage.password !==undefined){

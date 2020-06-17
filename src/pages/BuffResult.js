@@ -7,8 +7,8 @@ class BuffResult extends Component {
   //this component requires:
   //ttype: title_type
   state = {
-    items: [], flag: '', is_admin: '', x: this.props.location.state.xcoor,
-    y: this.props.location.state.ycoor, lostkingdom: this.props.location.state.lostkingdom,
+    items: [], flag: '', is_admin: '', x: localStorage.xcoor,
+    y: localStorage.ycoor, lostkingdom: this.props.location.state.lostkingdom,
     titleType: this.props.location.state.titleType, name: this.props.location.state.name.replace(/\"/g,'')
   };
 
@@ -18,8 +18,34 @@ class BuffResult extends Component {
   componentDidMount() {
     console.log(this.props)
     this.getRuinResult();
+      if(sessionStorage.id !== undefined && sessionStorage.password !==undefined){
+    console.log(sessionStorage.id.replace(/\"/g, ''))
+  this.signIn(sessionStorage.id.replace(/\"/g, ''),sessionStorage.password.replace(/\"/g, ''))
+  }
     console.log(this.state) 
   }
+
+  
+  signIn = async ( email, password )=> {
+    try {
+      const response = await axios.patch('loginresponse/', qs.stringify({
+        'mode': "login", 'password':password , 'account': email
+      })
+      );
+      console.log(response.data)
+      if (response.status === 200) {
+        localStorage.xcoor = JSON.stringify(response.data.info.account.x)
+        localStorage.ycoor = JSON.stringify(response.data.info.account.y)
+      } else {
+       
+      }
+
+    } catch (error) {
+      console.log(error.response)
+    
+    }
+  
+}
 
 
   getRuinResult = async text => {
@@ -66,7 +92,7 @@ class BuffResult extends Component {
     let divItems = this.state.items.map((item, index) => {
       console.log(item.name)
       console.log(this.state.name)
-      if(item.name === this.state.name){this.myrank = index +1; console.log("asddsadsadasdasdasdasd")}
+      if(item.name === this.state.name){this.myrank = index +1}
       return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name} <span>{item.server}</span></div>
     });
 

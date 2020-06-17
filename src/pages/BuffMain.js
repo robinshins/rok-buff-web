@@ -45,7 +45,33 @@ class BuffMain extends Component {
     componentDidMount() {
         this.getWaitingList();
         this.getServerStat();
+          if(sessionStorage.id !== undefined && sessionStorage.password !==undefined){
+    console.log(sessionStorage.id.replace(/\"/g, ''))
+  this.signIn(sessionStorage.id.replace(/\"/g, ''),sessionStorage.password.replace(/\"/g, ''))
+  }
     }
+
+    signIn = async ( email, password )=> {
+        try {
+          const response = await axios.patch('loginresponse/', qs.stringify({
+            'mode': "login", 'password':password , 'account': email
+          })
+          );
+          console.log(response.data)
+          if (response.status === 200) {
+            localStorage.xcoor = JSON.stringify(response.data.info.account.x)
+            localStorage.ycoor = JSON.stringify(response.data.info.account.y)
+          } else {
+           
+          }
+    
+        } catch (error) {
+          console.log(error.response)
+        
+        }
+      
+    }
+    
 
     getServerStat = async text => {
         try {
@@ -191,7 +217,7 @@ class BuffMain extends Component {
                     this.props.history.push({ state: this.state })
                     this.setState({ redirect: 1 })
                 } else if (response.status === 304) {
-                    this.props.history.push({ state: this.state })
+                   // this.props.history.push({ state: this.state })
                     this.setState({ redirect: 1 })
                 } else if (response.status === 406) {
                     alert(this.props.t("notice.nocoordinate"))

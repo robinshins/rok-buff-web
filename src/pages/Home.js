@@ -54,7 +54,8 @@ class Home extends Component {
         }
         localStorage.xcoor = JSON.stringify(response.data.info.account.x)
         localStorage.ycoor = JSON.stringify(response.data.info.account.y)
-        localStorage.password = JSON.stringify(this.state.Userpassword)
+        sessionStorage.id = JSON.stringify(this.state.Userid)
+        sessionStorage.password = JSON.stringify(this.state.Userpassword)
         localStorage.username = JSON.stringify(response.data.info.account.user_ingameID.replace(/['"]+/g,''))
         localStorage.usercode = JSON.stringify(response.data.info.account.user_ingamecode)
         //localStorage.is_admin = JSON.stringify('1')
