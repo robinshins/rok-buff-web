@@ -1,7 +1,7 @@
 .logo {
     height: 3.5rem;
     background-color: #445175;
-    width: 100vw;
+    width: 100%;
     line-height: 3.5rem;
     color: white;
     font-size: 1.5rem;
@@ -14,6 +14,19 @@
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
+}
+
+.logo logout {
+  position:absolute;
+  top: 5px;
+  right: 10px;
+  line-height: 1.5rem;
+  margin-right: 4px;
+  cursor: pointer;
+  color: rgb(224, 213, 213);
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .dropbtn {
@@ -62,7 +75,7 @@
     color: white;
     font-size: 0.7rem;
     line-height: 3.5rem;
-    width: 33.3333%;
+    width: 33.3333%;  
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s;

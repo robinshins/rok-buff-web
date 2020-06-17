@@ -7,33 +7,104 @@ import i18n from "i18next";
 import 'react-app-polyfill/ie9' //ie9~
 import PrivateRoute from "./components/PrivateRouters";
 import { Provider } from 'react-redux'
+import AuthRoute from './components/AuthRoute'
+import AdminRoute from './components/AdminRoute'
+import axios from './api';
+import qs from 'qs';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import Loader from 'react-loader-spinner'
+
+
+const admin = 2;
+const auth = 1;
+const fail = -1;
 
 
 class App extends Component {
 
+  state = {authenticate : sessionStorage.islogin, loading:false}
+
+//   signIn = async ( email, password )=> {
+//     try {
+//       const response = await axios.patch('loginresponse/', qs.stringify({
+//         'mode': "login", 'password':password , 'account': email
+//       })
+//       );
+//       console.log(response.data)
+//       if (response.status === 200) {
+//         if (response.data.info.account.is_serveradmin === 1) {
+//             this.setState({authenticate : 2}) 
+//         }else{
+//           this.setState({authenticate : 1}) 
+//         }
+
+//       } else {
+//         this.setState({authenticate : -1}) 
+//       }
+
+//     } catch (error) {
+//       console.log(error.response)
+//       this.setState({authenticate : -1})
+//     }
+  
+// }
+
+// componentDidMount(){
+//   var self = this;
+//   setTimeout(() => {
+//     self.setState({loading: false}); }, 0);
+//   // if(localStorage.id !== undefined && localStorage.password !==undefined){
+//   // this.signIn(localStorage.id,localStorage.password)
+//   // }
+//   //console.log(this.state.authenticate)
+// }
+
+// componentWillMount(){
+//   if(localStorage.id !== undefined && localStorage.password !==undefined){
+//     this.signIn(localStorage.id,localStorage.password)
+//     }
+// }
+
+
 
 
   render() {
+    console.log(this.state.authenticate)
+    console.log(sessionStorage.islogin)
+    if(!this.state.loading){
     return (
       <Router>
-        <Header />
+        <Header></Header>
         {this.props.children}
         <Route exact path='/' component={Home} />
         <Switch>
           <Route path='/register/' component={Register} />
-          <Route path='/buffmain/' component={BuffMain} />
-          <Route path='/ruinresult/' component={RuinResult} />
-          <Route path='/setbuff/' component={SetBuff} />
-          <Route path='/buffresult/' component={BuffResult} />
-          <Route path='/ruinregister/' component={RuinRegister} />
-          <Route path='/personalsetting/' component={PersonalSetting} />
-          <Route path='/alliancesetting/' component={AllianceSetting} />
-          <Route path='/usermanagement/' component={UserManagement} />
-        </Switch>
+          <AuthRoute  authenticated = {sessionStorage.islogin} path='/buffmain/' component={BuffMain} />
+          <Route path='/ruinresult/:ruintimecode' component={RuinResult} />
+          <AdminRoute  authenticated = {sessionStorage.islogin} path='/setbuff/' component={SetBuff} />
+          <AuthRoute authenticated = {sessionStorage.islogin}  path='/buffresult/' component={BuffResult} />
+          <AuthRoute  authenticated = {sessionStorage.islogin} path='/ruinregister/' component={RuinRegister} />
+          <AuthRoute authenticated = {sessionStorage.islogin} path='/personalsetting/' component={PersonalSetting} />
+          <AdminRoute  authenticated = {sessionStorage.islogin} path='/alliancesetting/' component={AllianceSetting} />
+          <AdminRoute authenticated = {sessionStorage.islogin} path='/usermanagement/' component={UserManagement} />
+        </Switch>   
       </Router>
     )
-
+  }else{
+    return(
+      <div style={{textAlign:"center"}}>
+      <Loader
+      type="ThreeDots"
+      color="#00BFFF"
+      height={100}
+      width={100}
+      timeout={500} //3 secs
+   />
+   </div>
+    )
   }
+}
+
 }
 
 export default App;

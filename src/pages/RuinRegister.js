@@ -86,6 +86,7 @@ class RuinRegister extends Component {
                     console.log(response)
                     if (response.status === 201) {
                         alert(this.props.t("notice.applysuccess"))
+                        window.location.href = `/ruinresult/${selected.id}`
                     } else {
                         alert(this.props.t("notice.applyfail"))
                     }
@@ -95,8 +96,8 @@ class RuinRegister extends Component {
                 } catch (error) {
                     if (error.response.status === 406) {
                         alert(this.props.t("notice.applyfull"))
+                        window.location.href = `/ruinresult/${selected.id}`
                         this.props.history.push({ state: this.state })
-
                         this.setState({ redirect: 2, ruin_selected: selected.id })
                     }
                     this.props.history.push({ state: this.state })
@@ -166,28 +167,28 @@ class RuinRegister extends Component {
 
 
     render() {
+        const { t } = this.props;
         const {handleApplyclick,handleTimeClick}=this;
         let divItems = this.state.ruinitems.map((item, index) => {
             if (item.checked === true && item.ruin_type == "ruin") {
                 return <div className="selectBox" key={item.id} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}
-                    onClick={() => handleTimeClick(item.id)}>{"UTC : " + item.time}<br />{"Korea time : " + item.koreaTime}{"type : " + t("ruin")}
+                    onClick={() => handleTimeClick(item.id)}>{"UTC : " + item.time}<br />{"Korea time : " + item.koreaTime}<br/> {"type : " + t("ruin")}{ " / " + t("alliance") + " : "+item.alliance_name}
                 </div>
             } else if (item.checked === true && item.ruin_type == "altar") {
                 return <div className="selectBox" key={item.id} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}
-                    onClick={() => handleTimeClick(item.id)}>{"UTC : " + item.time}<br />{"Korea time : " + item.koreaTime}{"type : " + t("altar")}
+                    onClick={() => handleTimeClick(item.id)}>{"UTC : " + item.time}<br />{"Korea time : " + item.koreaTime}<br/> {"type : " + t("ruin")}{ " / " + t("alliance") + " : "+item.alliance_name}
                 </div>
             } else if (item.checked === false && item.ruin_type == "ruin") {
                 return <div className="selectBox" key={item.id} onClick={() => handleTimeClick(item.id)
-                }> {"UTC : " + item.time} < br /> {"Korea time : " + item.koreaTime} {"type : " + t("ruin")}
+                }> {"UTC : " + item.time} < br /> {"Korea time : " + item.koreaTime}<br/> {"type : " + t("ruin")}{ " / " + t("alliance") + " : "+item.alliance_name}
                 </div >
             }
             else if (item.checked === false && item.ruin_type == "altar") {
                 return <div className="selectBox" key={item.id} onClick={() => handleTimeClick(item.id)
-                }> {"UTC : " + item.time} < br /> {"Korea time : " + item.koreaTime} {"type : " + t("altar")}
+                }> {"UTC : " + item.time} < br /> {"Korea time : " + item.koreaTime} <br/> {"type : " + t("ruin")}{ " / " + t("alliance") + " : "+item.alliance_name}
                 </div >
             }
         });
-        const { t } = this.props;
         return (
             <main className="Home">
             <div className="title2">

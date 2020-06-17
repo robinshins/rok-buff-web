@@ -9,15 +9,15 @@
   "member.delete": "회원삭제",
   "ruinapply": "폐허 신청",
   "result": "결과",
-  "ingameNickName": "인게임 닉네임",
+  "ingameNickName": "인게임 닉네임(꼭 정확하게 입력해주세요)",
   "ingameCode": "유저고유 번호 (게임 프로필 참고)",
   "serverNumber": "서버 번호",
   "error.existingID": "입력을 확인해 주시거나 다른아이디를 사용해 주세요",
   "error.serverExisting": "가입되지 않은 서버 입니다",
   "error.wrongid": "아이디나 비밀번호를 확인해주세요",
-  "apply.info": "5분 전까지 오지 않으면 다른분께 넘어갑니다",
+  "apply.info": "5분 전까지 오지 않으면 다른분께 넘어갑니다. (100번 이후부터는 예비입니다)",
   "buff": "칭호",
-  "ruin": "제단/폐허",
+  "ruin": "폐허",
   "settings": "설정",
   "buff.duke": "공작",
   "buff.scientist": "과학자",
@@ -62,7 +62,7 @@
   "notice.notitletype": "받을 칭호를 먼저 선택해주세요",
   "notice.alreadyregistered": "이미 신청하신 칭호입니다. 현재는 변경만 가능합니다. 추후 업데이트 예정입니다",
   "notice.applysuccess": "신청되었습니다",
-  "notice.applyfail": "신청되지 않았습니다ㅠ",
+  "notice.applyfail": "신청되지 않았습니다",
   "notice.applyfull": "이미 신청하셨거나 마감되었습니다",
   "notice.ChangeSuccess": "수정 성공",
   "notice.ChangeFail": "수정 실패",
@@ -80,5 +80,30 @@
 
   "allianceList":"연맹 목록",
   "allianceList_none":"등록된 연맹이 없습니다",
-  "findmember.info":"ctrl + F 를 통해 특정 회원을 찾아주세요. 자체 검색 기능을 곧 업데이트 하겠습니다."
+  "findmember.info":"ctrl + F 를 통해 특정 회원을 찾아주세요. 자체 검색 기능을 곧 업데이트 하겠습니다.",
+
+  "header.title":"칭호신청",
+  "header.ruin":"오시/폐허 신청",
+  "header.info":"개인정보 변경",
+
+  "header.titlesetting":"칭호 설정",
+  "header.alli":"연맹 설정",
+  "header.membermanage":"멤버 관리",
+  "altar":"재단",
+  "alliance":"연맹",
+
+  "server_status":"시스템 상태",
+  "server_status.sleep":"비활성화",
+  "server_status.running":"정상작동중",
+  "server_status.rebooting":"재부팅중",
+  "server_status.errorRebooting":"에러로 인한 재시작중",
+  "server_status.starting":"켜지는 중",
+
+  "setbuff.titlesetting" : "칭호 기본 설정",
+  "setbuff.waitinglist" : "칭호 대기열 관리",
+  "setbuff.deletedukelist" : "공작 대기열 초기화",
+  "setbuff.deletescilist" : "과학자 대기열 초기화",
+  "setbuff.deletearchlist" : "건축가 대기열 초기화"
+  
+
 }

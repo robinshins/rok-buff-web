@@ -23,13 +23,14 @@ class UserManagement extends Component {
      // console.log(code);
     console.log("sadasd")
     try {
-        const response = await Http.delete('userresponse/', {data:{
+        const response = await Http.delete('userresponse/', {data:qs.stringify({
             user_code: user_code
-        }}
+        })}
         );
         console.log(response)
         if (response.status === 200) {
             alert("delete success")
+            window.location.reload()
         } else if (response.status) {
         alert("delete fail")
           console.log(response)
@@ -57,7 +58,8 @@ class UserManagement extends Component {
         console.log(date.toString())
         const item = []
         for (var i = 0; i < response.data.info.length; i++) {
-          item.push({ name: response.data.info[i].user_ingameID, user_code:response.data.info[i].user_code})
+          item.push({ name: response.data.info[i].user_ingameID, user_code:response.data.info[i].user_code,
+             user_ingameCode:response.data.info[i].user_ingamecode})
         }
         this.setState({ items: item })
         console.log(this.state.items)
@@ -80,9 +82,12 @@ class UserManagement extends Component {
     } = this;
 
     let divItems = this.state.items.map((item, index) => {
-        return <div className="selectBox2" key={item.user_code}>{`(${index + 1}) ` + item.name} <button class="x-box"  onClick={()=>handleDeleteclick(item.user_code)}>
+        return <div className="selectBox2" key={item.user_code}>{`(${index + 1}) ` + item.name} 
+        <p className="usercode">({item.user_ingameCode})</p>
+         <button class="x-box"  onClick={()=>handleDeleteclick(item.user_code)}>
           {t("member.delete")}
-      </button></div>
+      </button>
+      </div>
  
 
     });

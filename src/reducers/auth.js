@@ -1,55 +1,33 @@
-	
-// src/reducers/auth.js
-import {
-    USER_LOADING,
-    USER_LOADED,
-    AUTH_ERROR,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL
-} from '../actions/types';
- 
-const initialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    isLoading: false,
-    user: null
-}
- 
-export default function(state = initialState, action) {
-    switch(action.type)    {
-        case USER_LOADING:
-            return {
-                ...state,
-                isLoading: true
+import React, { Fragment, Component } from 'react';
+import axios from '../api';
+import qs from 'qs';
+
+
+const admin = 2;
+const auth = 1;
+const fail = -1;
+
+export async function signIn({ email, password }) {
+      
+        try {
+          const response = await axios.patch('loginresponse/', qs.stringify({
+            'mode': "login", 'password':password , 'account': email
+          })
+          );
+          if (response.status === 200) {
+            if (response.data.info.account.is_serveradmin === 1) {
+                return admin
+            }else{
+             return auth;
             }
-        case USER_LOADED:
-            return {
-                ...state,
-                isAuthenticated: true,
-                isLoading: false,
-                user: action.payload
-            }
-        case LOGIN_SUCCESS:
-            localStorage.setItem("token", action.payload.token);
-            return {
-                ...state,
-                ...action.payload,
-                isAuthenticated: true,
-                isLoading: false
-            };
- 
-        case AUTH_ERROR:
-        case LOGIN_FAIL:
-            localStorage.removeItem("token");
-            return {
-                ...state,
-                token: null,
-                user: null,
-                isAuthenticated: false,
-                isLoading: false
-            };
-        default:
-            return state;
-    }
-}
- 
+
+          } else {
+              return fail;
+          }
+    
+        } catch (error) {
+            return fail;
+    
+        }
+      
+  }

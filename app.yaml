@@ -1,6 +1,6 @@
 runtime: python27
 api_version: 1
-service: bufftest
+service: default
 threadsafe: true
 handlers:
   - url: /static/js/(.*)

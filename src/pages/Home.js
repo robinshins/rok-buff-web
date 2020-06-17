@@ -13,6 +13,7 @@ import * as actions from '../actions';
 import {connect} from 'react-redux';
 
 
+
 const mapDispatchToProps = (dispatch) => ({
   set_ServerNumber: (e) => dispatch(actions.server_code(e))
 });
@@ -24,6 +25,13 @@ class Home extends Component {
   //   isAuthenticated : this.propTypes.bool
   // }
 
+  componentDidMount(){
+    if(sessionStorage.islogin==1){
+      window.location.href = '/buffmain'
+    }else if(sessionStorage.islogin==2){
+      window.location.href = '/setbuff'
+    }
+  }
 
 
 
@@ -34,38 +42,45 @@ class Home extends Component {
         'mode': "login", 'password': this.state.Userpassword, 'account': this.state.Userid
       })
       );
-      console.log(this.state.flag)
+      localStorage.id = this.state.Userid
+      //localStorage.password = this.state.Userpassword
+      console.log(this.response);
+      console.log(this.state.flag) 
       if (response.status === 200) {
-        sessionStorage.is_login = true;
+        sessionStorage.is_login = JSON.stringify('true');
         const info = {
           x: response.data.info.account.x, y: response.data.info.account.y,
           name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode, 
         }
         localStorage.xcoor = JSON.stringify(response.data.info.account.x)
         localStorage.ycoor = JSON.stringify(response.data.info.account.y)
-
+        localStorage.password = JSON.stringify(this.state.Userpassword)
         localStorage.username = JSON.stringify(response.data.info.account.user_ingameID.replace(/['"]+/g,''))
         localStorage.usercode = JSON.stringify(response.data.info.account.user_ingamecode)
         //localStorage.is_admin = JSON.stringify('1')
         this.setState({ userinfo: info })
         console.log(this.state.userinfo)
-        console.log(response.data.info)
+        console.log(response.data)
         if (response.data.info.account.is_serveradmin === 1) {
           this.setState({ is_admin: 1 })
+          sessionStorage.islogin = 2;
           sessionStorage.is_admin = JSON.stringify('1')
         }else{
+          sessionStorage.islogin = 1;
           sessionStorage.is_admin = JSON.stringify('0')
         }
         this.setState({ redirect: true, server_code:response.data.info.server_code});
-        this.props.set_ServerNumber(response.data.info.account.server_code);
+        //this.props.set_ServerNumber(response.data.info.account.server_code);
         sessionStorage.server_code =JSON.stringify(response.data.info.account.server_code);
 
         //window.location.href = '/buffmain'
       } else {
+        sessionStorage.islogin = -1;
 
       }
 
     } catch (error) {
+      sessionStorage.islogin = -1;
       console.log(error)
       this.setState({ flag: 2 })
       //alert("아이디와 비밀번호를 확인해주세요")
@@ -88,14 +103,27 @@ class Home extends Component {
 
   }
 
+  appKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.onClickLogin();
+    }
+  }
+
 
   render() {
     const { t } = this.props;
-    if (this.state.redirect && this.state.is_admin !== 1) {
 
+    // if(sessionStorage.islogin ==1){
+    //   return <Redirect to={{
+    //     pathname: "/buffmain/",
+    //   }} />;
+    // }else if (sessionStorage.islogin ==2){
+    //   return <Redirect push to={`/setbuff/`}/>
+    // }
+    
+    if (this.state.redirect && this.state.is_admin !== 1) {
       return <Redirect to={{
-        pathname: "/buffmain",
-        state: { name: this.state.userinfo.name, xcoor: this.state.userinfo.x, ycoor: this.state.userinfo.y, code: this.state.userinfo.code }
+        pathname: "/buffmain/",
       }} />;
     } else if (this.state.redirect && this.state.is_admin === 1) {
       return <Redirect push to={`/setbuff/`} />;
@@ -106,7 +134,7 @@ class Home extends Component {
     } = this;
 
     return (
-      <main className="Home2">
+      <main className="testhome">
         <div className="title2">
           {t("login")}
         </div>
@@ -115,7 +143,7 @@ class Home extends Component {
             <input id="Username" value={this.state.Userid} onChange={handleEmailChange} placeholder={t("id")} />
           </div>
           <div className="password">
-            <input type="password" value={this.state.Userpassword} onChange={handlePasswordChange} id="Userpassword" placeholder={t("password")} />
+            <input type="password" value={this.state.Userpassword} onChange={handlePasswordChange} id="Userpassword" placeholder={t("password")} onKeyPress={this.appKeyPress} />
           </div>
           <div className="create-button" onClick={onClickLogin}>
             {t("login")}
@@ -125,8 +153,16 @@ class Home extends Component {
           </div>
           {this.state.flag === 2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("error.wrongid")}</p>}
         </section>
+        <div textAlign="center" verticalAlign="middle">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" textAlign="center">
+                <input type="hidden" name="cmd" value="_s-xclick" />
+                <input type="hidden" name="hosted_button_id" value="G3P53UTQE4P46" />
+                <input type="image" src="https://www.k-rock.eu/cms/wp-content/uploads/Donate_Button.jpg"  style={{verticalAlign:"middle"}} verticalAlign="middle" textAlign = "center" width="100" height="60" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"  />
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" style={{verticalAlign:"middle"}} verticalAlign="middle"/>
+            </form>
+            </div>
+      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
       </main>
-
     );
   }
 

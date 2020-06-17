@@ -16,9 +16,10 @@
   "error.existingID": "check your input or use other ID",
   "error.serverExisting": "not existing server",
   "error.wrongid": "please check your id or password",
-  "apply.info": "If you don't come before 5 minutes, other people will take the chance",
+  "apply.info": "If you don't come before 5 minutes, other people will take the chance(above 100 is preliminary)",
   "buff": "title",
-  "ruin": "ruin/altar register",
+  "ruin": "ruin",
+  "altar":"altar",
   "settings": "settings",
   "buff.duke": "duke",
   "buff.scientist": "scientist",
@@ -84,5 +85,26 @@
   
   "allianceList":"Alliance List",
   "allianceList_none":"There is no information for alliance.",
-  "findmember.info":"Please use ctrl + F to find a specific member"
+  "findmember.info":"Please use ctrl + F to find a specific member",
+
+  "header.title":"TITLE",
+  "header.ruin":"OSY/RUIN",
+  "header.info":"PERSONAL INFO",
+  "header.titlesetting":"TITLE SET",
+  "header.alli":"ALLIANCE SET",
+  "header.membermanage":"MEMBER SET",
+  "alliance":"allicance",
+
+  "server_status":"system status",
+  "server_status.sleep":"sleep",
+  "server_status.running":"running",
+  "server_status.rebooting":"rebooting",
+  "server_status.errorRebooting":"error rebooting",
+  "server_status.starting":"app starting",
+
+  "setbuff.titlesetting" : "title setting",
+  "setbuff.waitinglist" : "title waiting list",
+  "setbuff.deletedukelist" : "Reset duke wating list",
+  "setbuff.deletescilist" : "Reset scientist wating list",
+  "setbuff.deletearchlist" : "Rest architecturre wating list"
 }

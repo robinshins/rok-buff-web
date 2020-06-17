@@ -4,7 +4,7 @@ import 'react-app-polyfill/stable';
 import 'core-js/stable'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+//import './index.css';
 import App from './App';
 import './lang/i18n';
 import * as serviceWorker from './serviceWorker';

@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-
+import detector from "i18next-browser-languagedetector";
 import translationEn from './translation.en';
 import translationKo from './translation.ko';
 
@@ -14,6 +14,7 @@ const resources = {
 };
 
 i18n.use(initReactI18next) // passes i18n down to react-i18next
+    .use(detector)
     .init({
         resources,
         lng: "en",

@@ -14,7 +14,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import * as actions from '../actions';
-import {connect,useSelector} from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 
 
@@ -38,63 +38,63 @@ class BuffMain extends Component {
         ruinitems: [], flag: -2,
         tabno: 0, lasttime: NaN, name: localStorage.username, x: localStorage.xcoor, code: localStorage.usercode,
         y: localStorage.ycoor, lostkingdom: false, redirect: 0, ruin_selected: -1,
-        backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null
+        backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null, register_check:-1,
+        notice:"",sever_status:-1
     };
 
     componentDidMount() {
         this.getWaitingList();
-        this.getRuintime();
+        this.getServerStat();
     }
 
-    getRuintime = async text => {
+    getServerStat = async text => {
         try {
-            const response = await Http.get('userresponse/', {
-                params: {
-                    mode: 'RUIN_time'
-                }
+          const response = await Http.get('userresponse/', {
+            params: {
+              mode: 'SERVER_info'
             }
-            );
+          }
+          );
+    
+          if (response.status === 201) {
+    
             console.log(response)
-            if (response.status === 201) {
-
-                if (response.data.info.length === 0) {
-                    this.setState({ flag: -1 })
-                } else {
-                    const singleItem = response.data.info;
-                    console.log(singleItem)
-                    const items = []
-                    singleItem.forEach(element => {
-                        let date = new Date(element.ruintime)
-                        //date.setHours(date.getHours()+9)
-                        console.log(date.toString())
-                        //const newitems = [...this.state.items]
-                        if (element.ruin_type === 1) {
-                            var ruin_type = 'ruin'
-                        }
-                        else {
-                            var ruin_type = 'altar'
-                        }
-                        items.push({
-                            id: element.ruintime_code,
-                            time: element.ruintime.substring(0, 10) + " " + element.ruintime.substring(11, 19),
-                            checked: false,
-                            koreaTime: date.toString().substring(15, 25),
-                            ruin_type: ruin_type,
-                            alliance_name: element.alliance_name
-                        })
-                    }
-                    )
-                    this.setState({ ruinitems: items })
-                }
-            } else if (response.status) {
-                this.setState({ flag: -3 })
+            if (response.data.info.length === 0) {
+              this.setState({ flag: -1 })
+            } else {
+              const singleItem = response.data.info
+              console.log(response)
+              console.log(singleItem)
+              this.setState({
+                  sever_status:singleItem.status_type
+              })
+              if (singleItem.register_check === 0) {
+                this.setState({
+                  register_check: true
+                })
+              } else if (singleItem.register_check === 1) {
+                this.setState({
+                  register_check: false
+                })
+              }
+              console.log(this.state)
+    
             }
+          } else if (response.status === 404) {
+            alert(this.props.t("notice.ServerNotExisting"))
+            console.log(response)
+          }
+        
         } catch (error) {
             console.log(error)
-
-            this.setState({ flag: 2 })
+          alert(this.props.t("notice.ServerNotConnected"))
+    
+          //TODO
+          // window.location.href = '/'
         }
-    }
+    
+      }
+
     getWaitingList = async text => {
         try {
             const response = await axios.get('qresponse/', {
@@ -105,8 +105,8 @@ class BuffMain extends Component {
             );
             if (response.status === 200) {
                 this.setState({ duke_wait: response.data.info[0][0] })
-                this.setState({ scientist_wait: response.data.info[2][0] })
-                this.setState({ architecture_wait: response.data.info[1][0] })
+                this.setState({ scientist_wait: response.data.info[1][0] })
+                this.setState({ architecture_wait: response.data.info[2][0] })
                 let checktime = NaN
                 if (Date(response.data.info[0][2]) < Date(response.data.info[1][2])) {
                     if (Date(response.data.info[1][2]) < Date(response.data.info[2][2])) {
@@ -136,48 +136,7 @@ class BuffMain extends Component {
             console.log(error)
         }
     }
-    onModifyUser = async text => {
-        try {
-            const response = await Http.patch('userresponse/', qs.stringify({
-                'mode': 'USER_management', 'mode_type': 'info',
-                'code': this.state.code, 'name': this.state.name
-            })
-            );
-            if (response.status === 201) {
-                alert(this.props.t("notice.ChangeSuccess"))
-            } else {
-                console.log(response)
-            }
-
-        } catch (error) {
-            alert(this.props.t("notice.ServerNotConnect"))
-
-            console.log(error)
-        }
-    }
-    onModifyUserPassword = async text => {
-        try {
-            const response = await Http.patch('userresponse/', qs.stringify({
-                'mode': 'USER_management', 'mode_type': 'password',
-                'newPassword': this.state.password
-            })
-            );
-            if (response.status === 201) {
-                alert(this.props.t("notice.ChangeSuccess"))
-            } else if (response.status === 406) {
-                alert(this.props.t("notice.checkpassword"))
-            }
-            else {
-                console.log(response)
-            }
-
-        } catch (error) {
-            alert(this.props.t("notice.ServerNotConnect"))
-
-            console.log(error)
-        }
-    }
-
+   
     handleApplyclick = async text => {
         if (this.state.flag === -1 || this.state.ruin_selected === -1) {
             console.log(this.state)
@@ -218,6 +177,7 @@ class BuffMain extends Component {
             }
         }
     }
+
     handleSubmit = async text => {
         console.log(this.state);
         if (this.state.titleType !== -1) {
@@ -301,7 +261,7 @@ class BuffMain extends Component {
         };
     }
     render() {
-        console.log(this.props.state.data)
+        //console.log(this.props.state.data)
         const { t } = this.props;
         const { handleBuffChange, handleTimeClick, handleApplyclick, handleSimpleStateChange, handleKingdomChange } = this;
         let bgColor = this.state.color_black ? this.props.color : this.props.color2
@@ -338,31 +298,31 @@ class BuffMain extends Component {
                     }
                 }} />;
             }
-            else if (this.state.redirect === 2) {
-                return <Redirect to={{
-                    pathname: "/ruinresult",
-                    state: {
-                        ruin_selected: this.state.ruin_selected
-
-                    }
-                }} />;
-            }
         }
         return (
             <main className="BuffMain">
                 <div>
-                    {/* <AppBar position="static">
-                        <Tabs value={this.state.tabno} onChange={this.handleChange} aria-label="simple tabs example" >
-                            <Tab label={t("buff")} {...this.a11yProps(0)} />
-                            <Tab label={t("ruin")} {...this.a11yProps(1)} />
-                            <Tab label={t("extra")} {...this.a11yProps(2)} disabled />
-                            <Tab label={t("settings")} {...this.a11yProps(3)} />
-                        </Tabs>
-                    </AppBar> */}
-                    <TabPanel value={this.state.tabno} index={0}>
-                        <div className="title1">
-                            {t("buff.lastworkingtime") + ":" + this.state.lasttime}
+                        <div className="title1" style={{fontSize:"0.8rem"}}>
+                            {t("buff.lastworkingtime") + ":" }{this.state.lasttime}<br/>
                         </div>
+                        <div style={{float:"left",fontSize:"0.8rem"}}>
+                        {t("server_status") + " :  " }
+                        </div>
+                        {this.state.sever_status===1 &&  <div className="title1" style={{fontSize:"0.8rem",color:"grey"}}>
+                            { t("server_status.sleep")}<br/>
+                        </div>}
+                        {this.state.sever_status===2 &&  <div className="title1" style={{fontSize:"0.8rem",color:"blue"}}>
+                           { " "+t("server_status.running")}<br/>
+                        </div>}
+                        {this.state.sever_status===3 &&  <div className="title1" style={{fontSize:"0.8rem",color:"red"}}>
+                           {t("server_status.rebooting")}<br/>
+                        </div>}
+                        {this.state.sever_status===4 &&  <div className="title1" style={{fontSize:"0.8rem",color:"red"}}>
+                          {t("server_status.errorRebooting")}<br/>
+                        </div>}
+                        {this.state.sever_status===5 &&  <div className="title1" style={{fontSize:"0.8rem",color:"red"}}>
+                           {t("server_status.starting")}<br/>
+                        </div>}
                         <section className="form-wrapper">
                             <div className="inputBox">
                                 <p>X : </p>
@@ -373,7 +333,7 @@ class BuffMain extends Component {
                             {this.state.titleType === 1 &&
                                 <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.duke")}
-                                    <waitNumber style = {{color:"#ffffff"}}> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
+                                    <waitNumber style={{ color: "#ffffff" }}> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
                                 </div>
                             }
                             {this.state.titleType !== 1 &&
@@ -385,7 +345,7 @@ class BuffMain extends Component {
                             {this.state.titleType === 2 &&
                                 <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.scientist")}
-                                    <waitNumber style = {{color:"#ffffff"}}> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
+                                    <waitNumber style={{ color: "#ffffff" }}> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
                                 </div>
                             }
                             {this.state.titleType !== 2 &&
@@ -397,7 +357,7 @@ class BuffMain extends Component {
                             {this.state.titleType === 3 &&
                                 <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
                                     {t("buff.architecture")}
-                                    <waitNumber style = {{color:"#ffffff"}}> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
+                                    <waitNumber style={{ color: "#ffffff" }}> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
                                 </div>
                             }
                             {this.state.titleType !== 3 &&
@@ -428,47 +388,10 @@ class BuffMain extends Component {
                                 {t("buff.apply")}
                             </div>
                         </section>
-                    </TabPanel>
-                    <TabPanel value={this.state.tabno} index={1}>
-                        <div className="title2">
-                            {t("ruin.choosetime")}
-                        </div>
-                        <section className="form-wrapper">
-                            {divItems}
-                            {this.state.flag === -1 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("ruin.notime")}</p>}
-                            {this.state.flag === -2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("ruin.selecttime")}</p>}
-                            {this.state.flag === -3 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("notice.ServerNotConnect")}</p>}
-
-                            <div className="create-button" onClick={handleApplyclick}>
-                                {t("ruin.apply")}
-                            </div>
-                        </section>
-                    </TabPanel>
-                    <TabPanel value={this.state.tabno} index={3}>
-                        <div className="title2">
-                            {t("settings.title")}
-                        </div>
-                        <section className="form-wrapper">
-                            {/* <div className="password2">
-                                <input type='text' id="Userpassword" value={this.state.Userpassword} onChange={handlePasswordChange} placeholder={t("password")} />
-                            </div> */}
-                            <div className="password2">
-                                <input type='text' id="UserNickName" value={this.state.name} onChange={(e) => handleSimpleStateChange("name", e)} placeholder={t("ingameNickName")} />
-                            </div>
-                            <div className="password2">
-                                <input type='number' id="UserId" value={this.state.code} onChange={(e) => handleSimpleStateChange("code", e)} placeholder={t("ingameCode")} />
-                            </div>
-                            <div className="create-button" onClick={this.onModifyUser}>
-                                {t("setbuff.Allmodify")}
-                            </div>
-                            <div className="create-button" onClick={(e) => this.handleChange(e, 0)}>
-                                {t("setbuff.ModifyAlloff")}
-                            </div>
-                        </section>
-                    </TabPanel>
                 </div>
 
             </main>
+
         )
     }
 }
@@ -476,5 +399,7 @@ class BuffMain extends Component {
 const mapStateToProps = state => ({
     state: state
 })
+
+
 
 export default withTranslation()(connect(mapStateToProps)(BuffMain));;
