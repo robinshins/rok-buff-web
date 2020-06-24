@@ -1,0 +1,5 @@
+env_variables:
+  PUBSUB_TOPIC: rok_chat_service
+  # This token is used to verify that requests originate from your
+  # application. It can be any sufficiently random string.
+  PUBSUB_VERIFICATION_TOKEN: YOUR_TOKEN

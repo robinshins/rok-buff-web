@@ -1,12 +1,24 @@
 .Home{
     background: white;
-    width: 90%;
+    width: 100%;
+    text-align: center;
     max-width: 800px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
     margin: 0 auto; /* 페이지 중앙 정렬 */
     margin-top: 4rem;
   }
   
+  .title {
+    display: inline-block;
+    width: 40%;
+    margin: 5px;
+    padding: 0.7rem;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 100;
+    background: #22b8cf;
+    color: white;
+}
   .title2 {
     padding: 0.7rem;
     font-size: 1rem;
@@ -15,6 +27,11 @@
     background: #22b8cf;;
     color: white;
   }
+
+  .title:hover{
+    background: #19cce7;
+    color: white;   
+}
   
   .form-wrapper {
     padding: 1rem;

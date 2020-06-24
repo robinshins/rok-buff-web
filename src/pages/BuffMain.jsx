@@ -13,13 +13,19 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { Circle } from 'react-leaflet'
 import * as actions from '../actions';
 import { connect, useSelector } from 'react-redux';
-
+import Popover from 'react-bootstrap/Popover'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Button from 'react-bootstrap/Button'
+import Image from 'react-bootstrap/Image'
 
 
 class TabPanel extends Component {
+    
     render() {
+       
         return (
             <Typography
                 component="div"
@@ -38,88 +44,92 @@ class BuffMain extends Component {
         ruinitems: [], flag: -2,
         tabno: 0, lasttime: NaN, name: localStorage.username, x: localStorage.xcoor, code: localStorage.usercode,
         y: localStorage.ycoor, lostkingdom: false, redirect: 0, ruin_selected: -1,
-        backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null, register_check:-1,
-        notice:"",sever_status:-1
+        backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null, register_check: -1,
+        notice: "", sever_status: -1, account_status: sessionStorage.account_status,
     };
 
     componentDidMount() {
         this.getWaitingList();
         this.getServerStat();
-          if(sessionStorage.id !== undefined && sessionStorage.password !==undefined){
-    console.log(sessionStorage.id.replace(/\"/g, ''))
-  this.signIn(sessionStorage.id.replace(/\"/g, ''),sessionStorage.password.replace(/\"/g, ''))
-  }
+        if (sessionStorage.id !== undefined && sessionStorage.password !== undefined) {
+            console.log(sessionStorage.id.replace(/\"/g, ''))
+            this.signIn(sessionStorage.id.replace(/\"/g, ''), sessionStorage.password.replace(/\"/g, ''))
+        }
     }
 
-    signIn = async ( email, password )=> {
+    signIn = async (email, password) => {
         try {
-          const response = await axios.patch('loginresponse/', qs.stringify({
-            'mode': "login", 'password':password , 'account': email
-          })
-          );
-          console.log(response.data)
-          if (response.status === 200) {
-            localStorage.xcoor = JSON.stringify(response.data.info.account.x)
-            localStorage.ycoor = JSON.stringify(response.data.info.account.y)
-          } else {
-           
-          }
-    
+            const response = await axios.patch('loginresponse/', qs.stringify({
+                'mode': "login", 'password': password, 'account': email
+            })
+            );
+            console.log(response.data)
+            if (response.status === 200) {
+                this.setState({ is_kvk: response.data.info.account.is_kvk })
+                if (response.data.info.account.is_kvk === 1) {
+                    this.setState({ lostkingdom: true })
+                }
+                localStorage.xcoor = JSON.stringify(response.data.info.account.x)
+                localStorage.ycoor = JSON.stringify(response.data.info.account.y)
+            } else {
+
+            }
+
         } catch (error) {
-          console.log(error.response)
-        
+            console.log(error.response)
+
         }
-      
+
     }
-    
+
 
     getServerStat = async text => {
         try {
-          const response = await Http.get('userresponse/', {
-            params: {
-              mode: 'SERVER_info'
+            const response = await Http.get('userresponse/', {
+                params: {
+                    mode: 'SERVER_info'
+                }
             }
-          }
-          );
-    
-          if (response.status === 201) {
-    
-            console.log(response)
-            if (response.data.info.length === 0) {
-              this.setState({ flag: -1 })
-            } else {
-              const singleItem = response.data.info
-              console.log(response)
-              console.log(singleItem)
-              this.setState({
-                  sever_status:singleItem.status_type
-              })
-              if (singleItem.register_check === 0) {
-                this.setState({
-                  register_check: true
-                })
-              } else if (singleItem.register_check === 1) {
-                this.setState({
-                  register_check: false
-                })
-              }
-              console.log(this.state)
-    
+            );
+
+            if (response.status === 201) {
+
+                console.log(response)
+                if (response.data.info.length === 0) {
+                    this.setState({ flag: -1 })
+                } else {
+                    const singleItem = response.data.info
+                    console.log(response)
+                    console.log(singleItem)
+                    this.setState({
+                        sever_status: singleItem.status_type
+                    })
+                    if (singleItem.register_check === 0) {
+                        this.setState({
+                            register_check: true
+                        })
+                    } else if (singleItem.register_check === 1) {
+                        this.setState({
+                            register_check: false
+                        })
+                    }
+                    console.log(this.state)
+
+                }
+            } else if (response.status === 404) {
+                alert(this.props.t("notice.ServerNotExisting"))
+                console.log(response)
             }
-          } else if (response.status === 404) {
-            alert(this.props.t("notice.ServerNotExisting"))
-            console.log(response)
-          }
-        
+
         } catch (error) {
             console.log(error)
-          alert(this.props.t("notice.ServerNotConnected"))
-    
-          //TODO
-          // window.location.href = '/'
+            alert(this.props.t("notice.ServerNotConnected"))
+
+            //TODO
+            // window.location.href = '/'
         }
-    
-      }
+
+    }
 
     getWaitingList = async text => {
         try {
@@ -162,7 +172,7 @@ class BuffMain extends Component {
             console.log(error)
         }
     }
-   
+
     handleApplyclick = async text => {
         if (this.state.flag === -1 || this.state.ruin_selected === -1) {
             console.log(this.state)
@@ -213,11 +223,13 @@ class BuffMain extends Component {
                 })
                 );
                 if (response.status === 201) {
+                    sessionStorage.apply_success = JSON.stringify('1')
+                    sessionStorage.title_type = JSON.stringify(this.state.titleType)
                     alert(this.props.t("notice.applysuccess"))
                     this.props.history.push({ state: this.state })
                     this.setState({ redirect: 1 })
                 } else if (response.status === 304) {
-                   // this.props.history.push({ state: this.state })
+                    // this.props.history.push({ state: this.state })
                     this.setState({ redirect: 1 })
                 } else if (response.status === 406) {
                     alert(this.props.t("notice.nocoordinate"))
@@ -276,10 +288,22 @@ class BuffMain extends Component {
     handleChange = (event, newValue) => {
         this.setState({ tabno: newValue });
     }
-    handleSimpleStateChange = (stateInstance, e) => {
 
-        this.setState({ [stateInstance]: e.target.value });
+    handleSimpleStateChange = (stateInstance, e) => {
+    
+        let value ;
+        if(e.target.value>1200){
+            value=1200
+        }else if(e.target.value<0){
+            value=0
+        }
+        else{
+            value=e.target.value
+        }
+
+        this.setState({ [stateInstance]:value});
     }
+
     a11yProps = (index) => {
         return {
             id: `simple-tab-${index}`,
@@ -287,6 +311,7 @@ class BuffMain extends Component {
         };
     }
     render() {
+        const { center, radius } = this.props
         //console.log(this.props.state.data)
         const { t } = this.props;
         const { handleBuffChange, handleTimeClick, handleApplyclick, handleSimpleStateChange, handleKingdomChange } = this;
@@ -321,99 +346,133 @@ class BuffMain extends Component {
                         ycoor: this.state.y,
                         lostkingdom: this.state.lostkingdom,
                         titleType: this.state.titleType,
+                        usercode: this.state.code
                     }
                 }} />;
             }
         }
+
+        const popover = (
+            <Popover id="popover-basic">
+                <Popover.Content>
+                    <img src="https://ifh.cc/g/FjZYQI.jpg"  width="70vw" style={{opacity:"80%",minWidth:"350px"}}></img>
+                </Popover.Content>
+            </Popover>
+        );
+        // 
+        const popup =()=>{
+            return popover
+        }
+        const Example = () => (
+            <OverlayTrigger placement="left"   width="50px" height="50px" overlay={popover}>
+                <Button className="important"  width="0px" height="0px" >
+                </Button>
+            </OverlayTrigger>
+        );
         return (
             <main className="BuffMain">
                 <div>
-                        <div className="title1" style={{fontSize:"0.8rem"}}>
-                            {t("buff.lastworkingtime") + ":" }{this.state.lasttime}<br/>
+                    <div className="title1" style={{ fontSize: "0.8rem" }}>
+                        {t("buff.lastworkingtime") + ":"}{this.state.lasttime}<br />
+                    </div>
+                    <div style={{ float: "left", fontSize: "0.8rem" }}>
+                        {t("server_status") + " : "}
+                    </div>
+                    {this.state.sever_status === 1 && <div className="title1" style={{ fontSize: "0.8rem", color: "grey" }}>
+                        {t("server_status.sleep")}<br />
+                    </div>}
+                    {this.state.sever_status === 2 && <div className="title1" style={{ fontSize: "0.8rem", color: "blue" }}>
+                        {" " + t("server_status.running")}<br />
+                    </div>}
+                    {this.state.sever_status === 3 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.rebooting")}<br />
+                    </div>}
+                    {this.state.sever_status === 4 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.errorRebooting")}<br />
+                    </div>}
+                    {this.state.sever_status === 5 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.starting")}<br />
+                    </div>}
+                    <div style={{ float: "left", fontSize: "0.8rem" }}>
+                        {t("account_stauts") + " :  "}
+                    </div>
+                    {this, this.state.account_status == 0 && <div className="title1" style={{ fontSize: "0.8rem", color: "blue" }}>
+                        {t("account_stauts.okay")}<br />
+                    </div>}
+                    {this, this.state.account_status == 1 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("account_stauts.notokay")}<br />
+                    </div>}
+                    <section className="form-wrapper">
+                        <div className="inputBox">
+
+                            <p>X : </p>
+                            <input type='number' value={this.state.x} id="x" placeholder="" min="0"
+                                max="1200" onChange={(e) => handleSimpleStateChange("x", e)}></input>
+                            <p>Y : </p>
+                            <input type='number' value={this.state.y} onChange={(e) => handleSimpleStateChange("y", e)} id="y" placeholder=""  min="0"
+                                max="1200"/>
+                            {/* <i class="fa fa-exclamation fa-2x" style={{marginTop:"8px"}}></i> */}
+
+                            <Example />
                         </div>
-                        <div style={{float:"left",fontSize:"0.8rem"}}>
-                        {t("server_status") + " :  " }
+                        {this.state.titleType === 1 &&
+                            <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
+                                {t("buff.duke")}
+                                <waitNumber style={{ color: "#ffffff" }}> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
+                            </div>
+                        }
+                        {this.state.titleType !== 1 &&
+                            <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)}>
+                                {t("buff.duke")}
+                                <waitNumber> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
+                            </div>
+                        }
+                        {this.state.titleType === 2 &&
+                            <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
+                                {t("buff.scientist")}
+                                <waitNumber style={{ color: "#ffffff" }}> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
+                            </div>
+                        }
+                        {this.state.titleType !== 2 &&
+                            <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)}>
+                                {t("buff.scientist")}
+                                <waitNumber> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
+                            </div>
+                        }
+                        {this.state.titleType === 3 &&
+                            <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
+                                {t("buff.architecture")}
+                                <waitNumber style={{ color: "#ffffff" }}> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
+                            </div>
+                        }
+                        {this.state.titleType !== 3 &&
+                            <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)}>
+                                {t("buff.architecture")}
+                                <waitNumber> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
+                            </div>
+                        }
+
+                        <div className="selectKingdom">
+                            {this.state.lostkingdom === true &&
+                                <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.lostkingdom")} </box>
+                            }
+                            {this.state.lostkingdom === false &&
+                                <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 1)}> {t("buff.lostkingdom")} </box>
+                            }
+
+                            {this.state.lostkingdom === false &&
+                                <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.normalkingdom")} </box>
+                            }
+                            {this.state.lostkingdom === true &&
+                                <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 2)}> {t("buff.normalkingdom")} </box>
+                            }
+
+
                         </div>
-                        {this.state.sever_status===1 &&  <div className="title1" style={{fontSize:"0.8rem",color:"grey"}}>
-                            { t("server_status.sleep")}<br/>
-                        </div>}
-                        {this.state.sever_status===2 &&  <div className="title1" style={{fontSize:"0.8rem",color:"blue"}}>
-                           { " "+t("server_status.running")}<br/>
-                        </div>}
-                        {this.state.sever_status===3 &&  <div className="title1" style={{fontSize:"0.8rem",color:"red"}}>
-                           {t("server_status.rebooting")}<br/>
-                        </div>}
-                        {this.state.sever_status===4 &&  <div className="title1" style={{fontSize:"0.8rem",color:"red"}}>
-                          {t("server_status.errorRebooting")}<br/>
-                        </div>}
-                        {this.state.sever_status===5 &&  <div className="title1" style={{fontSize:"0.8rem",color:"red"}}>
-                           {t("server_status.starting")}<br/>
-                        </div>}
-                        <section className="form-wrapper">
-                            <div className="inputBox">
-                                <p>X : </p>
-                                <input type='number' value={this.state.x} id="x" placeholder="" onChange={(e) => handleSimpleStateChange("x", e)}></input>
-                                <p>Y : </p>
-                                <input type='number' value={this.state.y} onChange={(e) => handleSimpleStateChange("y", e)} id="y" placeholder="" />
-                            </div>
-                            {this.state.titleType === 1 &&
-                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
-                                    {t("buff.duke")}
-                                    <waitNumber style={{ color: "#ffffff" }}> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
-                                </div>
-                            }
-                            {this.state.titleType !== 1 &&
-                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 1)}>
-                                    {t("buff.duke")}
-                                    <waitNumber> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
-                                </div>
-                            }
-                            {this.state.titleType === 2 &&
-                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
-                                    {t("buff.scientist")}
-                                    <waitNumber style={{ color: "#ffffff" }}> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
-                                </div>
-                            }
-                            {this.state.titleType !== 2 &&
-                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 2)}>
-                                    {t("buff.scientist")}
-                                    <waitNumber> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
-                                </div>
-                            }
-                            {this.state.titleType === 3 &&
-                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}>
-                                    {t("buff.architecture")}
-                                    <waitNumber style={{ color: "#ffffff" }}> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
-                                </div>
-                            }
-                            {this.state.titleType !== 3 &&
-                                <div className="selectBox" onClick={(e) => handleBuffChange(e, 3)}>
-                                    {t("buff.architecture")}
-                                    <waitNumber> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
-                                </div>
-                            }
-
-                            <div className="selectKingdom">
-                                {this.state.lostkingdom === true &&
-                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 1)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.lostkingdom")} </box>
-                                }
-                                {this.state.lostkingdom === false &&
-                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 1)}> {t("buff.lostkingdom")} </box>
-                                }
-
-                                {this.state.lostkingdom === false &&
-                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 2)} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}> {t("buff.normalkingdom")} </box>
-                                }
-                                {this.state.lostkingdom === true &&
-                                    <box id="Userpassword" onClick={(e) => handleKingdomChange(e, 2)}> {t("buff.normalkingdom")} </box>
-                                }
-
-
-                            </div>
-                            <div className="create-button" onClick={this.handleSubmit}>
-                                {t("buff.apply")}
-                            </div>
-                        </section>
+                        <div className="create-button" onClick={this.handleSubmit}>
+                            {t("buff.apply")}
+                        </div>
+                    </section>
                 </div>
 
             </main>

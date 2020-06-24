@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import axios from '../api';
 import https from 'https';
 import Http from '../api';
-import './SetBuff.css';
+import SetBuffcss from './SetBuff.css';
 import qs from 'qs';
 import { Redirect } from 'react-router';
 import { withTranslation, useTranslation } from "react-i18next";
@@ -12,33 +12,37 @@ import BuffResult from './BuffResult'
 class SetBuff extends Component {
 
   state = {
-    modifyAlliance: true, showBuff: true,isTab0:1,dukeWaitinglist:[],scientistWaitinglist:[],architectureWatinglist:[],dukecheck:false,
-    scientistcheck:false, architecturecheck:false,
+    modifyAlliance: true, showBuff: true, isTab0: 0, dukeWaitinglist: [], scientistWaitinglist: [], architectureWatinglist: [], dukecheck: false,
+    scientistcheck: false, architecturecheck: false,
     makeAlliance: true, showAlliance: true, alliance: [], server_number: 0,
     register_check: -1, register_check_bool: true, duke_time: 0, scientist_time: 0, architecture_time: 0,
-    kvk_number: 0, buffType: 0,duke_wait:0,scientist_wait:0,architecture_wait:0,
+    kvk_number: 0, buffType: 0, duke_wait: 0, scientist_wait: 0, architecture_wait: 0,
     makealliance_name: "연맹이름", makeruin_basetime: '', makemax_capacity: 0, makeruinable: false, makealtar_basetime: '',
     modifyalliance_name: [], modifyruin_basetime: [], modifymax_capacity: [], modifyruinable: [], modifyaltar_basetime: [], modifyalliance_code: []
+  };
+
+  components = {
+    SetBuffcss: SetBuffcss
   };
 
   componentDidMount() {
     this.getServerStat();
     this.getWaitingList();
     this.getWaitingMembers();
-    console.log(this.state)
+    ////console.log(this.state)
   }
 
-  
+
   deleteDukeList = async text => {
     try {
       const response = await axios.patch('userresponse/', qs.stringify({
-        'mode': "TITLEQ_management", 'title_type':1, 'mode_type': "clear"
+        'mode': "TITLEQ_management", 'title_type': 1, 'mode_type': "clear"
       })
       );
       localStorage.id = this.state.Userid
       //localStorage.password = this.state.Userpassword
-      console.log(this.response);
-      console.log(this.state.flag) 
+      //console.log(this.response);
+      //console.log(this.state.flag) 
       if (response.status === 200) {
         alert("success")
         window.location.reload()
@@ -56,13 +60,13 @@ class SetBuff extends Component {
   deleteSciList = async text => {
     try {
       const response = await axios.patch('userresponse/', qs.stringify({
-        'mode': "TITLEQ_management", 'title_type':2, 'mode_type': "clear"
+        'mode': "TITLEQ_management", 'title_type': 2, 'mode_type': "clear"
       })
       );
       localStorage.id = this.state.Userid
       //localStorage.password = this.state.Userpassword
-      console.log(this.response);
-      console.log(this.state.flag) 
+      //console.log(this.response);
+      //console.log(this.state.flag) 
       if (response.status === 200) {
         alert("success")
         window.location.reload()
@@ -81,13 +85,13 @@ class SetBuff extends Component {
   deleteArchList = async text => {
     try {
       const response = await axios.patch('userresponse/', qs.stringify({
-        'mode': "TITLEQ_management", 'title_type':3, 'mode_type': "clear"
+        'mode': "TITLEQ_management", 'title_type': 3, 'mode_type': "clear"
       })
       );
       localStorage.id = this.state.Userid
       //localStorage.password = this.state.Userpassword
-      console.log(this.response);
-      console.log(this.state.flag) 
+      //console.log(this.response);
+      //console.log(this.state.flag) 
       if (response.status === 200) {
         alert("success")
         window.location.reload()
@@ -106,45 +110,45 @@ class SetBuff extends Component {
 
   getWaitingList = async text => {
     try {
-        const response = await axios.get('qresponse/', {
-            params: {
-                'mode': "get_QCOUNT"
-            }
+      const response = await axios.get('qresponse/', {
+        params: {
+          'mode': "get_QCOUNT"
         }
-        );
-        console.log(response)
-        if (response.status === 200) {
-            this.setState({ duke_wait: response.data.info[0][0] })
-            this.setState({ scientist_wait: response.data.info[1][0] })
-            this.setState({ architecture_wait: response.data.info[2][0] })
-            let checktime = NaN
-            if (Date(response.data.info[0][2]) < Date(response.data.info[1][2])) {
-                if (Date(response.data.info[1][2]) < Date(response.data.info[2][2])) {
-                    checktime = response.data.info[2][2]
-                }
-                else {
-                    checktime = response.data.info[1][2]
-                }
-            }
-            else {
-                if (Date(response.data.info[0][2]) < Date(response.data.info[2][2])) {
-                    checktime = response.data.info[2][2]
-                }
-                else {
-                    checktime = response.data.info[0][2]
+      }
+      );
+      //console.log(response)
+      if (response.status === 200) {
+        this.setState({ duke_wait: response.data.info[0][0] })
+        this.setState({ scientist_wait: response.data.info[1][0] })
+        this.setState({ architecture_wait: response.data.info[2][0] })
+        let checktime = NaN
+        if (Date(response.data.info[0][2]) < Date(response.data.info[1][2])) {
+          if (Date(response.data.info[1][2]) < Date(response.data.info[2][2])) {
+            checktime = response.data.info[2][2]
+          }
+          else {
+            checktime = response.data.info[1][2]
+          }
+        }
+        else {
+          if (Date(response.data.info[0][2]) < Date(response.data.info[2][2])) {
+            checktime = response.data.info[2][2]
+          }
+          else {
+            checktime = response.data.info[0][2]
 
-                }
-                let date = new Date(checktime).toString().substring(15)
-                console.log(response)
-            }
-        } else {
+          }
+          let date = new Date(checktime).toString().substring(15)
+          //console.log(response)
         }
+      } else {
+      }
     } catch (error) {
-        //TODO// alert("server not connected redirect to home")
-        // window.location.href = '/'
-        console.log(error)
+      //TODO// alert("server not connected redirect to home")
+      // window.location.href = '/'
+      //console.log(error)
     }
-}
+  }
 
 
   getServerStat = async text => {
@@ -158,12 +162,12 @@ class SetBuff extends Component {
 
       if (response.status === 201) {
 
-        console.log(response)
+        //console.log(response)
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
         } else {
           const singleItem = response.data.info
-          console.log(response)
+          //console.log(response)
           this.setState({
             server_number: singleItem.number, duke_time: singleItem.duke_time,
             scientist_time: singleItem.scientist_time,
@@ -179,15 +183,15 @@ class SetBuff extends Component {
               register_check: false
             })
           }
-          console.log(this.state)
+          //console.log(this.state)
           this.getAlliance();
 
         }
       } else if (response.status === 404) {
         alert(this.props.t("notice.ServerNotExisting"))
-        console.log(response)
+        //console.log(response)
       }
-      console.log(response)
+      //console.log(response)
     } catch (error) {
       alert(this.props.t("notice.ServerNotConnected"))
 
@@ -214,7 +218,7 @@ class SetBuff extends Component {
           this.setState({ flag: -1 })
         } else {
           const singleItem = response.data.info
-          console.log(response)
+          //console.log(response)
           this.setState({
             server_number: singleItem.number, duke_time: singleItem.duke_time,
             scientist_time: singleItem.scientist_time,
@@ -230,15 +234,15 @@ class SetBuff extends Component {
               register_check: false
             })
           }
-          console.log(this.state)
+          //console.log(this.state)
           this.getAlliance();
 
         }
       } else if (response.status === 404) {
         alert(this.props.t("notice.ServerNotExisting"))
-        console.log(response)
+        //console.log(response)
       }
-      console.log(response)
+      //console.log(response)
     } catch (error) {
       alert(this.props.t("notice.ServerNotConnected"))
 
@@ -256,7 +260,7 @@ class SetBuff extends Component {
         }
       }
       );
-      console.log(response)
+      //console.log(response)
       if (response.status === 201) {
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
@@ -280,7 +284,7 @@ class SetBuff extends Component {
         }
 
       } else if (response.status) {
-        console.log(response)
+        //console.log(response)
       }
     } catch (error) {
       this.setState({ flag: 2 })
@@ -293,7 +297,7 @@ class SetBuff extends Component {
 
   getWaitingMembers = async text => {
     try {
-      console.log(this.props)
+      //console.log(this.props)
 
       const response = await axios.get('qresponse/', {
         params: {
@@ -304,18 +308,18 @@ class SetBuff extends Component {
       console.log(response)
       if (response.status === 200) {
         const singleItem = response.data.info[response.data.info.length - 1]
-        console.log(response)
+        //console.log(response)
         let date = new Date(singleItem.ruintime)
-        console.log(date.toString())
+        //console.log(date.toString())
         const item = []
         for (var i = 0; i < response.data.info.length; i++) {
-          item.push({ name: response.data.info[i][2], server: response.data.info[i][1] })
+          item.push({ name: response.data.info[i][2], server: response.data.info[i][1], user_ingamecode: response.data.info[i][0],user_code: response.data.info[i][3]  })
         }
         this.setState({ dukeWaitinglist: item })
-        
-        console.log(this.state.items)
+
+        //console.log(this.state.items)
       } else if (response.status) {
-        console.log(response)
+        //console.log(response)
 
       }
 
@@ -324,7 +328,7 @@ class SetBuff extends Component {
     }
 
     try {
-      console.log(this.props)
+      //console.log(this.props)
 
       const response = await axios.get('qresponse/', {
         params: {
@@ -332,21 +336,21 @@ class SetBuff extends Component {
         }
       }
       );
-      console.log(response)
+      //console.log(response)
       if (response.status === 200) {
         const singleItem = response.data.info[response.data.info.length - 1]
-        console.log(response)
+        //console.log(response)
         let date = new Date(singleItem.ruintime)
-        console.log(date.toString())
+        //console.log(date.toString())
         const item2 = []
         for (var i = 0; i < response.data.info.length; i++) {
-          item2.push({ name: response.data.info[i][2], server: response.data.info[i][1] })
+          item2.push({ name: response.data.info[i][2], server: response.data.info[i][1],user_ingamecode: response.data.info[i][0],user_code: response.data.info[i][3]   })
         }
         this.setState({ scientistWaitinglist: item2 })
-        
-        console.log(this.state.items)
+
+        //console.log(this.state.items)
       } else if (response.status) {
-        console.log(response)
+        //console.log(response)
 
       }
 
@@ -355,7 +359,7 @@ class SetBuff extends Component {
     }
 
     try {
-      console.log(this.props)
+      //console.log(this.props)
 
       const response = await axios.get('qresponse/', {
         params: {
@@ -363,18 +367,18 @@ class SetBuff extends Component {
         }
       }
       );
-      console.log(response)
+      // console.log(response)
       if (response.status === 200) {
         const singleItem = response.data.info[response.data.info.length - 1]
         let date = new Date(singleItem.ruintime)
-        console.log(date.toString())
+        //console.log(date.toString())
         const item3 = []
         for (var i = 0; i < response.data.info.length; i++) {
-          item3.push({ name: response.data.info[i][2], server: response.data.info[i][1] })
+          item3.push({ name: response.data.info[i][2], server: response.data.info[i][1],user_ingamecode: response.data.info[i][0],user_code: response.data.info[i][3]  })
         }
         this.setState({ architectureWatinglist: item3 })
-        
-        console.log(this.state.items)
+
+        //console.log(this.state.items)
       } else if (response.status) {
       }
 
@@ -385,8 +389,12 @@ class SetBuff extends Component {
 
   onClickMakeAlliance = async text => {
     try {
-      console.log(this.state)
+      //console.log(this.state)
       var ruinableset = this.state.makeruinable === false ? 0 : 1
+      //console.log(this.state.makeruinable)
+      if (this.state.makeruinable === 'on') {
+        ruinableset = 0;
+      }
       const response = await axios.patch('userresponse/', qs.stringify({
         'mode': "ALLIANCE_management", 'mode_type': "make"
         , 'ruin_basetime': this.state.makeruin_basetime, 'max_capacity': this.state.makemax_capacity,
@@ -394,7 +402,7 @@ class SetBuff extends Component {
         'altar_basetime': this.state.makealtar_basetime
       })
       );
-      console.log(response)
+      //console.log(response)
       if (response.status === 201) {
         alert(this.props.t("notice.MakeSuccess"))
         //window.location.href = '/buffmain'
@@ -404,14 +412,14 @@ class SetBuff extends Component {
         alert(this.props.t("notice.UnknownProb"))
       }
     } catch (error) {
-      console.log(error.response)
+      //console.log(error.response)
       alert(this.props.t("notice.ChangeFail"))
-      console.log(error)
+      //console.log(error)
     }
   }
   onClickModifyAlliance = async index => {
     try {
-      console.log(this.state, index)
+      //console.log(this.state, index)
       const response = await axios.patch('userresponse/', qs.stringify({
         'mode': "ALLIANCE_management", 'mode_type': "info", "alliance_code": this.state.modifyalliance_code[index]
         , 'ruin_basetime': this.state.modifyruin_basetime[index], 'max_capacity': this.state.modifymax_capacity[index],
@@ -445,12 +453,12 @@ class SetBuff extends Component {
   }
   onClickLogin = async text => {
     try {
-      console.log(this.state)
+      //console.log(this.state)
       let regicheck;
-      if(this.state.register_check){
+      if (this.state.register_check) {
         regicheck = 0;
-      }else{
-        regicheck=1;
+      } else {
+        regicheck = 1;
       }
       const response = await axios.patch('userresponse/', qs.stringify({
         'mode': "SERVER_management", 'mode_type': "info", 'kvk_number': this.state.kvk_number
@@ -464,7 +472,7 @@ class SetBuff extends Component {
       } else {
       }
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       alert(this.props.t("notice.ChangeFail"))
     }
   }
@@ -498,27 +506,70 @@ class SetBuff extends Component {
     })
   }
 
-  handleTabChange = (id) =>{
+  handleTabChange = (id) => {
     this.setState({
-      isTab0 : id
+      isTab0: id
     })
   }
 
+  handleDeleteclick = async (user_code, title_type) => {
+    console.log(user_code)
+    // const code = this.state.items[index].user_code
+    // console.log(code);
+    console.log("sadasd")
+    try {
+      const response = await axios.patch('userresponse/', qs.stringify({
+        'mode': "TITLEQ_management", 'mode_type': 'remove', 'user_code': user_code, 'title_type': title_type
+      })
+      );
+      console.log(response)
+      if (response.status === 200) {
+        alert("delete success")
+        window.location.reload()
+      } else if (response.status) {
+        alert("delete fail")
+        console.log(response)
+      }
+
+    } catch (error) {
+      console.log(error.response)
+      alert("delete fail, server error")
+    }
+  }
+
+
 
   render() {
+    const { t } = this.props;
+    //console.log(this.state.makeruinable)
     let dukeList = this.state.dukeWaitinglist.map((item, index) => {
-      return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name} <span>{item.server}</span></div>
+      return <div className="waitSelectBox" key={item.id}>
+        {`(${index + 1}) ` + item.name}
+        <span>({item.user_ingamecode})</span>
+        <button class="x-box" onClick={() => this.handleDeleteclick(item.user_code, 1)}>
+          {t("delete")}
+        </button>
+      </div>
     });
 
     let scientistList = this.state.scientistWaitinglist.map((item, index) => {
-      return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name} <span>{item.server}</span></div>
+      return <div className="waitSelectBox" key={item.id}>{`(${index + 1}) ` + item.name}
+        <span>({item.user_ingamecode})</span>
+        <button class="x-box" onClick={() => this.handleDeleteclick(item.user_code, 2)}>
+          {t("delete")}
+        </button>
+      </div>
     });
 
     let architectureList = this.state.architectureWatinglist.map((item, index) => {
-      return <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.name} <span>{item.server}</span></div>
+      return <div className="waitSelectBox" key={item.id}>{`(${index + 1}) ` + item.name}
+        <span>({item.user_ingamecode})</span>
+        <button class="x-box" onClick={() => this.handleDeleteclick(item.user_code, 3)}>
+          {t("delete")}
+        </button>
+      </div>
     });
 
-    const { t } = this.props;
     if (this.state.redirect) {
       return <Redirect to={{
         pathname: "/buffmain",
@@ -529,6 +580,7 @@ class SetBuff extends Component {
     const {
       onClickLogin,
       handleChange,
+      components,
       onClickMakeAlliance, handleSimpleStateChange
     } = this;
 
@@ -587,97 +639,94 @@ class SetBuff extends Component {
 
     });
 
-    let titlesetting = () =>{
-      return( <section className="form-wrapper">
-      <div className="inputBox2">
-        <p style={{ fontSize: 14 }}> {t("setbuff.RegisterAllow")}
-          <input id="Username" type="checkbox" onChange={handleChange} checked={this.state.register_check} /></p>
-      </div>
-      <div className="inputBox2 ">
-        <p style={{ fontSize: 14 }}>{t("setbuff.dukeRotate")}</p>
-        <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("duke_time", e)} placeholder={this.state.duke_time + t("setbuff.settingSec")} />
-      </div>
-      <div className="inputBox2">
-        <p style={{ fontSize: 14 }}>{t("setbuff.scientistRotate")}</p>
-        <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("scientist_time", e)} placeholder={this.state.scientist_time + t("setbuff.settingSec")} />
-      </div>
-      <div className="inputBox2">
-        <p style={{ fontSize: 14 }}>{t("setbuff.architectureRotate")}</p>
-        <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("architecture_time", e)} placeholder={this.state.architecture_time + t("setbuff.settingSec")} />
-      </div>
-      <div className="inputBox2">
-        <p style={{ fontSize: 14 }}>{t("setbuff.kvknumber")}</p>
-        <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("kvk_number", e)} placeholder={this.state.kvk_number} />
-      </div>
-      <div className="create-button" onClick={onClickLogin}>
-        {t("setbuff.Allmodify")}
-      </div>
-      {this.state.flag === 2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("error.wrongid")}</p>}
-    </section>
-)
+    let titlesetting = () => {
+      return (<section className="form-wrapper">
+        <div className="inputBox2">
+          <p style={{ fontSize: 14 }}> {t("setbuff.RegisterAllow")}
+            <input id="Username" type="checkbox" onChange={handleChange} checked={this.state.register_check} /></p>
+        </div>
+        <div className="inputBox2 ">
+          <p style={{ fontSize: 14 }}>{t("setbuff.dukeRotate")}</p>
+          <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("duke_time", e)} placeholder={this.state.duke_time + t("setbuff.settingSec")} />
+        </div>
+        <div className="inputBox2">
+          <p style={{ fontSize: 14 }}>{t("setbuff.scientistRotate")}</p>
+          <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("scientist_time", e)} placeholder={this.state.scientist_time + t("setbuff.settingSec")} />
+        </div>
+        <div className="inputBox2">
+          <p style={{ fontSize: 14 }}>{t("setbuff.architectureRotate")}</p>
+          <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("architecture_time", e)} placeholder={this.state.architecture_time + t("setbuff.settingSec")} />
+        </div>
+        <div className="inputBox2">
+          <p style={{ fontSize: 14 }}>{t("setbuff.kvknumber")}</p>
+          <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("kvk_number", e)} placeholder={this.state.kvk_number} />
+        </div>
+        <div className="create-button" onClick={onClickLogin}>
+          {t("setbuff.Allmodify")}
+        </div>
+      </section>
+      )
     }
 
-    let clickDuke = () =>{
+    let clickDuke = () => {
       this.setState({
         dukecheck: !this.state.dukecheck
       })
     }
-    let clickSci = () =>{
+    let clickSci = () => {
       this.setState({
         scientistcheck: !this.state.scientistcheck
       })
     }
 
-    let clickArch = () =>{
+    let clickArch = () => {
       this.setState({
         architecturecheck: !this.state.architecturecheck
       })
     }
 
-    let waitinglist = () =>{
-      return(  
+    const waitinglist = () => {
+      return (
         <section className="form-wrapper">
-        <div className="selectBox"  style={{marginTop:"80px"}} onClick={()=>clickDuke()}>
+          <div className="selectBox" style={{ marginTop: "30px" }} onClick={() => clickDuke()}>
             {t("buff.duke")}
-            <waitNumber> {this.state.duke_wait + t("buff.waiting")}</ waitNumber>
-        </div>
-        {this.state.dukecheck && dukeList}
-        <div className="create-button2" onClick={()=>this.deleteDukeList()}>
-        {t("setbuff.deletedukelist")}
-      </div>
-        <div className="selectBox"onClick={()=>clickSci()}>
+            <waitNumber> {this.state.duke_wait + t("buff.waiting")}</waitNumber>
+          </div>
+          {this.state.dukecheck && dukeList}
+          <div className="create-button2" onClick={() => this.deleteDukeList()}>
+            {t("setbuff.deletedukelist")}
+          </div>
+          <div className="selectBox" onClick={() => clickSci()}>
             {t("buff.scientist")}
             <waitNumber> {this.state.scientist_wait + t("buff.waiting")}</waitNumber>
-        </div>
-        {this.state.scientistcheck && scientistList}
-        <div className="create-button2"  onClick={()=>this.deleteSciList()}>
-        {t("setbuff.deletescilist")}
-      </div>
-        <div className="selectBox" onClick={()=>clickArch()}>
+          </div>
+          {this.state.scientistcheck && scientistList}
+          <div className="create-button2" onClick={() => this.deleteSciList()}>
+            {t("setbuff.deletescilist")}
+          </div>
+          <div className="selectBox" onClick={() => clickArch()}>
             {t("buff.architecture")}
             <waitNumber> {this.state.architecture_wait + t("buff.waiting")}</waitNumber>
-        </div>
-        {this.state.architecturecheck && architectureList}
-        <div className="create-button2"  onClick={()=>this.deleteArchList()}>
-        {t("setbuff.deletearchlist")}
-      </div>
-      <p style={{fontSize:"smaller"}}>
-      명단에서 특정 인원 빼는 기능 추후 업데이트 예정입니다. 감사합니다.
-      </p>
+          </div>
+          {this.state.architecturecheck && architectureList}
+          <div className="create-button2" onClick={() => this.deleteArchList()}>
+            {t("setbuff.deletearchlist")}
+          </div>
         </section>
-    )
+      )
     }
 
     return (
-      <main className="Home2">
-        <div className="title" onClick={()=>this.handleTabChange(0)}>
+      <main className="Home3">
+        <div className="title2" onClick={() => this.handleTabChange(0)}>
           {t("setbuff.settingTitle")}
         </div>
-        <div className="title" onClick={()=>this.handleTabChange(1)}>
+        <div className="title2" onClick={() => this.handleTabChange(1)}>
           {t("setbuff.waitinglist")}
         </div>
-      {this.state.isTab0===0 && titlesetting()}
-      {this.state.isTab0===1 && waitinglist()}
+        <br />
+        {this.state.isTab0 === 0 && titlesetting()}
+        {this.state.isTab0 === 1 && waitinglist()}
       </main >
     );
   }

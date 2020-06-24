@@ -11,6 +11,8 @@ import propTypes from "prop-types"
 import {login} from "../actions/auth"
 import * as actions from '../actions';
 import {connect} from 'react-redux';
+import Chat from '../components/Chat'
+import { ChatFeed, Message } from 'react-chat-ui'
 
 
 
@@ -19,7 +21,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 class Home extends Component {
 
-  state = { Userid: '', Userpassword: '', flag: '', userinfo: { x: '', y: "", name: "", code: "" }, redirect: false, is_admin: -1 ,server_code:1};
+  state = { Userid: '', Userpassword: '', flag: '', userinfo: { x: '', y: "", name: "", code: "" }, redirect: false, is_admin: -1 ,server_code:1,is_typing:false,
+  messages: [
+    new Message({
+      id: 1,
+      message: "I'm the recipient! (The person you're talking to)",
+    }), // Gray bubble
+    new Message({ id: 0, message: "I'm you -- the blue bubble!" }), // Blue bubble
+  ],
+};
   // static propTypes = {
   //   login: this.propTypes.func.isRequired,
   //   isAuthenticated : this.propTypes.bool
@@ -36,7 +46,6 @@ class Home extends Component {
 
 
   onClickLogin = async text => {
-    console.log(this.props.set_ServerNumber)
     try {
       const response = await axios.patch('loginresponse/', qs.stringify({
         'mode': "login", 'password': this.state.Userpassword, 'account': this.state.Userid
@@ -44,10 +53,11 @@ class Home extends Component {
       );
       localStorage.id = this.state.Userid
       //localStorage.password = this.state.Userpassword
-      console.log(this.response);
-      console.log(this.state.flag) 
+      console.log(response);
+      //console.log(this.state.flag) 
       if (response.status === 200) {
         sessionStorage.is_login = JSON.stringify('true');
+        sessionStorage.account_status = JSON.stringify( response.data.info.account.is_checked);
         const info = {
           x: response.data.info.account.x, y: response.data.info.account.y,
           name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode, 
@@ -73,16 +83,16 @@ class Home extends Component {
         this.setState({ redirect: true, server_code:response.data.info.server_code});
         //this.props.set_ServerNumber(response.data.info.account.server_code);
         sessionStorage.server_code =JSON.stringify(response.data.info.account.server_code);
+        sessionStorage.user_name =  JSON.stringify(response.data.info.account.user_ingameID.replace(/['"]+/g,''))
 
         //window.location.href = '/buffmain'
       } else {
         sessionStorage.islogin = -1;
-
       }
 
     } catch (error) {
       sessionStorage.islogin = -1;
-      console.log(error)
+      console.log(error.response)
       this.setState({ flag: 2 })
       //alert("아이디와 비밀번호를 확인해주세요")
 
@@ -110,9 +120,13 @@ class Home extends Component {
     }
   }
 
+ 
+
 
   render() {
     const { t } = this.props;
+   
+  
 
     // if(sessionStorage.islogin ==1){
     //   return <Redirect to={{
@@ -136,7 +150,27 @@ class Home extends Component {
 
     return (
       <main className="testhome">
-        <div className="title2">
+        {/* <Chat/> */}
+     {/* <ChatFeed
+      messages={this.state.messages} // Boolean: list of message objects
+      isTyping={this.state.is_typing} // Boolean: is the recipient typing
+      hasInputField={false} // Boolean: use our input, or use your own
+      showSenderName // show the name of the user who sent the message
+      bubblesCentered={true} //Boolean should the bubbles be centered in the feed?
+      // JSON: Custom bubble styles
+      bubbleStyles={
+        {
+          text: {
+            fontSize: 30
+          },
+          chatbubble: {
+            borderRadius: 70,
+            padding: 40
+          }
+        }
+      }
+    /> */}
+        <div className="hometitle">
           {t("login")}
         </div>
         <section className="form-wrapper">
@@ -162,6 +196,7 @@ class Home extends Component {
                 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" style={{verticalAlign:"middle"}} verticalAlign="middle"/>
             </form>
             </div>
+          
       <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
       </main>
     );

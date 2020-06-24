@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import './BuffMain.css';
+import './RuinRegister.css';
 import Http from '../api';
 import qs from 'qs';
 import { Redirect } from 'react-router';
@@ -176,7 +176,7 @@ class RuinRegister extends Component {
                 </div>
             } else if (item.checked === true && item.ruin_type == "altar") {
                 return <div className="selectBox" key={item.id} style={{ backgroundColor: "#87ceeb", color: "#ffffff" }}
-                    onClick={() => handleTimeClick(item.id)}>{"UTC : " + item.time}<br />{"Korea time : " + item.koreaTime}<br/> {"type : " + t("ruin")}{ " / " + t("alliance") + " : "+item.alliance_name}
+                    onClick={() => handleTimeClick(item.id)}>{"UTC : " + item.time}<br />{"Korea time : " + item.koreaTime}<br/> {"type : " + t("altar")}{ " / " + t("alliance") + " : "+item.alliance_name}
                 </div>
             } else if (item.checked === false && item.ruin_type == "ruin") {
                 return <div className="selectBox" key={item.id} onClick={() => handleTimeClick(item.id)
@@ -185,13 +185,13 @@ class RuinRegister extends Component {
             }
             else if (item.checked === false && item.ruin_type == "altar") {
                 return <div className="selectBox" key={item.id} onClick={() => handleTimeClick(item.id)
-                }> {"UTC : " + item.time} < br /> {"Korea time : " + item.koreaTime} <br/> {"type : " + t("ruin")}{ " / " + t("alliance") + " : "+item.alliance_name}
+                }> {"UTC : " + item.time} < br /> {"Korea time : " + item.koreaTime} <br/> {"type : " + t("altar")}{ " / " + t("alliance") + " : "+item.alliance_name}
                 </div >
             }
         });
         return (
-            <main className="Home">
-            <div className="title2">
+            <main className="Ruin">
+            <div className="ruintitle">
                 {t("ruin.choosetime")}
             </div>
             <section className="form-wrapper">

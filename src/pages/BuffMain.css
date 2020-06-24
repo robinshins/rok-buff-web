@@ -19,6 +19,15 @@
     color: white;
   }
 
+  .personaltitle {
+    padding: 0.7rem;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 100;
+    background: #22b8cf;;
+    color: white;
+  }
+
   .inputBox {
     width:90%;
     margin:20px;
@@ -53,7 +62,28 @@
     color: rgb(138, 135, 135);
   }
 
-  
+.important{
+  display: inline-block;
+  background: url("../assets/imprtant2.png");
+  width: 30px;
+  height: 30px;
+  outline: none;
+  border: none;
+  margin-top: 9px;
+}  
+
+
+
+.importanthover{
+  background: url("https://ifh.cc/g/FjZYQI.jpg");
+  width: 350px;
+  opacity: 75%;
+  border-radius: 10%;
+  height: 240px;
+}
+
+
+
 .selectKingdom {
         display: flex;
         }

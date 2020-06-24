@@ -9,7 +9,7 @@
   "member.delete": "회원삭제",
   "ruinapply": "폐허 신청",
   "result": "결과",
-  "ingameNickName": "인게임 닉네임(꼭 정확하게 입력해주세요)",
+  "ingameNickName": "인게임 닉네임(정확히 입력해주세요)",
   "ingameCode": "유저고유 번호 (게임 프로필 참고)",
   "serverNumber": "서버 번호",
   "error.existingID": "입력을 확인해 주시거나 다른아이디를 사용해 주세요",
@@ -103,7 +103,23 @@
   "setbuff.waitinglist" : "칭호 대기열 관리",
   "setbuff.deletedukelist" : "공작 대기열 초기화",
   "setbuff.deletescilist" : "과학자 대기열 초기화",
-  "setbuff.deletearchlist" : "건축가 대기열 초기화"
+  "setbuff.deletearchlist" : "건축가 대기열 초기화",
+
+  "account_stauts":"계정상태",
+  "account_stauts.okay":"승인됨",
+  "account_stauts.notokay":"승인되지 않음 (왕국 임원에게 승인을 요청하세요)",
+
+  
+  "member_management.list":"멤버 명단",
+  "member_management.approve":"승인 관리",
+  "member.approve":"승인",
+
+  "delete":"삭제",
+
+  "waiting_order":"내 대기순서",
+  "th":"번째",
+  "order":"순서입니다"
+
   
 
 }

@@ -7,7 +7,7 @@ import i18n from "i18next";
 
 
 class UserManagement extends Component {
-  state = { items: [], flag: '', is_admin: sessionStorage.isadmin};
+  state = { items: [], flag: '', is_admin: sessionStorage.isadmin, isTab0: 0, waitingItems:[] };
 
 
 
@@ -15,33 +15,96 @@ class UserManagement extends Component {
     console.log(this.props)
     console.log(this.state.is_admin)
     this.getRuinResult();
+    this.getApprovalList();
   }
 
   handleDeleteclick = async (user_code) => {
     console.log(user_code)
-     // const code = this.state.items[index].user_code
-     // console.log(code);
+    // const code = this.state.items[index].user_code
+    // console.log(code);
     console.log("sadasd")
     try {
-        const response = await Http.delete('userresponse/', {data:qs.stringify({
-            user_code: user_code
-        })}
-        );
-        console.log(response)
-        if (response.status === 200) {
-            alert("delete success")
-            window.location.reload()
-        } else if (response.status) {
-        alert("delete fail")
-          console.log(response)
-        }
-  
-      } catch (error) {
-          console.log(error)
-        alert("delete fail, server error")
+      const response = await Http.delete('userresponse/', {
+        data: qs.stringify({
+          user_code: user_code
+        })
       }
+      );
+      console.log(response)
+      if (response.status === 200) {
+        alert("delete success")
+        window.location.reload()
+      } else if (response.status) {
+        alert("delete fail")
+        console.log(response)
+      }
+
+    } catch (error) {
+      console.log(error)
+      alert("delete fail, server error")
+    }
   }
+
   
+  handleApprove = async (user_code) => {
+    console.log(user_code)
+    try {
+        const response = await Http.patch('userresponse/', qs.stringify({
+            'mode': 'USER_management', 'mode_type': 'check_USER',
+            'user_code': user_code
+        })
+        );
+
+        // console.log(response)
+        if (response.status === 201) {
+            localStorage.username = JSON.stringify(this.state.name)
+            localStorage.usercode = this.state.code
+            localStorage.password = JSON.stringify(this.state.password)
+            window.location.reload()
+            alert("success")
+        } else {
+            console.log(response)
+        }
+
+    } catch (error) {
+        alert(this.props.t("notice.ServerNotConnect"))
+        console.log(error)
+    }
+}
+
+
+  getApprovalList = async text =>{
+    try {
+      const response = await Http.get('userresponse/', {
+        params: {
+          mode: 'SERVER_member_list', mode_type: 'checked'
+        }
+      }
+      );
+      console.log(response)
+      if (response.status === 201) {
+        const singleItem = response.data.info[response.data.info.length - 1]
+        console.log(response)
+        let date = new Date(singleItem.ruintime)
+        console.log(date.toString())
+        const item = []
+        for (var i = 0; i < response.data.info.length; i++) {
+          item.push({
+            name: response.data.info[i].user_ingameID, user_code: response.data.info[i].user_code,
+            user_ingameCode: response.data.info[i].user_ingamecode
+          })
+        }
+        this.setState({ waitingItems: item })
+        console.log(this.state.waitingItems)
+      } else if (response.status) {
+        console.log(response)
+      }
+
+    } catch (error) {
+      this.setState({ flag: 2 })
+    }
+
+  }
 
   getRuinResult = async text => {
     try {
@@ -58,8 +121,10 @@ class UserManagement extends Component {
         console.log(date.toString())
         const item = []
         for (var i = 0; i < response.data.info.length; i++) {
-          item.push({ name: response.data.info[i].user_ingameID, user_code:response.data.info[i].user_code,
-             user_ingameCode:response.data.info[i].user_ingamecode})
+          item.push({
+            name: response.data.info[i].user_ingameID, user_code: response.data.info[i].user_code,
+            user_ingameCode: response.data.info[i].user_ingamecode
+          })
         }
         this.setState({ items: item })
         console.log(this.state.items)
@@ -73,35 +138,75 @@ class UserManagement extends Component {
 
   }
 
-  
+  handleTabChange = (id) => {
+    this.setState({
+      isTab0: id
+    })
+  }
+
 
   render() {
     const { t } = this.props;
     const {
-      handleDeleteclick
+      handleDeleteclick,handleApprove
     } = this;
 
     let divItems = this.state.items.map((item, index) => {
-        return <div className="selectBox2" key={item.user_code}>{`(${index + 1}) ` + item.name} 
+      return <div className="selectBox2" key={item.user_code}>{`(${index + 1}) ` + item.name}
         <p className="usercode">({item.user_ingameCode})</p>
-         <button class="x-box"  onClick={()=>handleDeleteclick(item.user_code)}>
+        <button class="x-box" onClick={() => handleDeleteclick(item.user_code)}>
           {t("member.delete")}
-      </button>
+        </button>
       </div>
- 
+
 
     });
 
+    let waitItems = this.state.waitingItems.map((item, index) => {
+      return <div className="selectBox2" key={item.user_code}>{`(${index + 1}) ` + item.name}
+        <p className="usercode">({item.user_ingameCode})</p>
+        <button class="x-box" onClick={() => handleApprove(item.user_code)}>
+          {t("member.approve")}
+        </button>
+      </div>
+
+
+    });
+
+    let memberList = () => {
+      return (
+        <section className="form-wrapper">
+          <p style={{ textAlign: "center" }}>{t("findmember.info")} </p>
+          {divItems}
+        </section>)
+    }
+
+    let waitList = () => {
+      if(this.state.waitingItems.length ===0){
+        return(
+        <section className="form-wrapper">
+        <p  style={{ textAlign: "center" , marginTop:"50px",color:"grey"}}>Empty</p>
+      </section>)
+      }else{
+      return (
+        <section className="form-wrapper">
+          {waitItems}
+        </section>)
+      }
+    }
+
     return (
       <main className="Home">
-        <div className="title2">
-          Results
-          </div>
-        <p style={{ textAlign: "center" }}>{t("findmember.info")} </p>
-        <section className="form-wrapper">
-          {divItems}
+        <div className="title" onClick={() => this.handleTabChange(0)}>
+          {t("member_management.list")}
+        </div>
+        <div className="title" onClick={() => this.handleTabChange(1)}>
+          {t("member_management.approve")}
+        </div>
+   
+        {this.state.isTab0 === 0 && memberList()}
+        {this.state.isTab0===1 && waitList()}
 
-        </section>
       </main>
 
     );

@@ -1,12 +1,13 @@
-.Home{
+.BuffResult{
     background: white;
-    width: 350px;
+    width: 100%;
+    max-width: 800px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
     margin: 0 auto; /* 페이지 중앙 정렬 */
     margin-top: 4rem;
   }
 
-  .title2 {
+  .resulttitle {
     padding: 0.7rem;
     font-size: 1rem;
     text-align: center;
@@ -15,7 +16,7 @@
     color: white;
   }
   
-  .form-wrapper {
+  .register-form-wrapper {
     padding: 1rem;
   }
   
@@ -41,50 +42,6 @@
     background: #3bc9db;
   }
 
-.email {
-  display: flex;
-  border-bottom: 1px solid #c5f6fa;
-  margin:20px;
-  margin-bottom: 30px;
-  }
-  .email input {
-    flex: 1; /* 버튼을 뺀 빈 공간을 모두 채워줍니다 */
-    font-size: 1rem;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #c5f6fa;
-  }
-
-.password {
-  display: flex;
-  border-bottom: 1px solid #c5f6fa;
-  margin:20px;
-  margin-bottom: 30px;
-  }
-
-  .password input {
-    flex: 1; /* 버튼을 뺀 빈 공간을 모두 채워줍니다 */
-    font-size: 1rem;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #c5f6fa;
-  }
-
-  
-  .inputBox {
-    display: flex;
-    border-bottom: 1px solid #c5f6fa;
-    margin:20px;
-    margin-bottom: 30px;
-   
-    }
-    .inputBox input {
-      flex: 1; /* 버튼을 뺀 빈 공간을 모두 채워줍니다 */
-      font-size: 1rem;
-      outline: none;
-      border: none;
-      border-bottom: 1px solid #c5f6fa;
-    }
 
     .selectBox2 {
         display: flex;
@@ -99,3 +56,18 @@
         width:150px;
         text-align:right;
     }
+
+    .DoneReload {
+      display: flex;
+      text-align: center;
+      }
+.DoneReload box {
+          flex:1;
+          margin:15px;
+          margin-bottom: 30px;
+          border: 1px solid #3794b9; 
+          background-color:linear-gradient(#FFFFFF, #B0B0B0);
+          color: gray; 
+          padding: 10px;
+          border-radius: 10px;
+          }

@@ -1,0 +1,91 @@
+.Ruin{
+    background: white;
+    width: auto;
+    max-width: 900px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
+    margin: 0 auto; /* 페이지 중앙 정렬 */
+    margin-top: 4rem;
+    
+  }
+  .form-wrapper {
+    padding: 1rem;
+  }
+  .ruintitle {
+    padding: 0.7rem;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 100;
+    background: #22b8cf;;
+    color: white;
+  }
+
+  .inputBox {
+    width:90%;
+    margin:20px;
+    border: none;
+    }
+    .inputBox input {
+      width: 40%;
+      font-size: 1rem;
+      margin: 10px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #c5f6fa;
+    }
+
+
+
+  .selectBox {
+    display: flex;
+    margin:20px;
+    margin-bottom: 30px;
+    border: 1px solid #3794b9; 
+    background-color: rgba(0,0,0,0);
+    color:skyblue; 
+    padding: 5px;
+    border-radius: 10px;
+
+  }
+  .selectBox waitNumber{
+    font-size: 0.8rem;
+    margin:auto 0;
+    margin-left: auto;
+    color: rgb(138, 135, 135);
+  }
+
+  
+.selectKingdom {
+        display: flex;
+        }
+.selectKingdom box {
+            flex:1;
+            margin:15px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid #3794b9; 
+            background-color:linear-gradient(#FFFFFF, #B0B0B0);
+            color: gray; 
+            padding: 10px;
+            border-radius: 10px;
+            }
+
+    
+
+
+.create-button {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 1rem;
+    background: #22b8cf;
+    text-align: center;
+    margin: 20px;
+    border-radius: 3px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }  
+  .create-button:hover {
+    background: #3bc9db;
+  }

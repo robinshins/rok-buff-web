@@ -85,7 +85,7 @@ class Register extends Component{
     return (
 
         <main className="Register">
-            <div className="title2">
+            <div className="registerTitle">
             {t("register")}
           </div>
           <section className = "form-wrapper">
@@ -94,7 +94,7 @@ class Register extends Component{
                 <input id="Username" value ={this.state.Userid}  onChange = {handleEmailChange} placeholder= {t("id")} />
             </div>
             <div className="password2">
-                <input type='text' id="Userpassword" value ={this.state.Userpassword}  onChange = {handlePasswordChange} placeholder= {t("password")} />
+                <input type='text' id="Userpassword" value ={this.state.Userpassword}   onChange = {handlePasswordChange} placeholder= {t("password")} />
             </div>
             <div className="password2">
                 <input type='text' id="UserNickName" value ={this.state.user_ingameID}  onChange = {handleIngameNameChange} placeholder= {t("ingameNickName")} />

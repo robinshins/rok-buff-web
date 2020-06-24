@@ -130,6 +130,9 @@ class AllianceSetting extends Component {
         this.setState({ server_number: e.target.value });
     }
 
+    handleRuinable = () =>{
+      this.setState({makeruinable:!this.state.makeruinable})
+    }
     handleSimpleStateChange = (stateInstance, e, type, index) => {
         if (type === "modify" || type === "make") {
             stateInstance = type + stateInstance
@@ -263,7 +266,7 @@ class AllianceSetting extends Component {
 
     render() {
 
-
+      console.log(this.state.makeruinable)
         const { t } = this.props;
 
         let divItems = this.state.alliance.map((item, index) => {
@@ -303,7 +306,7 @@ class AllianceSetting extends Component {
 
         const {
             onClickRegister, handleEmailChange, handlePasswordChange, handleIngameCodeChange, handleIngameNameChange,
-            handleServerNumberChange, handleSimpleStateChange, onClickDeleteAlliance, onClickMakeAlliance, onClickModifyAlliance
+            handleServerNumberChange, handleSimpleStateChange, onClickDeleteAlliance, onClickMakeAlliance, onClickModifyAlliance,handleRuinable
         } = this
 
         function alliancedata(methodOnClick, textForButton, state, index) {
@@ -318,7 +321,7 @@ class AllianceSetting extends Component {
                 </div>
                 <div className="inputBox2">
                     <p style={{ fontSize: 14 }}>{t("setbuff.Allruinable")}
-                        <input id={state[0]} type="checkbox" onChange={(e) => handleSimpleStateChange("ruinable", e, textForButton, index)} placeholder={state[2]} />
+                        <input id={state[0]} type="checkbox" onChange={(e) => handleRuinable()} checked={state.makeruinable}/>
                     </p>
                 </div>
                 <div className="inputBox2">
@@ -347,8 +350,8 @@ class AllianceSetting extends Component {
 
         return (
 
-            <main className="Register">
-                <div className="title2">
+            <main className="Register2">
+                <div className="title3">
                     {t("allianceList")}
                 </div>
                 <section className="form-wrapper">

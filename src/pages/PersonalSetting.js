@@ -86,7 +86,7 @@ class PersonalSetting extends Component {
         return (
 
             <main className="BuffMain">
-                <div className="title2">
+                <div className="personaltitle">
                     {t("settings.title")}
                 </div>
                 <section className="form-wrapper">

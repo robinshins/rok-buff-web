@@ -1,6 +1,6 @@
 runtime: python27
 api_version: 1
-service: default
+service: test
 threadsafe: true
 handlers:
   - url: /static/js/(.*)
@@ -15,6 +15,9 @@ handlers:
   - url: /(.*\.(json|ico))$
     static_files: build/\1
     upload: build/.*\.(json|ico)$
+  - url: /(.*\.(gif|png|jpg))$y
+    static_files: src/assets/\1
+    upload: src/assets/.*\.(gif|png|jpg)$
   - url: /
     static_files: build/index.html
     upload: build/index.html

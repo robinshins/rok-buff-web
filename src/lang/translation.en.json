@@ -103,8 +103,21 @@
   "server_status.starting":"app starting",
 
   "setbuff.titlesetting" : "title setting",
-  "setbuff.waitinglist" : "title waiting list",
+  "setbuff.waitinglist" : "Title waiting list",
   "setbuff.deletedukelist" : "Reset duke wating list",
   "setbuff.deletescilist" : "Reset scientist wating list",
-  "setbuff.deletearchlist" : "Rest architecturre wating list"
+  "setbuff.deletearchlist" : "Rest architecturre wating list",
+
+  "account_stauts":"Account Status",
+  "account_stauts.okay":"approved",
+  "account_stauts.notokay":"not approved(contact to R4)",
+
+  "member_management.list":"Member List",
+  "member_management.approve":"Approval queue",
+  "member.approve":"Approve",
+
+  "delete":"Delete",
+  "waiting_order":"My Waiting Order",
+  "th":"th",
+  "order":"order"
 }

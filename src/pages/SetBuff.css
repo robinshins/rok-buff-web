@@ -1,31 +1,39 @@
-.Home2 {
+.Home3 {
     background: white;
-    width: 350px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     /* 그림자 */
     margin: 0 auto;
     /* 페이지 중앙 정렬 */
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 main {
     display: block;
 }
 
-.title {
-    width: 43%;
-    float: left;
-    margin: 1px;
+.title2 {
+    display: inline-block;
+    width: 40%;
+    margin: 5px;
     padding: 0.7rem;
     font-size: 1rem;
-    text-align: center;
     font-weight: 100;
     background: #22b8cf;
-    color: white;
+    color: white;   
+}
+
+.title2:hover{
+    background: #19cce7;
+    color: white;   
 }
 
 .form-wrapper {
     padding: 1 rem;
+    text-align: left;
+    margin-left: 5%;
 }
 
 .members-wrapper {
@@ -90,6 +98,18 @@ main {
     color: rgb(138, 135, 135);
   }
 
+  
+  .waitSelectBox {
+    display: flex;
+    margin:20px;
+    border-bottom: 1px solid black; 
+    background-color: rgba(0,0,0,0);
+    color:black; 
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 5px;
+  }
+
 
 .inputBox2 input {
     font-size: 1rem;
@@ -105,4 +125,11 @@ main {
     color: gray;
     padding: 10px;
     border-radius: 10px;
+}
+
+.waitSelectBox x-box{
+    position: relative;
+    color: rgb(26, 24, 24);
+    height: 5px;
+    margin-left: auto;
 }
