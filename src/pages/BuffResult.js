@@ -16,7 +16,6 @@ class BuffResult extends Component {
 
   myrank = 0
 
-
   componentDidMount() {
     console.log(this.props)
     this.getRuinResult();
@@ -94,11 +93,9 @@ class BuffResult extends Component {
 
     } catch (error) {
       console.log(error.response)
-
     }
 
   }
-
 
   getRuinResult = async text => {
     try {
@@ -133,29 +130,36 @@ class BuffResult extends Component {
     }
   }
 
-  handleDone = async (t) => {
-    // try {
-    //   const response = await axios.patch('userresponse/', qs.stringify({
-    //     'mode': "TITLEQ_management", 'mode_type':'remove', 'usercode': usercode, 'title_type': this.state.titleType
-    //   })
-    //   );
-    //   console.log(response)
-    //   if (response.status === 200) {
+ 
+   handleDone = async (t) => {
+    try {
+      const response = await axios.delete('qresponse/',{data: qs.stringify({
+        'mode': "DONE", 'title_type': this.state.titleType
+      })}
+      );
+      console.log(response)
+      if (response.status === 200) {
+        alert("done success")
+        window.location.href = '/buffmain/'
 
-    //   } else {
+      } else {
+        alert(this.props.t("Done.fail"))
+        window.location.href = '/buffmain/'
+      }
 
-    //   }
+    } catch (error) {
+      alert(this.props.t("Done.fail"))
+      window.location.href = '/buffmain/'
+      console.log(error.response)
 
-    // } catch (error) {
-    //   console.log(error.response)
+    }
 
-    // }
 
-   window.location.href = '/buffmain/'
   }
-
   render() {
     const { t } = this.props;
+
+  
     let bgColor = this.state.lostkingdom === false ? "#origin kingdom" : "#The Lost Kingdom"
     let titletype = this.state.titleType === 1 ? "duke" : this.state.titleType === 2 ? "scientist" : "architect"
     //let myrank
@@ -198,12 +202,15 @@ class BuffResult extends Component {
           {t("server_status.starting")}
         </div>}
         <br/>
-              <div className="DoneReload" style={{ marginLeft:"-35px",}}>
+              <div className="DoneReload" style={{ marginLeft:"-35px",marginBottom:"-29px"}}>
                 <box className="create-button" style={{ backgroundColor: "#87ceeb", color: "#ffffff"}} onClick={() => this.handleDone()}>
                   DONE</box>
                 <box className="create-button" style={{ backgroundColor: "#87ceeb", color: "#ffffff" }} onClick={() => window.location.reload()}>
                   Reload</box>
               </div>
+              <p style={{color:"#969696",textAlign:'center'}}>
+              #{t("Done.explain")}.
+              </p>
             </div>
           </li>
         </ul>

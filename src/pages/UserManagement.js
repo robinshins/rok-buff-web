@@ -116,14 +116,14 @@ class UserManagement extends Component {
       );
       if (response.status === 201) {
         const singleItem = response.data.info[response.data.info.length - 1]
-        console.log(response)
+        console.log(response.data)
         let date = new Date(singleItem.ruintime)
         console.log(date.toString())
         const item = []
         for (var i = 0; i < response.data.info.length; i++) {
           item.push({
             name: response.data.info[i].user_ingameID, user_code: response.data.info[i].user_code,
-            user_ingameCode: response.data.info[i].user_ingamecode
+            user_ingameCode: response.data.info[i].user_ingamecode,userWebId: response.data.info[i].account
           })
         }
         this.setState({ items: item })
@@ -153,7 +153,7 @@ class UserManagement extends Component {
 
     let divItems = this.state.items.map((item, index) => {
       return <div className="selectBox2" key={item.user_code}>{`(${index + 1}) ` + item.name}
-        <p className="usercode">({item.user_ingameCode})</p>
+        <p className="usercode">({item.userWebId})</p>
         <button class="x-box" onClick={() => handleDeleteclick(item.user_code)}>
           {t("member.delete")}
         </button>
@@ -164,7 +164,7 @@ class UserManagement extends Component {
 
     let waitItems = this.state.waitingItems.map((item, index) => {
       return <div className="selectBox2" key={item.user_code}>{`(${index + 1}) ` + item.name}
-        <p className="usercode">({item.user_ingameCode})</p>
+        <p className="usercode">({item.userWebId})</p>
         <button class="x-box" onClick={() => handleApprove(item.user_code)}>
           {t("member.approve")}
         </button>

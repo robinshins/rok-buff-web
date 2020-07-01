@@ -369,6 +369,28 @@ class BuffMain extends Component {
                 </Button>
             </OverlayTrigger>
         );
+        const serverStatPopover = (
+            <Popover id="popover-basic"  style={{ backgroundColor: "#6c757d", opacity: "95%"}}>
+                <Popover.Content style={{fontSize:"10px", marginRight:"10px",color:"#ffffff", padding:"5px"}}>
+                {t("server_status.sleep")} : {t("server_explain.sleep")}<br/>
+                {t("server_status.rebooting")}  :{t("server_explain.rebooting")}<br/>
+                {t("server_status.errorRebooting")} : {t("server_explain.errorRebooting")}<br/>
+                {t("server_status.starting")}: {t("server_explain.starting")}<br/>
+                {t("server_status.authentication")} : {t("server_explain.authentication")}<br/>
+                </Popover.Content>
+            </Popover>
+        );
+
+        const ExplainServerstat = () => (
+           
+            <OverlayTrigger placement="bottom" width="50px" height="50px"  overlay={serverStatPopover}>
+                <span style={{color:"#969696"}}>
+                <i style={{marginLeft:"10px"}} class="fa fa-question-circle-o"></i>
+                </span>
+              
+            </OverlayTrigger>
+           
+        );
         return (
             <main className="BuffMain">
                 <div>
@@ -379,20 +401,24 @@ class BuffMain extends Component {
                         {t("server_status") + " : "}
                     </div>
                     {this.state.sever_status === 1 && <div className="title1" style={{ fontSize: "0.8rem", color: "grey" }}>
-                        {t("server_status.sleep")}<br />
+                        {t("server_status.sleep")}<ExplainServerstat/>
                     </div>}
                     {this.state.sever_status === 2 && <div className="title1" style={{ fontSize: "0.8rem", color: "blue" }}>
-                        {" " + t("server_status.running")}<br />
+                        {" " + t("server_status.running")}<ExplainServerstat/>
                     </div>}
                     {this.state.sever_status === 3 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
-                        {t("server_status.rebooting")}<br />
+                        {t("server_status.rebooting")}<ExplainServerstat/>
                     </div>}
                     {this.state.sever_status === 4 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
-                        {t("server_status.errorRebooting")}<br />
+                        {t("server_status.errorRebooting")}<ExplainServerstat/>
                     </div>}
                     {this.state.sever_status === 5 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
-                        {t("server_status.starting")}<br />
+                        {t("server_status.starting")}<ExplainServerstat/>
                     </div>}
+                    {this.state.sever_status === 6 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.authentication")}<ExplainServerstat/>
+                    </div>}
+     
                     <div style={{ float: "left", fontSize: "0.8rem" }}>
                         {t("account_stauts") + " :  "}
                     </div>

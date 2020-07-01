@@ -3,16 +3,16 @@
   "message.hello": "Hello",
   "login": "login",
   "register": "register",
-  "id": "Id",
-  "password": "Password",
+  "id": "Web Login Id",
+  "password": "Web Login Password",
   "okay": "okay",
   "cancel": "cancel",
   "member.delete": "delete",
   "ruinapply": "Ruin Apply",
   "result": "result",
-  "ingameNickName": "Ingame NickName",
+  "ingameNickName": "Ingame Name",
   "ingameCode": "User code (refer game profile)",
-  "serverNumber": "Server number",
+  "serverNumber": "Kingdom number (NOT LOSTKINGDOM!)",
   "error.existingID": "check your input or use other ID",
   "error.serverExisting": "not existing server",
   "error.wrongid": "please check your id or password",
@@ -101,6 +101,15 @@
   "server_status.rebooting":"rebooting",
   "server_status.errorRebooting":"error rebooting",
   "server_status.starting":"app starting",
+  "server_status.authentication":"Authentication popup generated",
+
+  "server_explain.sleep":"Titlebot is offline. If you request title, it will reboot.",
+  "server_explain.rebooting":"Titlebot is rebooting due to error. It takes 1minute",
+  "server_explain.errorRebooting":"Titlebot is recovering due to error. It takes 1minute",
+  "server_explain.starting":"Titlebot is rebooting from offline state. ",
+  "server_explain.authentication":"Human-checker appears in titlebot. Ask R4 or bot manager to solve it",
+
+  "setbuff_explain.registerAllow":"If you unselect this, the new members can use buff system only when manager allow them in MEMBER SET Tap",
 
   "setbuff.titlesetting" : "title setting",
   "setbuff.waitinglist" : "Title waiting list",
@@ -119,5 +128,9 @@
   "delete":"Delete",
   "waiting_order":"My Waiting Order",
   "th":"th",
-  "order":"order"
+  "order":"order",
+
+  "Done.fail":"Done fail, maybe you are not in queue",
+  "Done.explain" : "If you click DONE, you will be deleted from queue",
+  "chat.start":"Enjoy chat while waiting buff! We'll soon assign english random nick:) it's currently korean only."
 }

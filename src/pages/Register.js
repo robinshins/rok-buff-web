@@ -7,7 +7,7 @@ import i18n from "i18next";
 
 
 class Register extends Component{
-    state = { Userid: '', Userpassword:'',flag:'',user_ingamecode:'',user_ingameID:'',server_number:'',value:''};
+    state = { Userid: '', Userpassword:'',flag:'',user_ingamecode:'0',user_ingameID:'',server_number:'',value:''};
 
  
     onClickRegister = async text => {
@@ -90,19 +90,16 @@ class Register extends Component{
           </div>
           <section className = "form-wrapper">
 
-            <div className="email2">
+            <div className="password3">
                 <input id="Username" value ={this.state.Userid}  onChange = {handleEmailChange} placeholder= {t("id")} />
             </div>
-            <div className="password2">
+            <div className="password3">
                 <input type='text' id="Userpassword" value ={this.state.Userpassword}   onChange = {handlePasswordChange} placeholder= {t("password")} />
             </div>
-            <div className="password2">
+            <div className="password3">
                 <input type='text' id="UserNickName" value ={this.state.user_ingameID}  onChange = {handleIngameNameChange} placeholder= {t("ingameNickName")} />
             </div>
-            <div className="password2">
-                <input type='number'  id="UserId" value ={this.state.user_ingamecode}  onChange = {handleIngameCodeChange} placeholder= {t("ingameCode")} />
-            </div>
-            <div className="password2">
+            <div className="password3">
                 <input type='number' id="UserServerId" value ={this.state.server_number}  onChange = {handleServerNumberChange} placeholder= {t("serverNumber")} />
             </div>
             <div className="create-button" onClick = {onClickRegister}>

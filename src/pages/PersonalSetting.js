@@ -14,7 +14,7 @@ class PersonalSetting extends Component {
 
     state = {
         flag: -2,
-        name: localStorage.username.replace(/\"/g, ''), x: localStorage.xcoor, code: localStorage.usercode,
+        name: localStorage.username.replace(/\"/g, ''), x: localStorage.xcoor, code: "0",
         y: localStorage.ycoor, password: sessionStorage.password.replace(/\"/g, '')
     };
 
@@ -93,12 +93,11 @@ class PersonalSetting extends Component {
                     {/* <div className="password2">
             <input type='text' id="Userpassword" value={this.state.Userpassword} onChange={handlePasswordChange} placeholder={t("password")} />
         </div> */}
+         {t('ingameNickName')}
                     <div className="password2">
                         <input type='text' id="UserNickName" value={this.state.name} onChange={(e) => handleSimpleStateChange("name", e)} placeholder={t("ingameNickName")} />
                     </div>
-                    <div className="password2">
-                        <input type='number' id="UserId" value={this.state.code} onChange={(e) => handleSimpleStateChange("code", e)} placeholder={t("ingameCode")} />
-                    </div>
+                    {t('password')}
                     <div className="password2">
                         <input type='text' id="UserPassword" value={this.state.password} onChange={(e) => handleSimpleStateChange("password", e)} placeholder={t("password")} />
                     </div>

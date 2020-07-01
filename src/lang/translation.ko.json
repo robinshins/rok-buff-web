@@ -98,6 +98,15 @@
   "server_status.rebooting":"재부팅중",
   "server_status.errorRebooting":"에러로 인한 재시작중",
   "server_status.starting":"켜지는 중",
+  "server_status.authentication":"인증이 떴습니다",
+
+  "server_explain.sleep":"장기간 사용자가 없어서 칭호봇이 꺼져있습니다. 칭호를 요청하시면 다시 켜집니다.",
+  "server_explain.rebooting":"칭호봇에 문제가 생겨 자동으로 재시작중입니다. 1분정도 소요됩니다",
+  "server_explain.errorRebooting":"칭호봇에 문제가 생겨 자동으로 복구중입니다. 1분정도 소요됩니다.",
+  "server_explain.starting":"꺼져있던 칭호봇이 다시 켜지는 중입니다.",
+  "server_explain.authentication":"인증이 발생하였습니다. R4또는 관리자에게 요청해주세요",
+
+  "setbuff_explain.registerAllow":"해당 기능을 해제하시면 신규 회원들은 멤버관리 탭에서 관리자가 승인을 해줘야지만 버프 시스템을 이용할수 있습니다",
 
   "setbuff.titlesetting" : "칭호 기본 설정",
   "setbuff.waitinglist" : "칭호 대기열 관리",
@@ -118,7 +127,12 @@
 
   "waiting_order":"내 대기순서",
   "th":"번째",
-  "order":"순서입니다"
+  "order":"순서입니다",
+
+  "Done.fail":"잘못된 요청입니다. 대기열에 본인이 없었을 수 있습니다",
+  "Done.explain" : "DONE을 누르시면 대기열에서 제외됩니다",
+
+  "chat.start":"버프를 기다리시는 동안 채팅을 즐겨보세요!"
 
   
 

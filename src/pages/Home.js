@@ -62,16 +62,47 @@ class Home extends Component {
           x: response.data.info.account.x, y: response.data.info.account.y,
           name: response.data.info.account.user_ingameID, code: response.data.info.account.user_ingamecode, 
         }
+        var heroes = ['클레오파트라', '알렉산더', '마르텔','선덕','조조','미나','용기병','리차드','이성계','측천무후','로하','야만인','습격자'];
+        var adjectives = ['홀쭉한', '만취한', '가난한','뚱뚱한','센치한','무서운','섹시한','만만한','귀여운','건강한','허약한','배고픈','가녀린'];
+        var chatNickname =  adjectives[Math.floor(Math.random()*adjectives.length)]+ " " +  heroes[Math.floor(Math.random()*heroes.length)];
+        sessionStorage.chatNickname = JSON.stringify(response.data.info.account.server_code+chatNickname);
         localStorage.xcoor = JSON.stringify(response.data.info.account.x)
         localStorage.ycoor = JSON.stringify(response.data.info.account.y)
         sessionStorage.id = JSON.stringify(this.state.Userid)
+        var jbRandom = Math.random();
+        sessionStorage.chatId = JSON.stringify(response.data.info.account.user_code)
         sessionStorage.password = JSON.stringify(this.state.Userpassword)
         localStorage.username = JSON.stringify(response.data.info.account.user_ingameID.replace(/['"]+/g,''))
         localStorage.usercode = JSON.stringify(response.data.info.account.user_ingamecode)
+        localStorage.timestamp = ''+new Date().getTime();
         //localStorage.is_admin = JSON.stringify('1')
         this.setState({ userinfo: info })
         console.log(this.state.userinfo)
         console.log(response.data)
+        var firebase = require('firebase');
+    var firebaseConfig = {
+        apiKey: "AIzaSyA2JGaHEStXr3yJKFCg2gxT3eaZUml7eYw",
+        authDomain: "metal-incline-274111.firebaseapp.com",
+        databaseURL: "https://metal-incline-274111.firebaseio.com",
+        projectId: "metal-incline-274111",
+        storageBucket: "metal-incline-274111.appspot.com",
+        messagingSenderId: "587575508092",
+        appId: "1:587575508092:web:0031ad6f424f79345a1df9",
+        measurementId: "G-EH84K7W8W1"
+      };
+      var firebaseApp
+      if (!firebase.apps.length) {
+        firebaseApp= firebase.initializeApp(firebaseConfig);
+    }
+        var ref = firebase.database().ref('test/');
+        var now = Date.now();
+        var cutoff = now - 5 * 60 * 60 * 1000;
+        var old = ref.orderByChild('normal_chat/timestamp2').endAt(cutoff).limitToLast(1);
+        old.on('child_added', function(snapshot) {
+            //console.log(snapshot.val())
+            snapshot.ref.remove()
+            //snapshot.commentsRef.remove();
+        });
         if (response.data.info.account.is_serveradmin === 1) {
           this.setState({ is_admin: 1 })
           sessionStorage.islogin = 2;
@@ -80,7 +111,7 @@ class Home extends Component {
           sessionStorage.islogin = 1;
           sessionStorage.is_admin = JSON.stringify('0')
         }
-        this.setState({ redirect: true, server_code:response.data.info.server_code});
+        this.setState({ redirect: true, server_code:response.data.info.account.server_code});
         //this.props.set_ServerNumber(response.data.info.account.server_code);
         sessionStorage.server_code =JSON.stringify(response.data.info.account.server_code);
         sessionStorage.user_name =  JSON.stringify(response.data.info.account.user_ingameID.replace(/['"]+/g,''))

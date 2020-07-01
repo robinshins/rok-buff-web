@@ -8,6 +8,9 @@ import { Redirect } from 'react-router';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
 import BuffResult from './BuffResult'
+import Popover from 'react-bootstrap/Popover'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Button from 'react-bootstrap/Button'
 
 class SetBuff extends Component {
 
@@ -638,12 +641,32 @@ class SetBuff extends Component {
       </div>
 
     });
+    const serverStatPopover = (
+      <Popover id="popover-basic"  style={{ backgroundColor: "#6c757d", opacity: "95%", padding:"10px"}}>
+          <Popover.Content style={{fontSize:"10px", marginRight:"10px",color:"#ffffff"}}>
+          {t("setbuff_explain.registerAllow")}
+          </Popover.Content>
+      </Popover>
+  );
 
+  const ExplainServerstat = () => (
+     
+      <OverlayTrigger placement="bottom" width="50px" height="50px"  overlay={serverStatPopover}>
+          <span style={{color:"#969696"}}>
+          <i style={{marginLeft:"10px"}} class="fa fa-question-circle-o"></i>
+          </span>
+        
+      </OverlayTrigger>
+     
+  );
     let titlesetting = () => {
       return (<section className="form-wrapper">
         <div className="inputBox2">
           <p style={{ fontSize: 14 }}> {t("setbuff.RegisterAllow")}
-            <input id="Username" type="checkbox" onChange={handleChange} checked={this.state.register_check} /></p>
+            <input id="Username" type="checkbox" onChange={handleChange} checked={this.state.register_check} />
+            <ExplainServerstat/>
+            </p>
+          
         </div>
         <div className="inputBox2 ">
           <p style={{ fontSize: 14 }}>{t("setbuff.dukeRotate")}</p>
