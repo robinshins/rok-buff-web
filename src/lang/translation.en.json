@@ -132,5 +132,6 @@
 
   "Done.fail":"Done fail, maybe you are not in queue",
   "Done.explain" : "If you click DONE, you will be deleted from queue",
-  "chat.start":"Enjoy chat while waiting buff! We'll soon assign english random nick:) it's currently korean only."
+  "chat.start":"Enjoy chat while waiting buff! We'll soon assign english random nick:) it's currently korean only.",
+  "setbufftime.info":"If you set waiting time 0 sec, the title will be stopped"
 }

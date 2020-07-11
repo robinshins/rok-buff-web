@@ -10,6 +10,7 @@ class Register extends Component{
     state = { Userid: '', Userpassword:'',flag:'',user_ingamecode:'0',user_ingameID:'',server_number:'',value:''};
 
  
+    
     onClickRegister = async text => {
         try{
         const response = await Http.post('userresponse/', qs.stringify({

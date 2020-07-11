@@ -45,8 +45,17 @@ class BuffMain extends Component {
         tabno: 0, lasttime: NaN, name: localStorage.username, x: localStorage.xcoor, code: localStorage.usercode,
         y: localStorage.ycoor, lostkingdom: false, redirect: 0, ruin_selected: -1,
         backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null, register_check: -1,
-        notice: "", sever_status: -1, account_status: sessionStorage.account_status,
+        notice: "", sever_status: -1, account_status: sessionStorage.account_status,clickable:true,
     };
+
+     delayTime=()=>{
+        setTimeout(() => {
+            this.setState({clickable : true})
+        }, 1000);
+
+    }
+    
+
 
     componentDidMount() {
         this.getWaitingList();
@@ -216,6 +225,8 @@ class BuffMain extends Component {
 
     handleSubmit = async text => {
         console.log(this.state);
+        if(this.state.clickable){
+            this.setState({clickable:false})
         if (this.state.titleType !== -1) {
             try {
                 const response = await axios.post('qresponse/', qs.stringify({
@@ -244,6 +255,7 @@ class BuffMain extends Component {
         } else {
             alert("")
         }
+    }
     }
     handleTimeClick = (id) => {
         console.log(this.state.ruinitems)

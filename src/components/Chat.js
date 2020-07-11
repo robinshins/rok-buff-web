@@ -122,7 +122,7 @@ const Chat = () => {
     const [chatlogs, setChatlogs] = useState([]);
    
     const chatCirCleonclick = () => {
-        console.log(toggle)
+        //console.log(toggle)
         setToggle(!toggle);
 
     }
@@ -135,7 +135,7 @@ const Chat = () => {
     //   }, []);
       
     const { t,i18n } = useTranslation();
-    console.log(i18n)
+    //console.log(i18n)
     // </script>
  
     var messages = [
@@ -276,7 +276,7 @@ useEffect(()=>{
     var foo = commentsRef.orderByChild("normal_chat/timestamp2").limitToLast(10)
     foo.on('child_added', function(data) {
     var newMessage = [...messages]
-    console.log(data.val().normal_chat)
+    //console.log(data.val().normal_chat)
     setChatlogs(messages)
     if(data.val().normal_chat.user_name.replace(/\"/g, '') === sessionStorage.user_name.replace(/\"/g, '')){
         newMessage.push({id:0, message:data.val().normal_chat.text})
@@ -345,7 +345,6 @@ useEffect(()=>{
                                                 fontSize: 10
                                             },
                                             chatbubble: {
-                                                color:'black',
                                                 borderRadius: 70,
                                                 padding: 10
                                             },

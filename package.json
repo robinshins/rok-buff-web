@@ -79,6 +79,7 @@
     "react-router-dom": "^5.2.0",
     "react-scroll-button": "^1.1.2",
     "react-scroll-to-bottom": "^3.0.0",
+    "react-switch": "^5.0.1",
     "redux": "^4.0.5",
     "resolve": "1.15.0",
     "resolve-url-loader": "3.1.1",
@@ -94,7 +95,6 @@
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1"
   },
-
   "scripts": {
     "start": "set PORT=8080 &&node scripts/start.js",
     "postbuild": "rimraf build/**/*.map",

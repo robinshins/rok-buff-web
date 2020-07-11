@@ -1,0 +1,6 @@
+dispatch:
+  - url: "gamerbox.kr/*"
+    service: default
+
+  - url: "introduce.gamerbox.kr/*"
+    service: introduce

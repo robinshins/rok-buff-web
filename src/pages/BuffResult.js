@@ -8,8 +8,8 @@ class BuffResult extends Component {
   //this component requires:
   //ttype: title_type
   state = {
-    items: [], flag: '', is_admin: '', x: localStorage.xcoor,sever_status:-1,
-    y: localStorage.ycoor, lostkingdom: this.props.location.state.lostkingdom,
+    items: [], flag: '', is_admin: '', x:  this.props.location.state.xcoor,sever_status:-1,
+    y:  this.props.location.state.ycoor, lostkingdom: this.props.location.state.lostkingdom,
     titleType: this.props.location.state.titleType, name: this.props.location.state.name.replace(/\"/g, ''),
     usercode:this.props.location.usercode
   };

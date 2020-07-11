@@ -360,7 +360,7 @@ console.log(title_type)
                     data-ad-width="320"
                     data-ad-height="50"></ins>
                 <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-                {location.pathname === "/setbuff/" && <div className="update_notice">
+                {/* {location.pathname === "/setbuff/" && <div className="update_notice">
                     운영자 공지({notice_title}) :
                     <content> {notice_article}</content>
                 </div>
@@ -370,7 +370,7 @@ console.log(title_type)
                     <content> {notice_article}</content>
                 </div>
 
-                }
+                } */}
             </div>
         </Fragment>
 

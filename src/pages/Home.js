@@ -96,7 +96,7 @@ class Home extends Component {
     }
         var ref = firebase.database().ref('test/');
         var now = Date.now();
-        var cutoff = now - 5 * 60 * 60 * 1000;
+        var cutoff = now - 12 * 60 * 60 * 1000;
         var old = ref.orderByChild('normal_chat/timestamp2').endAt(cutoff).limitToLast(1);
         old.on('child_added', function(snapshot) {
             //console.log(snapshot.val())

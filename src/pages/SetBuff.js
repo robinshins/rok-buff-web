@@ -11,6 +11,7 @@ import BuffResult from './BuffResult'
 import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Button from 'react-bootstrap/Button'
+import Switch from 'react-switch'
 
 class SetBuff extends Component {
 
@@ -587,60 +588,8 @@ class SetBuff extends Component {
       onClickMakeAlliance, handleSimpleStateChange
     } = this;
 
-    function alliancedata(methodOnClick, textForButton, state, index) {
-      return <section className="form-wrapper">
-        <div className="inputBox2">
-          <p style={{ fontSize: 14 }}>{t("setbuff.Allname")}</p>
-          <input id={state[0]} type="text" onChange={(e) => handleSimpleStateChange("alliance_name", e, textForButton, index)} defaultValue={state[0]} />
-        </div>
-        <div className="inputBox2 ">
-          <p style={{ fontSize: 14 }}>{t("setbuff.Allcap")}</p>
-          <input id={state[0]} type="number" onChange={(e) => handleSimpleStateChange("max_capacity", e, textForButton, index)} defaultValue={state[1]} />
-        </div>
-        <div className="inputBox2">
-          <p style={{ fontSize: 14 }}>{t("setbuff.Allruinable")}
-            <input id={state[0]} type="checkbox" onChange={(e) => handleSimpleStateChange("ruinable", e, textForButton, index)} defaultChecked={state[2]} />
-          </p>
-        </div>
-        <div className="inputBox2">
-          <p style={{ fontSize: 14 }}>{t("setbuff.Allruinstarttime")}</p>
-          <input id={state[0]} type="datetime-local" onChange={(e) => handleSimpleStateChange("ruin_basetime", e, textForButton, index)} defaultValue={state[3]} />
-        </div>
-        <div className="inputBox2">
-          <p style={{ fontSize: 14 }}>{t("setbuff.Allaltarstarttime")}</p>
-          <input id={state[0]} type="datetime-local" onChange={(e) => handleSimpleStateChange("altar_basetime", e, textForButton, index)} defaultValue={state[4]} />
+   
 
-        </div>
-        <div className="selectKingdom">
-          <div className="create-button" onClick={(e) => methodOnClick[0](index)}>
-            {t("setbuff.All" + textForButton)}
-          </div>
-          {methodOnClick.length > 1 && (
-            <div className="create-button" onClick={(e) => methodOnClick[1](index)}>
-              {t("setbuff.Alldelete")}
-            </div>)}
-        </div>
-      </section >
-    }
-
-    let divItems = this.state.alliance.map((item, index) => {
-      return <div>
-        <div className="selectBox2" key={item.id}>{`(${index + 1}) ` + item.alliance_name}
-          <div>
-            {this.state.modifyAlliance === false && (
-              alliancedata([this.onClickModifyAlliance, this.onClickDeleteAlliance], "modify", [item.alliance_name, item.max_capacity, item.ruinable, item.ruin_basetime, item.altar_basetime], index)
-            )}
-          </div>
-        </div>
-
-        <button onClick={() => this.setState({
-          modifyAlliance: !this.state.modifyAlliance
-        })}>
-          {this.state.modifyAlliance ? t("setbuff.ModifyAllon") : t("setbuff.ModifyAlloff")}
-        </button>
-      </div>
-
-    });
     const serverStatPopover = (
       <Popover id="popover-basic"  style={{ backgroundColor: "#6c757d", opacity: "95%", padding:"10px"}}>
           <Popover.Content style={{fontSize:"10px", marginRight:"10px",color:"#ffffff"}}>
@@ -655,18 +604,19 @@ class SetBuff extends Component {
           <span style={{color:"#969696"}}>
           <i style={{marginLeft:"10px"}} class="fa fa-question-circle-o"></i>
           </span>
-        
       </OverlayTrigger>
      
   );
     let titlesetting = () => {
       return (<section className="form-wrapper">
-        <div className="inputBox2">
-          <p style={{ fontSize: 14 }}> {t("setbuff.RegisterAllow")}
-            <input id="Username" type="checkbox" onChange={handleChange} checked={this.state.register_check} />
+        <div style={{verticalAlign:"middle",display:"table"}}>
+          <p style={{ fontSize: 14, float:"left", verticalAlign:"middle",display:"table-cell", marginRight:"10px"}}> {t("setbuff.RegisterAllow")}</p>
+            <label style={{marginLeft:"15px", verticalAlign:"middle",display:"table-cell"}}>
+            <Switch onChange={handleChange} checked={this.state.register_check}/>
+            </label>
+            <label style={{marginLeft:"15px", verticalAlign:"middle",display:"table-cell"}}>
             <ExplainServerstat/>
-            </p>
-          
+            </label>
         </div>
         <div className="inputBox2 ">
           <p style={{ fontSize: 14 }}>{t("setbuff.dukeRotate")}</p>
@@ -684,6 +634,7 @@ class SetBuff extends Component {
           <p style={{ fontSize: 14 }}>{t("setbuff.kvknumber")}</p>
           <input id="Username" type="number" value={this.state.Userid} onChange={(e) => handleSimpleStateChange("kvk_number", e)} placeholder={this.state.kvk_number} />
         </div>
+        <p style={{textAlign:"center", opacity:"70%"}}>#{t("setbufftime.info")}</p>
         <div className="create-button" onClick={onClickLogin}>
           {t("setbuff.Allmodify")}
         </div>
