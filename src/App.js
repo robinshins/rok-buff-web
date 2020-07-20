@@ -1,6 +1,7 @@
+
 import React, { Component, Children } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { Home, Register, BuffMain, RuinResult, SetBuff, BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement } from './pages';
+import { Home, Register,Etcmenu,Roktest ,BuffMain, RuinResult, SetBuff, BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement,ScreenshotInven } from './pages';
 import Header from './components/Headers';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
@@ -13,6 +14,8 @@ import axios from './api';
 import qs from 'qs';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
+
+
 
 
 const admin = 2;
@@ -77,6 +80,9 @@ componentDidMount(){
         <Switch>
           <Route path='/register/' component={Register} />
           <AuthRoute  authenticated = {sessionStorage.islogin} path='/buffmain/' component={BuffMain} />
+          <AuthRoute  authenticated = {sessionStorage.islogin} path='/screenshotcalculator/' component={ScreenshotInven} />
+          <Route   path='/roktest/' component={Roktest} />
+          <AuthRoute  authenticated = {sessionStorage.islogin} path='/sidemenu/' component={Etcmenu} />
           <Route path='/ruinresult/:ruintimecode' component={RuinResult} />
           <AdminRoute  authenticated = {sessionStorage.islogin} path='/setbuff/' component={SetBuff} />
           <AuthRoute authenticated = {sessionStorage.islogin}  path='/buffresult/' component={BuffResult} />

@@ -74,8 +74,8 @@
   "notice.DeleteFail": "삭제에 실패하였습니다",
   "notice.CheckInfo": "정보를 확인하여 주세요",
   "notice.UnknownProb": "알수 없는 문제가 발생하였습니다.",
-  "notice.ServerNotConnected": "서버와의 통신에 실패하였습니다. 처음으로 돌아갑니다",
-  "notice.ServerNotConnect": "서버와의 통신에 실패하였습니다. 재시도 해주세요",
+  "notice.ServerNotConnected": "서버와의 통신에 실패하였습니다. 세션 만료일 수 있으니 재로그인 해주세요. https://www.gamerbox.kr/ 주소가 맞는지 확인해주세요 (https를 주의깊게 확인해주세요).",
+  "notice.ServerNotConnect": "서버와의 통신에 실패하였습니다. 세션 만료 일 수 있으니 재로그인 해주세요. https://www.gamerbox.kr/ 주소가 맞는지 확인해주세요 (https를 주의깊게 확인해주세요).",
   "notice.ServerNotExisting": "존재하지 않는 서버입니다",
 
   "allianceList":"연맹 목록",
@@ -133,7 +133,55 @@
   "Done.explain" : "DONE을 누르시면 대기열에서 제외됩니다",
 
   "chat.start":"버프를 기다리시는 동안 채팅을 즐겨보세요!",
-  "setbufftime.info":"대기시간을 0초로 설정하시면 해당 버프가 멈춥니다."
-  
+  "setbufftime.info":"대기시간을 0초로 설정하시면 해당 버프가 멈춥니다.",
 
+  "speedup.arch":"건축가속",
+  "speedup.research":"연구가속",
+  "speedup.heal":"치료가속",
+  "speedup.train":"훈련가속",
+  "speedup.all":"임의가속",
+  "resource.food":"식량",
+  "resource.wood":"나무",
+  "resource.rock":"석재",
+  "resource.gold":"금",
+
+  "speedup":"가속",
+  "resources":"자원",
+  "amount":"자원량",
+  "minute":"분",
+  "infantry":"보병",
+  "archer":"궁병",
+  "cavalry":"기병",
+  "siege":"투석기",
+  "totalamount":"총량",
+
+  "newunit(t4)" : "병종(T4)",
+  "upgrade" : "업글(T4 -> T5)",
+  "newunit(t5)" : "병종(T5)",
+
+  "training_calculator":"뽑을 수 있는 병사",
+  "resource_calculator":"갖고 있는 자원",
+  "screenshot_calculator":"스크린샷 계산기",
+  "submit":"제출",
+  "calculator.info1":"잘린 아이템들은 카운트 되지 않으며, 이미지를 여러장 넣을 시 중복으로 들어간 아이템들은 중복 카운팅이 됩니다. 스크린샷을 찍으실때에 해당 사항을 유념해서 찍어주세요! (한번에 한장씩 여러장 넣으실 수 있습니다.)",
+  "calculator.info2":"이미지 프로세싱의 특성상 일부 이미지가 인식이 안될 수 있습니다. 해당 이미지를 표시해 드리오니 해당 이미지의 알맞은 타입을 선택하고 빈칸을 채워 표에 추가해 주세요! (가속은 분 기준입니다) ",
+  "calculator.info3":" 1일 : 1440분, 3일: 4320분, 7일:10080분, 30일:43200분",
+  "calculator.addtable":"표에 추가하기",
+  "mge1":"최지자(1일차)",
+  "mge2":"최지자(4일차)",
+  "rok.test":"국사무쌍",
+  "header.sidemenu":"부가기능",
+  "calculator.beta":"아직 베타 버전이라 일부 오류가 있을 수 있습니다.",
+  "min/amount":"분/자원량",
+  "count":"개수",
+  "areuFirst":"처음이신가요?",
+  "whatisit":"ROK-Manager는 무엇인가요?",
+  "urlchange":"사이트 주소가 https://gamerbox.kr 로 변경되었습니다! 해당 주소로 이용해주세요. rokregister.bearbear.co.kr 에서는 일부 에러가 발생할 수 있습니다",
+
+  "sentence":"문제",
+  "answer":"답",
+  "newquiz":"새로운 문제 제보하기",
+  "roktest.info":"이 페이지는 여러분들에 의해 관리되는 페이지 입니다. 새로운 답안들을 적극적으로 공유해주시고 장난스런 데이터는 넣지 말아주시면 감사하겠습니다. 관리자 역시 더 나은 서비스를 위해 지속적으로 노력하겠습니다.",
+  "update.info":"업데이트 공지 : 스크린샷 계산기(베타 버전)와 국사무쌍 기능이 추가되었습니다. 상단바에서 확인 가능합니다. 감사합니다.",
+  "roktest.wrong":"오류 신고"
 }

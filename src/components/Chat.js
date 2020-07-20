@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect,useRef  } from 'react';
-import './Chat.css'
 import SendIcon from '@material-ui/icons/Send';
 import CloseIcon from '@material-ui/icons/Close';
 import { ChatFeed, Message } from 'react-chat-ui'
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { withTranslation, useTranslation } from "react-i18next";
+import './Chat.css'
 
 function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
@@ -146,7 +146,7 @@ const Chat = () => {
 
     var firebase = require('firebase');
     var firebaseConfig = {
-        apiKey: "AIzaSyA2JGaHEStXr3yJKFCg2gxT3eaZUml7eYw",
+        apiKey: process.env.REACT_APP_FB_API_KEY,
         authDomain: "metal-incline-274111.firebaseapp.com",
         databaseURL: "https://metal-incline-274111.firebaseio.com",
         projectId: "metal-incline-274111",

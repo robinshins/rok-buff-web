@@ -1,5 +1,4 @@
 import React, { Component, useState, useEffect, Fragment } from 'react';
-import Headercss from './Headers.css';
 import axios from '../api';
 import ReactFlagsSelect from 'react-flags-select';
 //import css module
@@ -17,6 +16,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 import Card from 'react-bootstrap/Card'
+import './Headers.css';
 
 
 
@@ -333,11 +333,11 @@ console.log(title_type)
                 </div>
 
                 {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
-                    && sessionStorage.is_login === JSON.stringify('true') && sessionStorage.is_admin !== JSON.stringify('1') &&
+        && sessionStorage.is_admin !== JSON.stringify('1') &&
                     <div className="menu">
                         <MenuItem to={'/buffmain/'}>{t("header.title")}</MenuItem>
-                        <MenuItem to={'/ruinregister/'}>{t("header.ruin")}</MenuItem>
-                        <MenuItem to={'/personalsetting/'}>{t("header.info")}</MenuItem>
+                        <MenuItem to={'/screenshotcalculator/'}>{t("screenshot_calculator")}</MenuItem>
+                        <MenuItem to={'/sidemenu/'}>{t("header.sidemenu")}</MenuItem>
                     </div>}
 
                 {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"

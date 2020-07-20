@@ -1,0 +1,60 @@
+.Home{
+    background: white;
+    width: 100%;
+    text-align: center;
+    max-width: 800px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
+    margin: 0 auto; /* 페이지 중앙 정렬 */
+    margin-top: 4rem;
+  }
+  
+  .testtitle {
+    display: inline-block;
+    width: 100%;
+    margin: 5px;
+    padding: 0.7rem;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 100;
+    background: #22b8cf;
+    color: white;
+}
+
+  
+.answerspot {
+  max-height: 500px;
+  background-color: rgb(240, 236, 236);
+  overflow: auto;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.databox {
+  display: flex;
+  margin-bottom:20px;
+  border-bottom: 1px solid black; 
+  background-color: rgba(0,0,0,0);
+  color:black; 
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+
+.answerbox{
+  position: relative;
+  flex: 0.3;
+  color: rgb(85, 80, 80);
+  margin: auto 0;
+}
+
+.sentencebox{
+  position: relative;
+  flex: 1;
+  color: rgb(85, 80, 80);
+  margin:  0 auto;
+}
+
+.wrongbox{
+  position: relative;
+  margin-left:0 auto;
+}

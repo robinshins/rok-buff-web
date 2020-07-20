@@ -77,8 +77,8 @@
   "notice.DeleteFail": "delete failed",
   "notice.CheckInfo": "check your infos",
   "notice.UnknownProb": "unknown problem",
-  "notice.ServerNotConnected": "server not connected redirect to home",
-  "notice.ServerNotConnect": "server not connected retry please",
+  "notice.ServerNotConnected": "server not connected please do Re-Login, the session might be done. Please check whether you are using https instead of http.",
+  "notice.ServerNotConnect": "server not connected please do Re-Login, the session might be done.  Please check whether you are using https instead of http.",
   "notice.ServerNotExisting": "server not existing",
 
 
@@ -133,5 +133,55 @@
   "Done.fail":"Done fail, maybe you are not in queue",
   "Done.explain" : "If you click DONE, you will be deleted from queue",
   "chat.start":"Enjoy chat while waiting buff! We'll soon assign english random nick:) it's currently korean only.",
-  "setbufftime.info":"If you set waiting time 0 sec, the title will be stopped"
+  "setbufftime.info":"If you set waiting time 0 sec, the title will be stopped",
+
+  "speedup.arch":"Build",
+  "speedup.research":"Research",
+  "speedup.heal":"Heal",
+  "speedup.train":"Training",
+  "speedup.all":"Generic",
+  "resource.food":"Corn",
+  "resource.wood":"Wood",
+  "resource.rock":"Rock",
+  "resource.gold":"Gold",
+
+  "speedup":"speed up",
+  "resources":"Resource",
+  "amount":"amount",
+  "minute":"min",
+  "infantry":"Infantry",
+  "archer":"Archer",
+  "cavalry":"Cavalry",
+  "siege":"Siege",
+  "totalamount":"amount",
+
+  "newunit(t4)" : "new unit(T4)",
+  "upgrade" : "upgrade(T4 -> T5)",
+  "newunit(t5)" : "new unit(T5)",
+
+  "training_calculator":"Training Calculator",
+  "resource_calculator":"Resource Calculator",
+  "screenshot_calculator":"Screenshot Calculator",
+  "submit" : "Submit",
+  "calculator.info1":"Cut items are not counted. When you put multiple images, overlapped items are duplicate counted. Please keep this in mind when you take screenshot!(You can put multiple images one by one)",
+  "calculator.info2":"Beacuse of the trait of the image processing, there can be some images not processed. We show that images and please add the right info of the images to the table.(speed up is in minutes)",
+  "calculator.info3":" 1day : 1440min, 3days: 4320min, 7days: 10080min, 30days: 43200min",
+  "calculator.addtable":"Add to table",
+  "mge1":"MGE(day 1)",
+  "mge2":"MGE(day 4)",
+  "rok.test":"Peerless Scholar",
+  "header.sidemenu":"Side Menu",
+  "calculator.beta":"Since this is beta version, there can be a bug.",
+  "min/amount":"min/amount",
+  "count":"count",
+  "areuFirst":"Are you first?",
+  "whatisit":"What is ROK-Manager?",
+  "urlchange":"Our site url is changed to https://gamerbox.kr Please use our service with the url. There can be server error at rokregister.bearbear.co.kr",
+  "calculator.fail":"Checklist",
+  "sentence":"Question",
+  "answer":"Answer",
+  "newquiz":"Add new question and Answer",
+  "roktest.info":"This page is basically made by users. Please share new answers, and don't put trash data. We will keep trying to make better service. Thank you. (If you have excel data for this in other languages and give it us, we can add it. Please contact to star940103@kakao.com )"
+, "update.info":"Update! Screenshot Calculator and Peerless Scholar helper are updated. You can check it in top-bar Thank you. "
+, "roktest.wrong":"dislike"
 }

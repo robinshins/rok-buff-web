@@ -6,7 +6,29 @@
     margin-top: 4rem;
   }
 
-  main{display: block;}
+  main{display: block!important;}
+  .homebtn {
+    border: none;
+    color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    padding: 14px 28px;
+    background-color: #2196F3;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .homebtn info {background-color: #2196F3;} /* Blue */
+.info:hover {background: #0b7dda;}
+
+  .rokinfo{
+    color: #969696;
+    text-align: center;
+
+  }  .rokinfo:hover {
+    color: #1723ce;
+    cursor: pointer;
+  }
 
   .hometitle {
     padding: 0.7rem;
@@ -18,7 +40,7 @@
   }
   
   .form-wrapper {
-    padding: 1rem;
+    padding: 1rem!important;;
   }
   
   .members-wrapper {

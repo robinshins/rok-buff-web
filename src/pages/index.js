@@ -8,3 +8,6 @@ export { default as RuinRegister } from './RuinRegister';
 export { default as PersonalSetting } from './PersonalSetting';
 export { default as AllianceSetting } from './AllianceSetting';
 export { default as UserManagement } from './UserManagement';
+export { default as ScreenshotInven } from './ScreenshotInven';
+export { default as Roktest } from './Roktest';
+export { default as Etcmenu } from './Etcmenu';

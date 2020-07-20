@@ -180,27 +180,16 @@ class Home extends Component {
     } = this;
 
     return (
+      <Fragment>
+      {/* <div style={{textAlign:"center", marginTop:"10px",fontSize:"20px",color:"#E00000",fontWeight:"bolder"}}>
+      {t("urlchange")}
+      <br/>
+      <button className="homebtn info" onClick={()=>{ window.location.href = "https://gamerbox.kr"}}>
+        Try in our new Website!
+        </button>
+      </div> */}
+
       <main className="testhome">
-        {/* <Chat/> */}
-     {/* <ChatFeed
-      messages={this.state.messages} // Boolean: list of message objects
-      isTyping={this.state.is_typing} // Boolean: is the recipient typing
-      hasInputField={false} // Boolean: use our input, or use your own
-      showSenderName // show the name of the user who sent the message
-      bubblesCentered={true} //Boolean should the bubbles be centered in the feed?
-      // JSON: Custom bubble styles
-      bubbleStyles={
-        {
-          text: {
-            fontSize: 30
-          },
-          chatbubble: {
-            borderRadius: 70,
-            padding: 40
-          }
-        }
-      }
-    /> */}
         <div className="hometitle">
           {t("login")}
         </div>
@@ -217,6 +206,13 @@ class Home extends Component {
           <div className="create-button" onClick={event => window.location.href = '/register/'}>
             {t("register")}
           </div>
+          <div className="rokinfo" onClick={()=>{  window.location.href = "https://gamerbox.tistory.com/m/notice/22"}}>
+          {t("areuFirst")} 
+          </div>
+      <br/>
+      <div className="rokinfo" onClick={()=>{  window.location.href = "https://introduce.gamerbox.kr";}}>
+      {t("whatisit")}
+      </div>
           {this.state.flag === 2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("error.wrongid")}</p>}
         </section>
         <div textAlign="center" verticalAlign="middle">
@@ -229,7 +225,9 @@ class Home extends Component {
             </div>
           
       <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
       </main>
+      </Fragment>
     );
   }
 

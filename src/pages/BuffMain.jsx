@@ -1,9 +1,7 @@
 import React, { Fragment, Component } from 'react';
-import './BuffMain.css';
 import axios from '../api';
 import https from 'https';
 import Http from '../api';
-
 import qs from 'qs';
 import { Redirect } from 'react-router';
 import { withTranslation, useTranslation } from "react-i18next";
@@ -20,6 +18,7 @@ import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
+import './BuffMain.css';
 
 
 class TabPanel extends Component {
@@ -404,6 +403,8 @@ class BuffMain extends Component {
            
         );
         return (
+            <Fragment>
+                <p style={{textAlign:"center", fontWeight:"bolder",color:"#fb1c2e",marginBottom:"-10px"}}>{t("update.info")}</p>
             <main className="BuffMain">
                 <div>
                     <div className="title1" style={{ fontSize: "0.8rem" }}>
@@ -514,6 +515,7 @@ class BuffMain extends Component {
                 </div>
 
             </main>
+            </Fragment>
 
         )
     }
