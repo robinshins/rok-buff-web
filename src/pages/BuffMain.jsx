@@ -195,9 +195,14 @@ class BuffMain extends Component {
                     );
                     console.log(response)
                     if (response.status === 201) {
+                        window.location.reload()
                         alert(this.props.t("notice.applysuccess"))
+                      
+
                     } else {
+                        window.location.reload()
                         alert(this.props.t("notice.applyfail"))
+                        
                     }
                     this.props.history.push({ state: this.state })
 
@@ -205,6 +210,7 @@ class BuffMain extends Component {
                 } catch (error) {
                     if (error.response.status === 406) {
                         alert(this.props.t("notice.applyfull"))
+                        
                         this.props.history.push({ state: this.state })
 
                         this.setState({ redirect: 2, ruin_selected: selected.id })
@@ -238,6 +244,7 @@ class BuffMain extends Component {
                     alert(this.props.t("notice.applysuccess"))
                     this.props.history.push({ state: this.state })
                     this.setState({ redirect: 1 })
+                    window.location.reload()
                 } else if (response.status === 304) {
                     // this.props.history.push({ state: this.state })
                     this.setState({ redirect: 1 })
@@ -404,7 +411,6 @@ class BuffMain extends Component {
         );
         return (
             <Fragment>
-                <p style={{textAlign:"center", fontWeight:"bolder",color:"#fb1c2e",marginBottom:"-10px"}}>{t("update.info")}</p>
             <main className="BuffMain">
                 <div>
                     <div className="title1" style={{ fontSize: "0.8rem" }}>
@@ -508,6 +514,7 @@ class BuffMain extends Component {
 
 
                         </div>
+                        <p style={{textAlign:"center", fontWeight:"bolder",color:"#fb1c2e",marginBottom:"-10px"}}>{t("update.info")}</p>
                         <div className="create-button" onClick={this.handleSubmit}>
                             {t("buff.apply")}
                         </div>

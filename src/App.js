@@ -1,7 +1,7 @@
 
 import React, { Component, Children } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { Home, Register,Etcmenu,Roktest ,BuffMain, RuinResult, SetBuff, BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement,ScreenshotInven } from './pages';
+import { Home, Register,Etcmenu,Roktest ,BuffMain, RuinResult, SetBuff, ScreenshotInvest,BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement,ScreenshotInven } from './pages';
 import Header from './components/Headers';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
@@ -25,7 +25,7 @@ const fail = -1;
 
 class App extends Component {
 
-  state = {authenticate : sessionStorage.islogin, loading:false}
+  state = {authenticate : sessionStorage.islogin, loading:false,language:""}
 
   signIn = async ( email, password )=> {
     try {
@@ -49,6 +49,11 @@ class App extends Component {
 }
 
 componentDidMount(){
+  if (this.state.language === JSON.stringify("ko")) {
+    i18n.changeLanguage("ko");
+  } else {
+    i18n.changeLanguage("en");
+  }
   // var self = this;
   // setTimeout(() => {
   //   self.setState({loading: false}); }, 0);
@@ -80,7 +85,7 @@ componentDidMount(){
         <Switch>
           <Route path='/register/' component={Register} />
           <AuthRoute  authenticated = {sessionStorage.islogin} path='/buffmain/' component={BuffMain} />
-          <AuthRoute  authenticated = {sessionStorage.islogin} path='/screenshotcalculator/' component={ScreenshotInven} />
+          <Route   path='/screenshotcalculator/' component={ScreenshotInven} />
           <Route   path='/roktest/' component={Roktest} />
           <AuthRoute  authenticated = {sessionStorage.islogin} path='/sidemenu/' component={Etcmenu} />
           <Route path='/ruinresult/:ruintimecode' component={RuinResult} />
@@ -90,6 +95,7 @@ componentDidMount(){
           <AuthRoute authenticated = {sessionStorage.islogin} path='/personalsetting/' component={PersonalSetting} />
           <AdminRoute  authenticated = {sessionStorage.islogin} path='/alliancesetting/' component={AllianceSetting} />
           <AdminRoute authenticated = {sessionStorage.islogin} path='/usermanagement/' component={UserManagement} />
+          <AuthRoute authenticated = {sessionStorage.islogin} path='/screenshotinvest/' component={ScreenshotInvest} />
         </Switch>   
       </Router>
     )

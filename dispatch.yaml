@@ -1,6 +1,7 @@
 dispatch:
   - url: "gamerbox.kr/*"
     service: default
+    secure: always
 
   - url: "introduce.gamerbox.kr/*"
     service: introduce

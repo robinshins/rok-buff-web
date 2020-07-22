@@ -109,7 +109,6 @@ html, body {
    
   }
   #chat-input {
-   
     background: #f4f7f9;
     width:76.5%; 
     position:relative;
@@ -157,6 +156,7 @@ html, body {
     height:35px;  
   }
   .chat-logs {
+    background: #efefef;
     z-index: 11;
     padding:15px; 
     height:450px;

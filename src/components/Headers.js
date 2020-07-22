@@ -5,7 +5,7 @@ import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/css/react-flags-select.css';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
-import { Link, withRouter,useLocation } from 'react-router-dom';
+import { Link, withRouter, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { sub, add, lang } from '../actions'
@@ -28,7 +28,7 @@ const Header = () => {
     const [apply_success, SetApplySuccess] = useState(sessionStorage.apply_success);
     const [title_type, setTitleType] = useState(sessionStorage.title_type);
     const [waiting_order, setWaitingOrder] = useState(-1);
-    const [waitItems, setWaitingItems] = useState([]);
+    const [waitItems, setWaitingItems] = useState();
     const [name, setName] = useState(sessionStorage.user_name);
     const [myrank, setMyRank] = useState(-1);
 
@@ -82,7 +82,7 @@ const Header = () => {
             );
             console.log(response.data.info[response.data.info.length - 1])
             if (response.status === 201) {
-                setNoticeTitle( response.data.info[response.data.info.length - 1].title)
+                setNoticeTitle(response.data.info[response.data.info.length - 1].title)
                 setNoticeArticle(response.data.info[response.data.info.length - 1].article)
                 // this.setState({
                 //     notice_title: response.data.info[response.data.info.length - 1].title,
@@ -138,9 +138,9 @@ const Header = () => {
     }
 
     useEffect(() => {
-    setWaitingPopup();
-    getWaitingList();
-      }, [myrank]);
+        setWaitingPopup();
+        getWaitingList();
+    }, [myrank]);
 
 
     const onclickLogout = () => {
@@ -190,11 +190,12 @@ const Header = () => {
                     console.log(sessionStorage.user_name)
                     //console.log(this.state.name)
                     if (item.name === name.replace(/\"/g, '')) {
-                        console.log("asdasdasda",index)
-                        setMyRank(index + 1) }
+                        console.log("asdasdasda", index)
+                        setMyRank(index + 1)
+                    }
                 });
 
-                if(response.data.info.length===0){
+                if (response.data.info.length === 0) {
                     setMyRank(0)
                 }
 
@@ -206,8 +207,8 @@ const Header = () => {
             }
 
         } catch (error) {
-            console.log(error.response)
-            console.log(error)
+            // console.log(error.response)
+            // console.log(error)
             //this.setState({ flag: 2 })
         }
     }
@@ -219,7 +220,7 @@ const Header = () => {
     //       this.getWaitingList();
     //   }
 
-console.log(title_type)
+    console.log(title_type)
 
     const popover = (
         <Popover style={{ backgroundColor: "#6c757d", borderRadius: "10%", opacity: "95%" }} >
@@ -228,7 +229,7 @@ console.log(title_type)
             </Popover.Title>
             <Popover.Content>
                 &nbsp;<strong>{title_type === 1 && t("buff.duke")}
-                {title_type === 2 && t("buff.scientist")}
+                    {title_type === 2 && t("buff.scientist")}
                     {title_type === 3 && t("buff.architecture")}
                 </strong>&nbsp;<strong style={{ color: "#FD6558" }}>{myrank}{t('th')}</strong> {t('order')}. &nbsp;
                    <br />
@@ -256,7 +257,7 @@ console.log(title_type)
     //             {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
     //                 && sessionStorage.is_login === JSON.stringify('true') &&
     //                 <Chat />}
-    
+
     //             <div>
     //                 <div className="logo" >
     //                     {sessionStorage.apply_success === JSON.stringify('1') &&
@@ -268,7 +269,7 @@ console.log(title_type)
     //                     {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
     //                         && sessionStorage.is_login === JSON.stringify('true') && <headerlogout type="button" onClick={() => onclickLogout()}> Logout</headerlogout>}
     //                 </div>
-    
+
     //                 {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
     //                     && sessionStorage.is_login === JSON.stringify('true') && sessionStorage.is_admin !== JSON.stringify('1') &&
     //                     <div className="menu">
@@ -276,7 +277,7 @@ console.log(title_type)
     //                         <MenuItem to={'/ruinregister/'}>{t("header.ruin")}</MenuItem>
     //                         <MenuItem to={'/personalsetting/'}>{t("header.info")}</MenuItem>
     //                     </div>}
-    
+
     //                 {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
     //                     && sessionStorage.is_login === JSON.stringify('true') && sessionStorage.is_admin === JSON.stringify('1') &&
     //                     <div className="menu">
@@ -306,25 +307,27 @@ console.log(title_type)
     //                     운영자 공지({notice_title}) :
     //                     <content> {notice_article}</content>
     //                 </div>
-    
+
     //                 }
     //             </div>
     //         </Fragment>
-    
+
     //     );
     // },5000)
-  
+
     return (
-        
+
         <Fragment>
-            {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
+            {/* {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
                 && sessionStorage.is_login === JSON.stringify('true') &&
-                <Chat />}
+                <Chat />} */}
             <div>
                 <div className="logo" >
                     {sessionStorage.apply_success === JSON.stringify('1') &&
-                        <div style={{ float: "left", marginLeft: "5px" }} >
-                            <Example></Example>
+                        <div style={{ float: "left", marginLeft: "5px" ,fontSize:"0.7rem", marginRight:"-90px",color:"#cccccc"}} >
+                            {title_type === 1 && t("buff.duke")}
+                            {title_type === 2 && t("buff.scientist")}
+                            {title_type === 3 && t("buff.architecture")}/{myrank}{t('th')}
                         </div>
                     }
                     <headertitle> ROK MANAGER</headertitle>
@@ -333,10 +336,10 @@ console.log(title_type)
                 </div>
 
                 {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
-        && sessionStorage.is_admin !== JSON.stringify('1') &&
+                    && sessionStorage.is_admin !== JSON.stringify('1') &&
                     <div className="menu">
                         <MenuItem to={'/buffmain/'}>{t("header.title")}</MenuItem>
-                        <MenuItem to={'/screenshotcalculator/'}>{t("screenshot_calculator")}</MenuItem>
+                        <MenuItem to={'/screenshotcalculator/'}> {t("screenshot_calculator")}</MenuItem>
                         <MenuItem to={'/sidemenu/'}>{t("header.sidemenu")}</MenuItem>
                     </div>}
 
@@ -375,8 +378,8 @@ console.log(title_type)
         </Fragment>
 
     );
-            
-   
+
+
 }
 
 

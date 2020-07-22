@@ -182,6 +182,18 @@
   "answer":"Answer",
   "newquiz":"Add new question and Answer",
   "roktest.info":"This page is basically made by users. Please share new answers, and don't put trash data. We will keep trying to make better service. Thank you. (If you have excel data for this in other languages and give it us, we can add it. Please contact to star940103@kakao.com )"
-, "update.info":"Update! Screenshot Calculator and Peerless Scholar helper are updated. You can check it in top-bar Thank you. "
-, "roktest.wrong":"dislike"
+, "update.info":"Update! Screenshot Calculator and Peerless Scholar helper are updated. You can check it in top-bar. And we also provide your title waiting status one the top-left side. You can update the status by refresh. "
+, "roktest.wrong":"Report on error",
+"confirm.wrong":"Do you want to report this in wrong answer?",
+"yes":"Yes",
+"no":"No",
+"roktest.chatinfo":"This is chat service for sharing answers in real-time. Please add new question and answer when you get new one in the chat!"
+,"roktest.chat":"Real Time Chat",
+"roktest.searchinfo":"Search with keyword ex) art of war",
+"sreenshotinvest":"Screenshot power/kill/deaths/aid investigation",
+"servernumber":"Server Number ex)1525",
+"account":"Web Account",
+"nickname":"Ingame NikeName",
+"ingamecode":"Ingame Code(refer game profile)",
+"screenshotinvest.info":"Please make your screen shot have power, kill, death, aid. Your data in screenshot will be converted to excel data and transfer to R4."
 }

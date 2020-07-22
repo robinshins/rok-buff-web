@@ -95,7 +95,6 @@ const ScreenshotInv = () => {
   const { t, i18n } = useTranslation();
   // useEffect(()=>{}, [result]);
   useEffect(() => {
-    i18n.changeLanguage('ko');
     if (language === JSON.stringify("ko")) {
       console.log(language)
       i18n.changeLanguage("ko");
@@ -640,23 +639,23 @@ const ScreenshotInv = () => {
           </tr>
           <tr>
             <td>{t("speedup.arch")}</td>
-            <td>{result[2]}({parseInt(result[2] / 1440)}day {parseInt((result[2] % 1440) / 60)}hour {(parseInt((result[2] % 1440) % 60))}min)</td>
+            <td>{result[2]}&nbsp; ({parseInt(result[2] / 1440)}day {parseInt((result[2] % 1440) / 60)}hour {(parseInt((result[2] % 1440) % 60))}min)</td>
           </tr>
           <tr>
             <td>{t("speedup.research")}</td>
-            <td>{result[7]}({parseInt(result[7] / 1440)}day {parseInt((result[7] % 1440) / 60)}hour {(parseInt((result[7] % 1440) % 60))}min)</td>
+            <td>{result[7]}&nbsp;({parseInt(result[7] / 1440)}day {parseInt((result[7] % 1440) / 60)}hour {(parseInt((result[7] % 1440) % 60))}min)</td>
           </tr>
           <tr>
             <td>{t("speedup.train")}</td>
-            <td>{result[9]}({parseInt(result[9] / 1440)}day {parseInt((result[9] % 1440) / 60)}hour {(parseInt((result[9] % 1440) % 60))}min)</td>
+            <td>{result[9]}&nbsp;({parseInt(result[9] / 1440)}day {parseInt((result[9] % 1440) / 60)}hour {(parseInt((result[9] % 1440) % 60))}min)</td>
           </tr>
           <tr>
             <td>{t("speedup.heal")}</td>
-            <td>{result[5]}({parseInt(result[5] / 1440)}day {parseInt((result[5] % 1440) / 60)}hour {(parseInt((result[5] % 1440) % 60))}min)</td>
+            <td>{result[5]}&nbsp;({parseInt(result[5] / 1440)}day {parseInt((result[5] % 1440) / 60)}hour {(parseInt((result[5] % 1440) % 60))}min)</td>
           </tr>
           <tr>
             <td>{t("speedup.all")}</td>
-            <td>{result[0]}({parseInt(result[0] / 1440)}day {parseInt((result[0] % 1440) / 60)}hour {(parseInt((result[0] % 1440) % 60))}min)</td>
+            <td>{result[0]}&nbsp;({parseInt(result[0] / 1440)}day {parseInt((result[0] % 1440) / 60)}hour {(parseInt((result[0] % 1440) % 60))}min)</td>
           </tr>
         </table>
         <table>

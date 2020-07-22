@@ -1,6 +1,6 @@
 runtime: python27
 api_version: 1
-service: default
+service: test
 threadsafe: true
 handlers:
   - url: /static/js/(.*)
@@ -20,10 +20,13 @@ handlers:
     upload: src/assets/.*\.(gif|png|jpg)$
   - url: /
     static_files: build/index.html
+    secure: always
     upload: build/index.html
   - url: /.*
     static_files: build/index.html
+    secure: always
     upload: build/index.html
   - url: .*
     static_files: build/index.html
+    secure: always
     upload: build/index.html

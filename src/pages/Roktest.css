@@ -23,7 +23,7 @@
   
 .answerspot {
   max-height: 500px;
-  background-color: rgb(240, 236, 236);
+  background-color: #efefef;
   overflow: auto;
   padding: 15px;
   border-radius: 10px;
@@ -57,4 +57,53 @@
 .wrongbox{
   position: relative;
   margin-left:0 auto;
+}
+
+.chat-submit2 {  
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  box-shadow:none;
+  border:none;
+  cursor: pointer;
+  border-radius:50%;
+  color:#5A5EB9;
+  margin-left: -35px;
+}
+
+
+#chat-input2 {
+  display: inline-block;
+  background: #f4f7f9;
+  width:75%; 
+  position:relative;
+  height:30px;  
+  padding-top:10px;
+  padding-right:55.2px;
+  padding-bottom:10px;
+  padding-left:15px;
+  border:none;
+  resize:none;
+  outline:none;
+  border:1px solid #ccc;
+  color:#888;
+  border-top:none;
+  border-bottom-right-radius:5px;
+  border-bottom-left-radius:5px;
+  overflow:auto;  
+}
+.chat-input2 > form {
+    margin-bottom: 0;
+}
+#chat-input2::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #ccc;
+}
+#chat-input2::-moz-placeholder { /* Firefox 19+ */
+  color: #ccc;
+}
+#chat-input2:-ms-input-placeholder { /* IE 10+ */
+  color: #ccc;
+}
+#chat-input2:-moz-placeholder { /* Firefox 18- */
+  color: #ccc;
 }

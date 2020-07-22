@@ -8,8 +8,8 @@ const config = {
   };
 
 export default axios.create({
-   baseURL: 'http://35.238.162.67/',
-   // baseURL: 'https://server.gamerbox.kr/',
+   //baseURL: 'http://35.238.162.67/',
+   baseURL: 'https://server.gamerbox.kr/',
     headers: config,
     withCredentials: true,
 

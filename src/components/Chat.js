@@ -342,7 +342,8 @@ useEffect(()=>{
                                     bubbleStyles={
                                         {
                                             text: {
-                                                fontSize: 10
+                                                fontSize: 12,
+                                                fontWeight:"bolder",
                                             },
                                             chatbubble: {
                                                 borderRadius: 70,

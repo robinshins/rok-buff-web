@@ -213,10 +213,12 @@ class BuffResult extends Component {
               </p>
             </div>
           </li>
+          
         </ul>
         <div className="resulttitle">
           Waiting List
           </div>
+          <p style={{textAlign:"center", fontSize:"0.8rem",color:"#fb1c2e",marginBottom:"-10px"}}>{t("update.info")}</p>
         <section className="register-form-wrapper">
           {divItems}
         </section>
