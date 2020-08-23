@@ -77,7 +77,8 @@
   "notice.ServerNotConnected": "서버와의 통신에 실패하였습니다. 세션 만료일 수 있으니 재로그인 해주세요. https://www.gamerbox.kr/ 주소가 맞는지 확인해주세요 (https를 주의깊게 확인해주세요).",
   "notice.ServerNotConnect": "서버와의 통신에 실패하였습니다. 세션 만료 일 수 있으니 재로그인 해주세요. https://www.gamerbox.kr/ 주소가 맞는지 확인해주세요 (https를 주의깊게 확인해주세요).",
   "notice.ServerNotExisting": "존재하지 않는 서버입니다",
-
+  "errorpage.title":"시스템 점검중입니다.",
+  "errorpage.body":"일리즈의 업데이트에 대응중입니다. 빠른 시일내에 복구하도록 하겠습니다. 불편을 끼쳐드려 죄송합니다.",
   "allianceList":"연맹 목록",
   "allianceList_none":"등록된 연맹이 없습니다",
   "findmember.info":"ctrl + F 를 통해 특정 회원을 찾아주세요. 자체 검색 기능을 곧 업데이트 하겠습니다.",
@@ -129,7 +130,7 @@
   "th":"번째",
   "order":"순서입니다",
 
-  "Done.fail":"잘못된 요청입니다. 대기열에 본인이 없었을 수 있습니다",
+  "Done.fail":"잘못된 요청입니다. 이미 칭호사용 완료 처리되었습니다.",
   "Done.explain" : "DONE을 누르시면 대기열에서 제외됩니다",
 
   "chat.start":"버프를 기다리시는 동안 채팅을 즐겨보세요!",
@@ -190,11 +191,21 @@
   "roktest.chatinfo":"최종시험에서 실시간 정보공유를 위해 제공되는 채팅입니다. 채팅을 통해 새로운 문제와 답을 알게 되시면 제보까지 해주는거는 센스!"
 ,"roktest.chat":"실시간 채팅",
 "roktest.searchinfo":"키워드로 검색 ex) 손자병법",
-"sreenshotinvest":"스크린샷 투력/처치수/전사자/자원원조 조사",
+"sreenshotinvest":"스크린샷 투력/처치수/전사자/자원원조 조사 (베타)",
 "servernumber":"서버 넘버 ex) 1525",
 "account":"웹 계정 아이디",
 "nickname":"인게임 닉네임",
 "ingamecode":"유저고유번호 (유저 프로필 참고)",
 
-"screenshotinvest.info":"처치수, 전사자, 전투력, 자원원조량이 모두 한번에 나오도록 스크린샷을 찍어 제출해주세요. 해당 이미지는 엑셀로 자동으로 정리되어 임원분들께 전달됩니다."
+"screenshotinvest.info":"꼭 스크롤을 제일 아래로 내리고 티어별 처치수 보기를 클릭하여 처치수, 전사자, 전투력, 자원원조량이 모두 한번에 나오도록 스크린샷을 찍어 제출해주세요. 해당 이미지는 엑셀로 자동으로 정리되어 임원분들께 전달됩니다. (스크롤을 제일 아래로 내렸는지, 티어별 처치수 보기를 눌렀는지 꼭 확인해주세요!)"
+,"combat":"전투력",
+"1T kill":"1T 처치",
+"2T kill":"2T 처치",
+"3T kill":"3T 처치",
+"4T kill":"4T 처치",
+"5T kill":"5T 처치",
+"death":"전사",
+"aid resources":"자원 원조량",
+"etcset":"부가 설정",
+"screenshotinvest download":"스크린샷 투력/처치수/전사자/자원원조 조사 결과 다운"
 }

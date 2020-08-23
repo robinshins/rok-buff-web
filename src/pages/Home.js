@@ -13,6 +13,7 @@ import * as actions from '../actions';
 import {connect} from 'react-redux';
 import Chat from '../components/Chat'
 import { ChatFeed, Message } from 'react-chat-ui'
+import addNotification from 'react-push-notification';
 
 
 
@@ -35,15 +36,32 @@ class Home extends Component {
   //   isAuthenticated : this.propTypes.bool
   // }
 
+
+
   componentDidMount(){
     if(sessionStorage.islogin==1){
       window.location.href = '/buffmain'
     }else if(sessionStorage.islogin==2){
       window.location.href = '/setbuff'
     }
+
+    if (localStorage.language === JSON.stringify("ko")) {
+      //console.log(language)
+      i18n.changeLanguage("ko");
+  } else if (localStorage.language === JSON.stringify("en")) {
+      i18n.changeLanguage("en");
+  } else if (localStorage.language === JSON.stringify("ja")) {
+      i18n.changeLanguage("ja");
+  }else if (localStorage.language === JSON.stringify("VN")) {
+      i18n.changeLanguage("vm");
+  }else if (localStorage.language === JSON.stringify("PO")) {
+      i18n.changeLanguage("po");
+  }else if (localStorage.language === JSON.stringify("DE")) {
+      i18n.changeLanguage("gm");
+  }else if (localStorage.language === JSON.stringify("IN")) {
+      i18n.changeLanguage("in");
   }
-
-
+  }
 
   onClickLogin = async text => {
     try {
@@ -53,7 +71,7 @@ class Home extends Component {
       );
       localStorage.id = this.state.Userid
       //localStorage.password = this.state.Userpassword
-      console.log(response);
+     // console.log(response);
       //console.log(this.state.flag) 
       if (response.status === 200) {
         sessionStorage.is_login = JSON.stringify('true');
@@ -71,17 +89,18 @@ class Home extends Component {
         sessionStorage.id = JSON.stringify(this.state.Userid)
         var jbRandom = Math.random();
         sessionStorage.chatId = JSON.stringify(response.data.info.account.user_code)
+        sessionStorage.servernumber =JSON.stringify(response.data.info.server_number)
         sessionStorage.password = JSON.stringify(this.state.Userpassword)
         localStorage.username = JSON.stringify(response.data.info.account.user_ingameID.replace(/['"]+/g,''))
         localStorage.usercode = JSON.stringify(response.data.info.account.user_ingamecode)
         localStorage.timestamp = ''+new Date().getTime();
         //localStorage.is_admin = JSON.stringify('1')
         this.setState({ userinfo: info })
-        console.log(this.state.userinfo)
-        console.log(response.data)
+       // console.log(this.state.userinfo)
+       // console.log(response.data)
         var firebase = require('firebase');
     var firebaseConfig = {
-        apiKey: "AIzaSyA2JGaHEStXr3yJKFCg2gxT3eaZUml7eYw",
+        apiKey: process.env.REACT_APP_FB_API_KEY,
         authDomain: "metal-incline-274111.firebaseapp.com",
         databaseURL: "https://metal-incline-274111.firebaseio.com",
         projectId: "metal-incline-274111",

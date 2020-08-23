@@ -85,7 +85,7 @@ const Roktest = () => {
         var foo = commentsRef.orderByChild("normal_chat/timestamp2").limitToLast(10)
         foo.on('child_added', function(data) {
         var newMessage = [...messages]
-        console.log(data.val().normal_chat)
+       // console.log(data.val().normal_chat)
         setChatlogs(messages)
         console.log(sessionStorage.user_name)
         if(sessionStorage.user_name!==undefined){
@@ -206,7 +206,7 @@ const Roktest = () => {
 
             var messages = {
                 normal_chat: {
-                    server_code: sessionStorage.server_code === undefined ? "" : sessionStorage.server_code ,
+                    server_code: sessionStorage.servernumber === undefined ? "" : sessionStorage.servernumber ,
                     user_name: sessionStorage.user_name ===undefined? "stranger"+randomnum : sessionStorage.user_name.replace(/\"/g, ''),
                     text: text,
                     chatId: sessionStorage.chatId === undefined ? "stranger"+randomnum : sessionStorage.chatId,
@@ -235,7 +235,7 @@ const Roktest = () => {
                  'bad':0,'good':0,
               })
               );
-              console.log(response)
+           //   console.log(response)
               if(response.status===200){
                 alert("success")
                 window.location.reload();

@@ -1,7 +1,7 @@
 
 import React, { Component, Children } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { Home, Register,Etcmenu,Roktest ,BuffMain, RuinResult, SetBuff, ScreenshotInvest,BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement,ScreenshotInven } from './pages';
+import { Home, Register,Etcmenu,Roktest ,Error,BuffMain, RuinResult, SetBuff,Etcset, ScreenshotInvest,BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement,ScreenshotInven } from './pages';
 import Header from './components/Headers';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
@@ -14,6 +14,7 @@ import axios from './api';
 import qs from 'qs';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
+import { Notifications } from 'react-push-notification';
 
 
 
@@ -25,7 +26,7 @@ const fail = -1;
 
 class App extends Component {
 
-  state = {authenticate : sessionStorage.islogin, loading:false,language:""}
+  state = {authenticate : sessionStorage.islogin, loading:false,language:localStorage.language}
 
   signIn = async ( email, password )=> {
     try {
@@ -47,8 +48,15 @@ class App extends Component {
     }
   
 }
-
+componentWillMount(){
+  if (this.state.language === JSON.stringify("ko")) {
+    i18n.changeLanguage("ko");
+  } else {
+    i18n.changeLanguage("en");
+  }
+}
 componentDidMount(){
+  console.log(navigator.language)
   if (this.state.language === JSON.stringify("ko")) {
     i18n.changeLanguage("ko");
   } else {
@@ -79,6 +87,7 @@ componentDidMount(){
     if(!this.state.loading){
     return (
       <Router>
+        {/* <Notifications /> */}
         <Header></Header>
         {this.props.children}
         <Route exact path='/' component={Home} />
@@ -90,6 +99,7 @@ componentDidMount(){
           <AuthRoute  authenticated = {sessionStorage.islogin} path='/sidemenu/' component={Etcmenu} />
           <Route path='/ruinresult/:ruintimecode' component={RuinResult} />
           <AdminRoute  authenticated = {sessionStorage.islogin} path='/setbuff/' component={SetBuff} />
+          <AdminRoute  authenticated = {sessionStorage.islogin} path='/etcset/' component={Etcset} />
           <AuthRoute authenticated = {sessionStorage.islogin}  path='/buffresult/' component={BuffResult} />
           <AuthRoute  authenticated = {sessionStorage.islogin} path='/ruinregister/' component={RuinRegister} />
           <AuthRoute authenticated = {sessionStorage.islogin} path='/personalsetting/' component={PersonalSetting} />

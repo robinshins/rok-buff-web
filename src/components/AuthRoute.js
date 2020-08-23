@@ -2,7 +2,7 @@ import React from "react"
 import { Route, Redirect } from "react-router-dom"
 
 function AuthRoute({ authenticated, component: Component, render, ...rest }) {
-    console.log(authenticated)
+   // console.log(authenticated)
   return (
     <Route
       {...rest}

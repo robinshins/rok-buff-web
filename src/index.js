@@ -12,6 +12,7 @@ import * as serviceWorker from './serviceWorker';
 import {createStore} from 'redux';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
+import { Notifications } from 'react-push-notification';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,6 +23,7 @@ const store = createStore(reducers);
 const render = ()=> {
   ReactDOM.render(
     <Provider store={store}>
+    {/* <Notifications /> */}
     <App />
 </Provider>,
       document.getElementById('root')

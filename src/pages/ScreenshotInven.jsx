@@ -51,9 +51,7 @@ const ScreenshotInv = () => {
   const [faildata, setFaildata] = useState([]);
   const [dynamicOpa, setDynamicOpa] = useState("");
   const [dynamicTouch, setDynamicTouch] = useState("");
-  const [speedup, setSpeedup] = useState([]);
   const [trainbuff, setTrainbuff] = useState(0);
-  const [resouerces, setResources] = useState([]);
   const [result, setResult] = useState([]);
   const [result2, setResult2] = useState([]);
   const [fixdata, setFixdata] = useState([]);
@@ -83,12 +81,6 @@ const ScreenshotInv = () => {
   const [fourTresult3, setFourTresult3] = useState([]);
   const [fiveTresult3, setFiveTresult3] = useState([]);
   const [upgraderesult3, setupgraderesult3] = useState([]);
-  const [fourTresultgrade1, setFourTresultgrade1] = useState([]);
-  const [fiveTresultgrade1, setFiveTresultgrade1] = useState([]);
-  const [upgraderesultgrade1, setupgraderesultgrade1] = useState([]);
-  const [fourTresultgrade2, setFourTresultgrade2] = useState([]);
-  const [fiveTresultgrade2, setFiveTresultgrade2] = useState([]);
-  const [upgraderesultgrade2, setupgraderesultgrade2] = useState([]);
   const [language, setLanguage] = useState(localStorage.language);
   const [optionval, setOptionval] = useState([]);
   const classes = useStyles();
@@ -96,13 +88,13 @@ const ScreenshotInv = () => {
   // useEffect(()=>{}, [result]);
   useEffect(() => {
     if (language === JSON.stringify("ko")) {
-      console.log(language)
+      //console.log(language)
       i18n.changeLanguage("ko");
     } else {
       i18n.changeLanguage("en");
     }
     return () => {
-      console.log('컴포넌트가 화면에서 사라짐');
+    //  console.log('컴포넌트가 화면에서 사라짐');
     };
   }, []);
 
@@ -130,7 +122,7 @@ const ScreenshotInv = () => {
       }
       reader.readAsDataURL(file);
     });
-    console.log(img)
+    //console.log(img)
   }
 
   const deleteImage = (index) => {
@@ -164,7 +156,7 @@ const ScreenshotInv = () => {
     if (img.length === 0) {
       alert("put image first")
     } else {
-      console.log(img[0])
+    //  console.log(img[0])
       loadingstart();
 
 
@@ -179,7 +171,7 @@ const ScreenshotInv = () => {
       axios.post('inventory', formData, {
       }).then(res => {
         setFlag(true)
-        console.log(res.data)
+       // console.log(res.data)
         var a = []
         var fail = []
         var fix = []
@@ -191,12 +183,12 @@ const ScreenshotInv = () => {
         }
         setFixdata(fix);
         setFaildata(fail);
-        console.log(res.data[1][0])
-        console.log(res.data[1])
+       // console.log(res.data[1][0])
+       // console.log(res.data[1])
         var results = []
         for (let value in res.data[1]) {
           let resultdata = res.data[1][value]
-          console.log(resultdata.result)
+         // console.log(resultdata.result)
           results.push(resultdata.result)
         }
         setResult(results);
@@ -333,22 +325,22 @@ const ScreenshotInv = () => {
     // var newval = [...optionval]
     // newval[key] = selected.value
     // setOptionval(newval)
-    console.log(`Option selected: key`, fix[key]);
+   // console.log(`Option selected: key`, fix[key]);
   };
 
   const handleInputAmoutChange = (selected, key) => {
     var fix = fixdata
     fix[key].amount = selected.target.value
     setFixdata(fix)
-    console.log(selected.target.value)
-    console.log(`Option selected: key`, fix[key]);
+   // console.log(selected.target.value)
+   // console.log(`Option selected: key`, fix[key]);
   };
 
   const handleInputCountChange = (selected, key) => {
     var fix = fixdata
     fix[key].count = selected.target.value
     setFixdata(fix)
-    console.log(`Option selected: key`, fix[key]);
+   // console.log(`Option selected: key`, fix[key]);
   };
 
   const onClickAddFix = () => {
@@ -359,57 +351,57 @@ const ScreenshotInv = () => {
         var total = parseInt(single.amount) * parseInt(single.count)
         newresult[0] += total
         //setResult(newresult)
-        console.log(total)
-        console.log(newresult[0])
-        console.log(result[0])
+      //  console.log(total)
+       // console.log(newresult[0])
+       // console.log(result[0])
       } else if (single.type === "buildfast") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[2] += total
         //setResult(newresult)
-        console.log(total)
+      //  console.log(total)
       } else if (single.type === "researchfast") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[7] += total
         //setResult(newresult)
-        console.log(total)
+       // console.log(total)
       } else if (single.type === "healfast") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[5] += total
         //setResult(newresult)
-        console.log(total)
+       // console.log(total)
       } else if (single.type === "trainfast") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[9] += total
         //setResult(newresult)
-        console.log(total)
+      //  console.log(total)
       } else if (single.type === "corn") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[3] += total
         //setResult(newresult)
-        console.log(total)
+       // console.log(total)
       } else if (single.type === "wood") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[10] += total
         //setResult(newresult)
-        console.log(total)
+       // console.log(total)
       } else if (single.type === "rock") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[8] += total
         //setResult(newresult)
-        console.log(total)
+       // console.log(total)
       } else if (single.type === "gold") {
         var total = parseInt(single.amount) * parseInt(single.count)
         //const newresult = [...result]
         newresult[4] += total
 
-        console.log(total)
+       // console.log(total)
       }
     }
     setResult(newresult)
@@ -561,7 +553,7 @@ const ScreenshotInv = () => {
       setFourTresult2(fourTresult2backup)
       setFiveTresult2(fiveTresult2backup)
       setupgraderesult2(upgraderesult2backup)
-      console.log('delete');
+     // console.log('delete');
     }
   }
 
@@ -577,15 +569,15 @@ const ScreenshotInv = () => {
       var afterbuff2 = [...fiveTresult2];
       var afterbuff3 = [...upgraderesult2];
       var rate = 1 + (e.target.value / 100)
-      console.log(rate)
-      console.log(fourTresult2.length)
-      console.log(fourTresult2)
+     // console.log(rate)
+      //console.log(fourTresult2.length)
+      //console.log(fourTresult2)
 
       for (var i = 0; i < fourTresult2.length; i++) {
         afterbuff1[i] = parseInt(afterbuff1[i] * rate)
         afterbuff2[i] = parseInt(afterbuff2[i] * rate)
         afterbuff3[i] = parseInt(afterbuff3[i] * rate)
-        console.log(afterbuff1[i])
+       // console.log(afterbuff1[i])
       }
       setFourTresult2(afterbuff1)
       setFiveTresult2(afterbuff2)

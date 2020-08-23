@@ -266,7 +266,7 @@ class AllianceSetting extends Component {
 
     render() {
 
-      console.log(this.state.makeruinable)
+      //console.log(this.state.makeruinable)
         const { t } = this.props;
 
         let divItems = this.state.alliance.map((item, index) => {

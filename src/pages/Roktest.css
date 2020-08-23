@@ -75,13 +75,10 @@
 #chat-input2 {
   display: inline-block;
   background: #f4f7f9;
-  width:75%; 
+  width:98.5%;
+  padding: 5px;
   position:relative;
   height:30px;  
-  padding-top:10px;
-  padding-right:55.2px;
-  padding-bottom:10px;
-  padding-left:15px;
   border:none;
   resize:none;
   outline:none;

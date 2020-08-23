@@ -18,11 +18,11 @@ import i18n from "i18next";
           <div className="create-button"onClick={event => window.location.href = '/roktest/'}>
             {t("rok.test")}
           </div>
-          <div className="create-button" onClick={event => window.location.href = '/personalsetting/'}>
-          {t("header.info")}
-          </div>
           <div className="create-button" onClick={event => window.location.href = '/screenshotinvest/'}>
           {t("sreenshotinvest")}
+          </div>
+          <div className="create-button" onClick={event => window.location.href = '/personalsetting/'}>
+          {t("header.info")}
           </div>
           </section>
         </main>

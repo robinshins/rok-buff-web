@@ -57,37 +57,14 @@ class BuffMain extends Component {
 
 
     componentDidMount() {
-        this.getWaitingList();
         this.getServerStat();
+        this.getDukewait();
+        this.getSciwait();
+        this.getArchwait();
+        this.getWaitingList();
         if (sessionStorage.id !== undefined && sessionStorage.password !== undefined) {
-            console.log(sessionStorage.id.replace(/\"/g, ''))
-            this.signIn(sessionStorage.id.replace(/\"/g, ''), sessionStorage.password.replace(/\"/g, ''))
+            //console.log(sessionStorage.id.replace(/\"/g, ''))
         }
-    }
-
-    signIn = async (email, password) => {
-        try {
-            const response = await axios.patch('loginresponse/', qs.stringify({
-                'mode': "login", 'password': password, 'account': email
-            })
-            );
-            console.log(response.data)
-            if (response.status === 200) {
-                this.setState({ is_kvk: response.data.info.account.is_kvk })
-                if (response.data.info.account.is_kvk === 1) {
-                    this.setState({ lostkingdom: true })
-                }
-                localStorage.xcoor = JSON.stringify(response.data.info.account.x)
-                localStorage.ycoor = JSON.stringify(response.data.info.account.y)
-            } else {
-
-            }
-
-        } catch (error) {
-            console.log(error.response)
-
-        }
-
     }
 
 
@@ -102,13 +79,13 @@ class BuffMain extends Component {
 
             if (response.status === 201) {
 
-                console.log(response)
+               // console.log(response)
                 if (response.data.info.length === 0) {
                     this.setState({ flag: -1 })
                 } else {
                     const singleItem = response.data.info
-                    console.log(response)
-                    console.log(singleItem)
+                   // console.log(response)
+                   // console.log(singleItem)
                     this.setState({
                         sever_status: singleItem.status_type
                     })
@@ -121,23 +98,88 @@ class BuffMain extends Component {
                             register_check: false
                         })
                     }
-                    console.log(this.state)
+                   // console.log(this.state)
 
                 }
             } else if (response.status === 404) {
-                alert(this.props.t("notice.ServerNotExisting"))
-                console.log(response)
+                //alert(this.props.t("notice.ServerNotExisting"))
+                //console.log(response)
             }
 
         } catch (error) {
-            console.log(error)
-            alert(this.props.t("notice.ServerNotConnected"))
+            //console.log(error)
+            //alert(this.props.t("notice.ServerNotConnected"))
 
             //TODO
             // window.location.href = '/'
         }
 
     }
+    getDukewait = async text => {
+        try {
+          const response = await axios.get('qresponse/', {
+            params: {
+              'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': 1
+            }
+          }
+          );
+         // console.log(response)
+          if (response.status === 200) {
+              this.setState({duke_wait:response.data.info.length})
+          
+          } else {
+            console.log(response)
+    
+          }
+    
+        } catch (error) {
+        
+        }
+      }
+
+      getSciwait = async text => {
+        try {
+          const response = await axios.get('qresponse/', {
+            params: {
+              'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': 2
+            }
+          }
+          );
+         // console.log(response)
+          if (response.status === 200) {
+              this.setState({scientist_wait:response.data.info.length})
+          
+          } else {
+            console.log(response)
+    
+          }
+    
+        } catch (error) {
+        
+        }
+      }
+
+      getArchwait = async text => {
+        try {
+          const response = await axios.get('qresponse/', {
+            params: {
+              'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': 3
+            }
+          }
+          );
+          console.log(response)
+          if (response.status === 200) {
+              this.setState({architecture_wait:response.data.info.length})
+          
+          } else {
+            console.log(response)
+    
+          }
+    
+        } catch (error) {
+        
+        }
+      }
 
     getWaitingList = async text => {
         try {
@@ -148,9 +190,7 @@ class BuffMain extends Component {
             }
             );
             if (response.status === 200) {
-                this.setState({ duke_wait: response.data.info[0][0] })
-                this.setState({ scientist_wait: response.data.info[1][0] })
-                this.setState({ architecture_wait: response.data.info[2][0] })
+
                 let checktime = NaN
                 if (Date(response.data.info[0][2]) < Date(response.data.info[1][2])) {
                     if (Date(response.data.info[1][2]) < Date(response.data.info[2][2])) {
@@ -170,30 +210,30 @@ class BuffMain extends Component {
                     }
                     let date = new Date(checktime).toString().substring(15)
                     this.setState({ lasttime: date })
-                    console.log(response)
+                   // console.log(response)
                 }
             } else {
             }
         } catch (error) {
             //TODO// alert("server not connected redirect to home")
             // window.location.href = '/'
-            console.log(error)
+           // console.log(error)
         }
     }
 
     handleApplyclick = async text => {
         if (this.state.flag === -1 || this.state.ruin_selected === -1) {
-            console.log(this.state)
+           // console.log(this.state)
         } else {
             const selected = this.state.ruinitems.find(item => item.checked === true)
-            console.log(selected)
+           // console.log(selected)
             if (selected.checked) {
                 try {
                     const response = await Http.patch('userresponse/', qs.stringify({
                         'mode': 'RUIN_register', 'ruintime_code': selected.id
                     })
                     );
-                    console.log(response)
+                   // console.log(response)
                     if (response.status === 201) {
                         window.location.reload()
                         alert(this.props.t("notice.applysuccess"))
@@ -229,7 +269,7 @@ class BuffMain extends Component {
     }
 
     handleSubmit = async text => {
-        console.log(this.state);
+       // console.log(this.state);
         if(this.state.clickable){
             this.setState({clickable:false})
         if (this.state.titleType !== -1) {
@@ -252,7 +292,7 @@ class BuffMain extends Component {
                     alert(this.props.t("notice.nocoordinate"))
                 }
                 else {
-                    console.log(response)
+                   // console.log(response)
                 }
             } catch (error) {
                 alert(this.props.t("notice.alreadyregistered"))
@@ -264,7 +304,7 @@ class BuffMain extends Component {
     }
     }
     handleTimeClick = (id) => {
-        console.log(this.state.ruinitems)
+       // console.log(this.state.ruinitems)
 
         const { ruinitems } = this.state;
         // 파라미터로 받은 id 를 가지고 몇번째 아이템인지 찾습니다.

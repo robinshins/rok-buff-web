@@ -22,7 +22,7 @@ class SetBuff extends Component {
     register_check: -1, register_check_bool: true, duke_time: 0, scientist_time: 0, architecture_time: 0,
     kvk_number: 0, buffType: 0, duke_wait: 0, scientist_wait: 0, architecture_wait: 0,
     makealliance_name: "연맹이름", makeruin_basetime: '', makemax_capacity: 0, makeruinable: false, makealtar_basetime: '',
-    modifyalliance_name: [], modifyruin_basetime: [], modifymax_capacity: [], modifyruinable: [], modifyaltar_basetime: [], modifyalliance_code: []
+    modifyalliance_name: [], modifyruin_basetime: [], modifymax_capacity: [], modifyruinable: [], modifyaltar_basetime: [], modifyalliance_code: [],server_status:-1,
   };
 
   components = {
@@ -31,9 +31,78 @@ class SetBuff extends Component {
 
   componentDidMount() {
     this.getServerStat();
-    this.getWaitingList();
+    //this.getWaitingList();
     this.getWaitingMembers();
+    this.getDukewait();
+    this.getSciwait();
+    this.getArchwait();
     ////console.log(this.state)
+  }
+
+  getDukewait = async text => {
+    try {
+      const response = await axios.get('qresponse/', {
+        params: {
+          'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': 1
+        }
+      }
+      );
+      console.log(response)
+      if (response.status === 200) {
+          this.setState({duke_wait:response.data.info.length})
+      
+      } else {
+       // console.log(response)
+
+      }
+
+    } catch (error) {
+    
+    }
+  }
+
+  getSciwait = async text => {
+    try {
+      const response = await axios.get('qresponse/', {
+        params: {
+          'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': 2
+        }
+      }
+      );
+     // console.log(response)
+      if (response.status === 200) {
+          this.setState({scientist_wait:response.data.info.length})
+      
+      } else {
+        console.log(response)
+
+      }
+
+    } catch (error) {
+    
+    }
+  }
+
+  getArchwait = async text => {
+    try {
+      const response = await axios.get('qresponse/', {
+        params: {
+          'mode': "get_MYQ", 'dat_time': "1900-01-01 00:00:00.00+00:00", 'title_type': 3
+        }
+      }
+      );
+     // console.log(response)
+      if (response.status === 200) {
+          this.setState({architecture_wait:response.data.info.length})
+      
+      } else {
+       // console.log(response)
+
+      }
+
+    } catch (error) {
+    
+    }
   }
 
 
@@ -154,7 +223,6 @@ class SetBuff extends Component {
     }
   }
 
-
   getServerStat = async text => {
     try {
       const response = await Http.get('userresponse/', {
@@ -170,6 +238,9 @@ class SetBuff extends Component {
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
         } else {
+          this.setState({
+            sever_status: singleItem.status_type
+        })
           const singleItem = response.data.info
           //console.log(response)
           this.setState({
@@ -217,11 +288,15 @@ class SetBuff extends Component {
 
       if (response.status === 201) {
 
-        console.log(response)
+       // console.log(response)
         if (response.data.info.length === 0) {
           this.setState({ flag: -1 })
         } else {
+
           const singleItem = response.data.info
+          this.setState({
+            sever_status: singleItem.status_type
+        })
           //console.log(response)
           this.setState({
             server_number: singleItem.number, duke_time: singleItem.duke_time,
@@ -309,7 +384,7 @@ class SetBuff extends Component {
         }
       }
       );
-      console.log(response)
+     // console.log(response)
       if (response.status === 200) {
         const singleItem = response.data.info[response.data.info.length - 1]
         //console.log(response)
@@ -526,13 +601,13 @@ class SetBuff extends Component {
         'mode': "TITLEQ_management", 'mode_type': 'remove', 'user_code': user_code, 'title_type': title_type
       })
       );
-      console.log(response)
+     // console.log(response)
       if (response.status === 200) {
         alert("delete success")
         window.location.reload()
       } else if (response.status) {
         alert("delete fail")
-        console.log(response)
+       // console.log(response)
       }
 
     } catch (error) {
@@ -588,8 +663,28 @@ class SetBuff extends Component {
       onClickMakeAlliance, handleSimpleStateChange
     } = this;
 
-   
+    const serverStatPopover2 = (
+      <Popover id="popover-basic"  style={{ backgroundColor: "#6c757d", opacity: "95%"}}>
+          <Popover.Content style={{fontSize:"10px", marginRight:"10px",color:"#ffffff", padding:"5px"}}>
+          {t("server_status.sleep")} : {t("server_explain.sleep")}<br/>
+          {t("server_status.rebooting")}  :{t("server_explain.rebooting")}<br/>
+          {t("server_status.errorRebooting")} : {t("server_explain.errorRebooting")}<br/>
+          {t("server_status.starting")}: {t("server_explain.starting")}<br/>
+          {t("server_status.authentication")} : {t("server_explain.authentication")}<br/>
+          </Popover.Content>
+      </Popover>
+  );
 
+  const ExplainServerstat2 = () => (
+           
+    <OverlayTrigger placement="bottom" width="50px" height="50px"  overlay={serverStatPopover2}>
+        <span style={{color:"#969696"}}>
+        <i style={{marginLeft:"10px"}} class="fa fa-question-circle-o"></i>
+        </span>
+      
+    </OverlayTrigger>
+   
+);
     const serverStatPopover = (
       <Popover id="popover-basic"  style={{ backgroundColor: "#6c757d", opacity: "95%", padding:"10px"}}>
           <Popover.Content style={{fontSize:"10px", marginRight:"10px",color:"#ffffff"}}>
@@ -597,7 +692,7 @@ class SetBuff extends Component {
           </Popover.Content>
       </Popover>
   );
-
+console.log(this.state.server_status)
   const ExplainServerstat = () => (
      
       <OverlayTrigger placement="bottom" width="50px" height="50px"  overlay={serverStatPopover}>
@@ -607,8 +702,32 @@ class SetBuff extends Component {
       </OverlayTrigger>
      
   );
+  
     let titlesetting = () => {
       return (<section className="form-wrapper">
+
+                              <div style={{ float: "left", fontSize: "0.8rem"}}>
+                        {t("server_status") + " : "}
+                    </div>
+                    {this.state.sever_status === 1 && <div className="title1" style={{ fontSize: "0.8rem", color: "grey" }}>
+                        {t("server_status.sleep")}<ExplainServerstat2/>
+                    </div>}
+                    {this.state.sever_status === 2 && <div className="title1" style={{ fontSize: "0.8rem", color: "blue" }}>
+                        {" " + t("server_status.running")}<ExplainServerstat2/>
+                    </div>}
+                    {this.state.sever_status === 3 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.rebooting")}<ExplainServerstat2/>
+                    </div>}
+                    {this.state.sever_status === 4 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.errorRebooting")}<ExplainServerstat2/>
+                    </div>}
+                    {this.state.sever_status === 5 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.starting")}<ExplainServerstat2/>
+                    </div>}
+                    {this.state.sever_status === 6 && <div className="title1" style={{ fontSize: "0.8rem", color: "red" }}>
+                        {t("server_status.authentication")}<ExplainServerstat2/>
+                    </div>}
+                    <br/>
         <div style={{verticalAlign:"middle",display:"table"}}>
           <p style={{ fontSize: 14, float:"left", verticalAlign:"middle",display:"table-cell", marginRight:"10px"}}> {t("setbuff.RegisterAllow")}</p>
             <label style={{marginLeft:"15px", verticalAlign:"middle",display:"table-cell"}}>
@@ -662,6 +781,7 @@ class SetBuff extends Component {
     const waitinglist = () => {
       return (
         <section className="form-wrapper">
+
           <div className="selectBox" style={{ marginTop: "30px" }} onClick={() => clickDuke()}>
             {t("buff.duke")}
             <waitNumber> {this.state.duke_wait + t("buff.waiting")}</waitNumber>

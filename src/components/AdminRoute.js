@@ -2,8 +2,8 @@ import React from "react"
 import { Route, Redirect } from "react-router-dom"
 
 function AdminRoute({ authenticated, component: Component, render, ...rest }) {
-  console.log(authenticated == 2)
-  console.log("dsadsa")
+ // console.log(authenticated == 2)
+//  console.log("dsadsa")
   return (
     <Route
       {...rest}

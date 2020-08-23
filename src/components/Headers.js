@@ -17,6 +17,7 @@ import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 import Card from 'react-bootstrap/Card'
 import './Headers.css';
+import addNotification from 'react-push-notification';
 
 
 
@@ -26,12 +27,12 @@ const Header = () => {
     const [notice_title, setNoticeTitle] = useState("");
     const [notice_article, setNoticeArticle] = useState("");
     const [apply_success, SetApplySuccess] = useState(sessionStorage.apply_success);
-    const [title_type, setTitleType] = useState(sessionStorage.title_type);
+    const [title_type, setTitleType] = useState(sessionStorage.title_type === undefined ? 1 : sessionStorage.title_type);
     const [waiting_order, setWaitingOrder] = useState(-1);
     const [waitItems, setWaitingItems] = useState();
     const [name, setName] = useState(sessionStorage.user_name);
     const [myrank, setMyRank] = useState(-1);
-
+   // console.log(sessionStorage.title_type)
     // state = { language: "", notice_title: "", notice_article: "", apply_success: sessionStorage.apply_success, 
     // title_type: "", waiting_order: -1,waitItems:[],
     // name:'', myrank:0 }
@@ -50,20 +51,37 @@ const Header = () => {
     //     }
     // }
 
+
     useEffect(() => {
         //getWaitingList();
-        getNotice();
+        //getNotice();
         //setWaitingPopup();
-        setTimeout(() => {
-            getWaitingList();
-            setWaitingPopup();
-        }, 5000);
+        //buttonClick();
+
+        if (sessionStorage.title_type !== undefined) {
+            setTimeout(() => {
+                getWaitingList();
+                setWaitingPopup();
+            }, 5000);
+
+        }
+
         i18n.changeLanguage('ko');
         if (language === JSON.stringify("ko")) {
-            console.log(language)
+            //console.log(language)
             i18n.changeLanguage("ko");
-        } else {
+        } else if (language === JSON.stringify("en")) {
             i18n.changeLanguage("en");
+        } else if (language === JSON.stringify("ja")) {
+            i18n.changeLanguage("ja");
+        }else if (language === JSON.stringify("VN")) {
+            i18n.changeLanguage("vm");
+        }else if (language === JSON.stringify("PO")) {
+            i18n.changeLanguage("po");
+        }else if (language === JSON.stringify("DE")) {
+            i18n.changeLanguage("gm");
+        }else if (language === JSON.stringify("IN")) {
+            i18n.changeLanguage("in");
         }
         return () => {
             console.log('컴포넌트가 화면에서 사라짐');
@@ -74,13 +92,13 @@ const Header = () => {
 
     const getNotice = async (t) => {
         try {
-            const response = await axios.get('userresponse/', {
+            const response = await axios.get('boardresponse/', {
                 params: {
-                    'mode': "ServerBoard_list"
+                    'mode': "ServerBoard_list",
                 }
             }
             );
-            console.log(response.data.info[response.data.info.length - 1])
+           // console.log(response.data.info[response.data.info.length - 1])
             if (response.status === 201) {
                 setNoticeTitle(response.data.info[response.data.info.length - 1].title)
                 setNoticeArticle(response.data.info[response.data.info.length - 1].article)
@@ -122,9 +140,24 @@ const Header = () => {
         if (countryCode === 'KR') {
             i18n.changeLanguage('ko');
             localStorage.language = JSON.stringify('ko')
-        } else {
+        } else if (countryCode == 'US') {
             i18n.changeLanguage('en');
             localStorage.language = JSON.stringify('en')
+        } else if (countryCode == 'JP') {
+            i18n.changeLanguage('ja');
+            localStorage.language = JSON.stringify('ja')
+        }else if (countryCode == 'VN') {
+            localStorage.language = JSON.stringify('VN')
+            i18n.changeLanguage("vm");
+        }else if (countryCode == 'PO') {
+            localStorage.language = JSON.stringify('PO')
+            i18n.changeLanguage("po");
+        }else if (countryCode == 'DE') {
+            localStorage.language = JSON.stringify('DE')
+            i18n.changeLanguage("gm");
+        }else if (countryCode == 'IN') {
+            localStorage.language = JSON.stringify('IN')
+            i18n.changeLanguage("in");
         }
         setLanguage(countryCode)
         // this.setState({
@@ -151,7 +184,7 @@ const Header = () => {
     }
 
     const setWaitingPopup = () => {
-        console.log(sessionStorage.title_type === JSON.stringify(3))
+        //console.log(sessionStorage.title_type === JSON.stringify(3))
         if (sessionStorage.title_type === JSON.stringify(1)) {
             setTitleType(1)
             //this.setState({ title_type: 1 })
@@ -177,7 +210,7 @@ const Header = () => {
             console.log(response)
             if (response.status === 200) {
                 const singleItem = response.data.info[response.data.info.length - 1]
-                console.log(response)
+                //console.log(response)
                 const item = []
                 for (var i = 0; i < response.data.info.length; i++) {
                     item.push({ name: response.data.info[i][2], server: response.data.info[i][1] })
@@ -185,12 +218,12 @@ const Header = () => {
                 setWaitingItems(item)
                 //this.setState({ waitItems: item })
                 item.map((item, index) => {
-                    console.log(item.name)
-                    console.log(name)
-                    console.log(sessionStorage.user_name)
+                    //console.log(item.name)
+                    // console.log(name)
+                    //console.log(sessionStorage.user_name)
                     //console.log(this.state.name)
                     if (item.name === name.replace(/\"/g, '')) {
-                        console.log("asdasdasda", index)
+                        //console.log("asdasdasda", index)
                         setMyRank(index + 1)
                     }
                 });
@@ -199,10 +232,10 @@ const Header = () => {
                     setMyRank(0)
                 }
 
-                console.log(waitItems)
-                console.log(myrank)
+                //console.log(waitItems)
+                //console.log(myrank)
             } else if (response.status) {
-                console.log(response)
+                //console.log(response)
 
             }
 
@@ -220,7 +253,7 @@ const Header = () => {
     //       this.getWaitingList();
     //   }
 
-    console.log(title_type)
+    //console.log(title_type)
 
     const popover = (
         <Popover style={{ backgroundColor: "#6c757d", borderRadius: "10%", opacity: "95%" }} >
@@ -324,7 +357,7 @@ const Header = () => {
             <div>
                 <div className="logo" >
                     {sessionStorage.apply_success === JSON.stringify('1') &&
-                        <div style={{ float: "left", marginLeft: "5px" ,fontSize:"0.7rem", marginRight:"-90px",color:"#cccccc"}} >
+                        <div style={{ float: "left", marginLeft: "5px", fontSize: "0.7rem", marginRight: "-90px", color: "#cccccc" }} >
                             {title_type === 1 && t("buff.duke")}
                             {title_type === 2 && t("buff.scientist")}
                             {title_type === 3 && t("buff.architecture")}/{myrank}{t('th')}
@@ -347,22 +380,27 @@ const Header = () => {
                     && sessionStorage.is_login === JSON.stringify('true') && sessionStorage.is_admin === JSON.stringify('1') &&
                     <div className="menu">
                         <MenuItem to={'/setbuff/'}>{t("header.titlesetting")}</MenuItem>
-                        <MenuItem to={'/alliancesetting/'}>{t("header.alli")}</MenuItem>
                         <MenuItem to={'/usermanagement/'}>{t("header.membermanage")}</MenuItem>
+                        <MenuItem to={'/etcset/'}>{t("etcset")}</MenuItem>
                     </div>}
                 <ReactFlagsSelect
                     className="menu-flags"
-                    countries={["US", "KR"]}
+                    countries={["US", "KR", "JP","VN",'DE','IN','PO']}
                     onSelect={onSelectFlag}
                     alignOptions="right"
                     selectedSize={15}
                     optionsSize={10}
                 />
                 <ins class="kakao_ad_area"
+                    data-ad-unit="DAN-uve7st00ub1h"
+                    data-ad-width="320"
+                    data-ad-height="100"></ins>
+                <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+                {/* <ins class="kakao_ad_area"
                     data-ad-unit="DAN-1h84s2np9jckm"
                     data-ad-width="320"
                     data-ad-height="50"></ins>
-                <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+                <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script> */}
                 {/* {location.pathname === "/setbuff/" && <div className="update_notice">
                     운영자 공지({notice_title}) :
                     <content> {notice_article}</content>

@@ -47,67 +47,29 @@ const ScreenshotInvest = () => {
     const [flag, setFlag] = useState(false);
     const [submitflag, setSubmitsetFlag] = useState(false);
     const [loadingFlag, setLoadingFlag] = useState(false);
-    const [flag2, setFlag2] = useState("-1");
-    const [resultImg, setResultImg] = useState([]);
-    const [faildata, setFaildata] = useState([]);
     const [dynamicOpa, setDynamicOpa] = useState("");
     const [dynamicTouch, setDynamicTouch] = useState("");
-    const [speedup, setSpeedup] = useState([]);
-    const [trainbuff, setTrainbuff] = useState(0);
-    const [resouerces, setResources] = useState([]);
-    const [result, setResult] = useState([]);
-    const [result2, setResult2] = useState([]);
     const [fixdata, setFixdata] = useState([]);
-    const [selectedOption, setSelectedOption] = useState([]);
-    const [inputval, setinputVal] = useState();
-    const [fourT1, setFourT1] = useState({ time: 80, food: 300, wood: 300, rock: 0, gold: 20 });
-    const [fourT2, setFourT2] = useState({ time: 80, food: 300, wood: 0, rock: 225, gold: 20 });
-    const [fourT3, setFourT3] = useState({ time: 80, food: 0, wood: 300, rock: 225, gold: 20 });
-    const [fourT4, setFourT4] = useState({ time: 80, food: 200, wood: 200, rock: 150, gold: 20 });
-    const [fiveT1, setFiveT1] = useState({ time: 120, food: 800, wood: 800, rock: 0, gold: 400 });
-    const [fiveT2, setFiveT2] = useState({ time: 120, food: 800, wood: 0, rock: 600, gold: 400 });
-    const [fiveT3, setFiveT3] = useState({ time: 120, food: 0, wood: 800, rock: 600, gold: 400 });
-    const [fiveT4, setFiveT4] = useState({ time: 120, food: 250, wood: 250, rock: 250, gold: 250 });
-    const [upgrade1, setUpgrade1] = useState({ time: 40, food: 500, wood: 500, rock: 0, gold: 380 });
-    const [upgrade2, setUpgrade2] = useState({ time: 40, food: 500, wood: 0, rock: 375, gold: 380 });
-    const [upgrade3, setUpgrade3] = useState({ time: 40, food: 0, wood: 500, rock: 375, gold: 380 });
-    const [upgrade4, setUpgrade4] = useState({ time: 40, food: 50, wood: 50, rock: 200, gold: 230 });
-    const [fourTresult, setFourTresult] = useState([]);
-    const [fiveTresult, setFiveTresult] = useState([]);
-    const [upgraderesult, setupgraderesult] = useState([]);
-    const [fourTresult2, setFourTresult2] = useState([]);
-    const [fourTresult2backup, setFourTresult2backup] = useState([]);
-    const [fiveTresult2backup, setFiveTresult2backup] = useState([]);
-    const [fiveTresult2, setFiveTresult2] = useState([]);
-    const [upgraderesult2, setupgraderesult2] = useState([]);
-    const [upgraderesult2backup, setupgraderesult2backup] = useState([]);
-    const [fourTresult3, setFourTresult3] = useState([]);
-    const [fiveTresult3, setFiveTresult3] = useState([]);
-    const [upgraderesult3, setupgraderesult3] = useState([]);
-    const [fourTresultgrade1, setFourTresultgrade1] = useState([]);
-    const [fiveTresultgrade1, setFiveTresultgrade1] = useState([]);
-    const [upgraderesultgrade1, setupgraderesultgrade1] = useState([]);
-    const [fourTresultgrade2, setFourTresultgrade2] = useState([]);
-    const [fiveTresultgrade2, setFiveTresultgrade2] = useState([]);
-    const [upgraderesultgrade2, setupgraderesultgrade2] = useState([]);
     const [language, setLanguage] = useState(localStorage.language);
-    const [optionval, setOptionval] = useState([]);
-    const [servernumber, setServernumber] = useState("");
+    const [servernumber, setServernumber] = useState(sessionStorage.servernumber.replace(/\"/g, ''));
     const [account, setAccount] = useState(sessionStorage.id.replace(/\"/g, ''));
+    const [usercode, setUsercode] = useState(sessionStorage.chatId);
     const [nickname, setNickName] = useState(localStorage.username.replace(/\"/g, ''));
     const [ingamecode, setIngamecode] = useState(localStorage.usercode.replace(/\"/g, ''));
     const classes = useStyles();
+    const [investResult,setInvestResult] =  useState([]);
     const { t, i18n } = useTranslation();
     // useEffect(()=>{}, [result]);
     useEffect(() => {
+        console.log(sessionStorage.servernumber)
         if (language === JSON.stringify("ko")) {
-            console.log(language)
+           // console.log(language)
             i18n.changeLanguage("ko");
         } else {
             i18n.changeLanguage("en");
         }
         return () => {
-            console.log('컴포넌트가 화면에서 사라짐');
+          //  console.log('컴포넌트가 화면에서 사라짐');
         };
     }, []);
 
@@ -151,7 +113,7 @@ const ScreenshotInvest = () => {
             }
             reader.readAsDataURL(file);
         });
-        console.log(img)
+      //  console.log(img)
     }
 
     const deleteImage = (index) => {
@@ -187,33 +149,38 @@ const ScreenshotInvest = () => {
         } else if(servernumber.length===0 || account===undefined || ingamecode === undefined || nickname ===undefined){
             alert("please fill all information")
         }else {
-            console.log(img)
+        //    console.log(img[0])
             loadingstart();
             var formData = new FormData();
-            formData.append('file', img)
-            // formData.append('server_number', servernumber)
-            // formData.append('account', account)
-            // formData.append('ingame_id', nickname)
-            // formData.append('ingame_code', ingamecode)
-            axios.post('stat/', formData,qs.stringify({"server_number":servernumber,"account":account,
-            "ingame_id":nickname,"ingame_code":ingamecode})).then(res => {
+            formData.append('file', img[0])
+            formData.append('server_number', servernumber)
+            formData.append('account', account)
+            formData.append('ingame_id', nickname)
+            formData.append('ingame_code', ingamecode)
+            formData.append('user_code', usercode)
+            axios.post('stat', formData).then(res => {
                 setFlag(true)
-                console.log(res.data)
+          //      console.log(res.data[0].result)
+          //      console.log(res)
                 loadingdone()
-                setSubmitsetFlag(true)
+               var result = [...res.data[0].result]
+                if(res.status===200){
+                    setSubmitsetFlag(true)
+                    setInvestResult(result)
+                    alert("success")
+                }else{
+                    alert("fail")
+                }
             }).catch(err => {
-                console.log(err.error)
-                console.log(err.data)
-                console.log(err)
+                alert("fail server error")
+             //   console.log(err.error)
+             //   console.log(err.data)
+             //   console.log(err)
                 loadingdone()
             })
         }
 
     }
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
     // Close the dropdown if the user clicks outside of it
     window.onclick = function (event) {
         if (!event.target.matches('.dropbtn')) {
@@ -318,277 +285,30 @@ const ScreenshotInvest = () => {
     ]
 
 
-    //   const onFileChange = (e) => {
-    //     this.setState({ imgCollection: e.target.files })
-    //   }
-
     const handleChange = (selected, key) => {
         var fix = fixdata
         fix[key].type = selected.value
         setFixdata(fix)
-        // var newval = [...optionval]
-        // newval[key] = selected.value
-        // setOptionval(newval)
-        console.log(`Option selected: key`, fix[key]);
+       // console.log(`Option selected: key`, fix[key]);
     };
 
     const handleInputAmoutChange = (selected, key) => {
         var fix = fixdata
         fix[key].amount = selected.target.value
         setFixdata(fix)
-        console.log(selected.target.value)
-        console.log(`Option selected: key`, fix[key]);
+       // console.log(selected.target.value)
+       // console.log(`Option selected: key`, fix[key]);
     };
 
     const handleInputCountChange = (selected, key) => {
         var fix = fixdata
         fix[key].count = selected.target.value
         setFixdata(fix)
-        console.log(`Option selected: key`, fix[key]);
+      //  console.log(`Option selected: key`, fix[key]);
     };
 
-    const onClickAddFix = () => {
-        var newresult = [...result]
-        for (var i = 0; i < fixdata.length; i++) {
-            const single = fixdata[i];
-            if (single.type === "allfast") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                newresult[0] += total
-                //setResult(newresult)
-                console.log(total)
-                console.log(newresult[0])
-                console.log(result[0])
-            } else if (single.type === "buildfast") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[2] += total
-                //setResult(newresult)
-                console.log(total)
-            } else if (single.type === "researchfast") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[7] += total
-                //setResult(newresult)
-                console.log(total)
-            } else if (single.type === "healfast") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[5] += total
-                //setResult(newresult)
-                console.log(total)
-            } else if (single.type === "trainfast") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[9] += total
-                //setResult(newresult)
-                console.log(total)
-            } else if (single.type === "corn") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[3] += total
-                //setResult(newresult)
-                console.log(total)
-            } else if (single.type === "wood") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[10] += total
-                //setResult(newresult)
-                console.log(total)
-            } else if (single.type === "rock") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[8] += total
-                //setResult(newresult)
-                console.log(total)
-            } else if (single.type === "gold") {
-                var total = parseInt(single.amount) * parseInt(single.count)
-                //const newresult = [...result]
-                newresult[4] += total
+    console.log(usercode)
 
-                console.log(total)
-            }
-        }
-        setResult(newresult)
-        alert("added")
-    };
-
-    let divItems = resultImg.map((item, index) => {
-        var optionvalue = options.filter(option => option.value === fixdata[index].type)
-        // var newval = [...optionval]
-        // newval.push(optionvalue)
-        // setOptionval(newval)
-        return (
-            <section style={{ display: "inline-block", margin: "10px" }}>
-                <img width="20%" src={`data:image/jpeg;base64,${item}`} style={{ float: "left" }} />
-                <Select isSearchable={false} options={options} defaultValue={optionvalue} onChange={value => handleChange(value, index)} />
-                {t("min/amount")}<input style={{ width: "15%", margin: "5px" }} type="number" value={inputval} defaultValue={faildata[index]} onChange={value => handleInputAmoutChange(value, index)} />
-                {t("count")}: <input style={{ width: "15%", margin: "5px" }} type="number" value={inputval} onChange={value => handleInputCountChange(value, index)} />
-            </section>
-        )
-    });
-
-    const onClickSpeedup = () => {
-        var totalspeed = parseInt(result[0]) + parseInt(result[9])
-        totalspeed = totalspeed * 60;
-        console.log(totalspeed)
-        var singleresult = []
-        var singleresult2 = []
-        var singleresult3 = []
-        var cal1 = totalspeed / fourT1.time
-        var cal2 = totalspeed / fourT2.time
-        var cal3 = totalspeed / fourT3.time
-        var cal4 = totalspeed / fourT4.time
-        var cal5 = totalspeed / fiveT1.time
-        var cal6 = totalspeed / fiveT2.time
-        var cal7 = totalspeed / fiveT3.time
-        var cal8 = totalspeed / fiveT4.time
-        var cal9 = totalspeed / upgrade1.time
-        var cal10 = totalspeed / upgrade2.time
-        var cal11 = totalspeed / upgrade3.time
-        var cal12 = totalspeed / upgrade4.time
-        singleresult.push(parseInt(cal1))
-        singleresult.push(parseInt(cal2))
-        singleresult.push(parseInt(cal3))
-        singleresult.push(parseInt(cal4))
-        singleresult2.push(parseInt(cal5))
-        singleresult2.push(parseInt(cal6))
-        singleresult2.push(parseInt(cal7))
-        singleresult2.push(parseInt(cal8))
-        singleresult3.push(parseInt(cal9))
-        singleresult3.push(parseInt(cal10))
-        singleresult3.push(parseInt(cal11))
-        singleresult3.push(parseInt(cal12))
-        setFlag2("3")
-        setFourTresult2(singleresult)
-        setFiveTresult2(singleresult2)
-        setupgraderesult2(singleresult3)
-        setFourTresult2backup(singleresult)
-        setFiveTresult2backup(singleresult2)
-        setupgraderesult2backup(singleresult3)
-    }
-
-    const onClickBoth = () => {
-        var singleresult = []
-        var singleresult2 = []
-        var singleresult3 = []
-        var cal1 = Math.min(fourTresult[0], fourTresult2[0])
-        var cal2 = Math.min(fourTresult[1], fourTresult2[1])
-        var cal3 = Math.min(fourTresult[2], fourTresult2[2])
-        var cal4 = Math.min(fourTresult[3], fourTresult2[3])
-        var cal5 = Math.min(fiveTresult[0], fiveTresult2[0])
-        var cal6 = Math.min(fiveTresult[1], fiveTresult2[1])
-        var cal7 = Math.min(fiveTresult[2], fiveTresult2[2])
-        var cal8 = Math.min(fiveTresult[3], fiveTresult2[3])
-        var cal9 = Math.min(upgraderesult[0], upgraderesult2[0])
-        var cal10 = Math.min(upgraderesult[1], upgraderesult2[1])
-        var cal11 = Math.min(upgraderesult[2], upgraderesult2[2])
-        var cal12 = Math.min(upgraderesult[3], upgraderesult2[3])
-        singleresult.push(parseInt(cal1))
-        singleresult.push(parseInt(cal2))
-        singleresult.push(parseInt(cal3))
-        singleresult.push(parseInt(cal4))
-        singleresult2.push(parseInt(cal5))
-        singleresult2.push(parseInt(cal6))
-        singleresult2.push(parseInt(cal7))
-        singleresult2.push(parseInt(cal8))
-        singleresult3.push(parseInt(cal9))
-        singleresult3.push(parseInt(cal10))
-        singleresult3.push(parseInt(cal11))
-        singleresult3.push(parseInt(cal12))
-        setFlag2("1")
-        setFourTresult3(singleresult)
-        setFiveTresult3(singleresult2)
-        setupgraderesult3(singleresult3)
-    }
-
-
-    const onClickResource = () => {
-        var food = result[3]
-        var wood = result[10]
-        var rock = result[8]
-        var gold = result[4]
-        setFlag2("2")
-        var singleresult = []
-        var singleresult2 = []
-        var singleresult3 = []
-        var cal1 = Math.min(food / fourT1.food, wood / fourT1.wood, gold / fourT1.gold)
-        var cal2 = Math.min(food / fourT2.food, rock / fourT2.rock, gold / fourT2.gold)
-        var cal3 = Math.min(wood / fourT3.wood, rock / fourT3.rock, gold / fourT3.gold)
-        var cal4 = Math.min(food / fourT4.food, wood / fourT4.wood, rock / fourT4.rock, gold / fourT4.gold)
-        var cal5 = Math.min(food / fiveT1.food, wood / fiveT1.wood, gold / fiveT1.gold)
-        var cal6 = Math.min(food / fiveT1.food, rock / fiveT2.rock, gold / fiveT2.gold)
-        var cal7 = Math.min(wood / fiveT1.wood, rock / fiveT3.rock, gold / fiveT3.gold)
-        var cal8 = Math.min(food / fiveT1.food, wood / fiveT4.wood, rock / fiveT4.rock, gold / fiveT4.gold)
-        var cal9 = Math.min(food / upgrade1.food, wood / upgrade1.wood, gold / upgrade1.gold)
-        var cal10 = Math.min(food / upgrade2.food, rock / upgrade2.rock, gold / upgrade2.gold)
-        var cal11 = Math.min(wood / upgrade3.wood, rock / upgrade3.rock, gold / upgrade3.gold)
-        var cal12 = Math.min(food / upgrade4.food, wood / upgrade4.wood, rock / upgrade4.rock, gold / upgrade4.gold)
-        // var grade1 = cal1*40
-        // var grade2 = cal2*40
-        // var grade3 = cal3*40
-        // var grade4 = cal4*40
-        // var grade5 = cal5*40
-        // var grade6 = cal6*40
-        // var grade7 = cal7*40
-        // var grade8 = cal8*40
-        // var grade9 = cal9*40
-        // var grade110 = cal10*40
-        // var grade11 = cal11*40
-        // var grade12 = cal12*40
-
-        singleresult.push(parseInt(cal1))
-        singleresult.push(parseInt(cal2))
-        singleresult.push(parseInt(cal3))
-        singleresult.push(parseInt(cal4))
-        singleresult2.push(parseInt(cal5))
-        singleresult2.push(parseInt(cal6))
-        singleresult2.push(parseInt(cal7))
-        singleresult2.push(parseInt(cal8))
-        singleresult3.push(parseInt(cal9))
-        singleresult3.push(parseInt(cal10))
-        singleresult3.push(parseInt(cal11))
-        singleresult3.push(parseInt(cal12))
-        setFourTresult(singleresult)
-        setFiveTresult(singleresult2)
-        setupgraderesult(singleresult3)
-    }
-
-    const onKeyDown = (e) => {
-        if (e.keyCode === 8) {
-            setFourTresult2(fourTresult2backup)
-            setFiveTresult2(fiveTresult2backup)
-            setupgraderesult2(upgraderesult2backup)
-            console.log('delete');
-        }
-    }
-
-    const onTrainbuffChange = (e) => {
-        console.log(e.target.value)
-        if (e.target.value === "") {
-            setFourTresult2(fourTresult2backup)
-            setFiveTresult2(fiveTresult2backup)
-            setupgraderesult2(upgraderesult2backup)
-        } else {
-            setTrainbuff(e.target.value)
-            var afterbuff1 = [...fourTresult2];
-            var afterbuff2 = [...fiveTresult2];
-            var afterbuff3 = [...upgraderesult2];
-            var rate = 1 + (e.target.value / 100)
-            console.log(rate)
-            console.log(fourTresult2.length)
-            console.log(fourTresult2)
-
-            for (var i = 0; i < fourTresult2.length; i++) {
-                afterbuff1[i] = parseInt(afterbuff1[i] * rate)
-                afterbuff2[i] = parseInt(afterbuff2[i] * rate)
-                afterbuff3[i] = parseInt(afterbuff3[i] * rate)
-                console.log(afterbuff1[i])
-            }
-            setFourTresult2(afterbuff1)
-            setFiveTresult2(afterbuff2)
-            setupgraderesult2(afterbuff3)
-        }
-    }
     return (
         <Fragment>
             <main className="Home" style={{ pointerEvents: dynamicTouch, opacity: dynamicOpa }}>
@@ -598,7 +318,7 @@ const ScreenshotInvest = () => {
                 </div>
                 <section className="form-wrapper">
                 <p style={{ fontSize: "1rem", color: "blue", textAlign: "center", fontWeight: "bolder" }}>{t("screenshotinvest.info")}</p>
-                ex)<img width="80%" src="https://ifh.cc/g/w1ao0g.jpg"/>
+                ex)<img width="80%" src="https://ifh.cc/g/TMYO9K.jpg"/>
                 <br/><br/><br/><br/>
                     <input type='file'
                         class="filestyle"
@@ -608,25 +328,11 @@ const ScreenshotInvest = () => {
                         onChange={handleFileOnChange}
                     >
                     </input>
-                   
                     <br />
                     {profile_preview}
                     <br />
-                    {t("servernumber")} : &nbsp;
-                    <input type='text'
-                
-                        placeholder="server code ex) 1525"
-                        onChange={changeServernumber}
-                    />
-                    <br />
-                    {t("account")} : &nbsp;
-                    <input type='text'
-                        value={account}
-                        placeholder="Account"
-                        onChange={changeAccount}
-                    ></input>
-                    <br />
                     {t("nickname")} : &nbsp;
+                    <br />
                     <input type='text'
                         value={nickname}
                         onChange={changeNickname}
@@ -634,6 +340,7 @@ const ScreenshotInvest = () => {
                     ></input>
                     <br />
                     {t("ingamecode")} : &nbsp;
+                    <br />
                     <input type='text'
                         value={ingamecode}
                         onChange={changeIngamecode}
@@ -643,6 +350,52 @@ const ScreenshotInvest = () => {
                 <div className="create-button" onClick={onSubmit}>
                     {t("submit")}
                 </div>
+                <br/>
+                {submitflag && <p style={{marginBottom:"15px",fontSize:"1.5rem",fontWeight:"bolder"}}> {t("result")}</p>}
+                {submitflag &&<table style={{ width: "90%" }}>
+          <tr>
+            <th>Result</th>
+            <th>{t("totalamount")}</th>
+            <th></th>
+          </tr>
+          <tr>
+            <td>User</td>
+             <td>{investResult[0]}</td>
+          </tr>
+          <tr>
+            <td>{t("combat")}</td>
+            <td><NumberFormat value={investResult[2]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+          <tr>
+            <td>{t("1T kill")}</td>
+            <td><NumberFormat value={investResult[3]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+          <tr>
+          <td>{t("2T kill")}</td>
+          <td><NumberFormat value={investResult[4]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+          <tr>
+          <td>{t("3T kill")}</td>
+          <td><NumberFormat value={investResult[5]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+          <tr>
+          <td>{t("4T kill")}</td>
+          <td><NumberFormat value={investResult[6]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+          <tr>
+          <td>{t("5T kill")}</td>
+          <td><NumberFormat value={investResult[7]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+          <tr>
+          <td>{t("death")}</td>
+          <td><NumberFormat value={investResult[8]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+          <tr>
+          <td>{t("aid resources")}</td>
+          <td><NumberFormat value={investResult[11]} thousandSeparator={true} displayType={'text'} /></td>
+          </tr>
+        </table>
+}
             </main>
         </Fragment>
 

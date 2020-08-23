@@ -12,17 +12,17 @@ class UserManagement extends Component {
 
 
   componentDidMount() {
-    console.log(this.props)
-    console.log(this.state.is_admin)
+   // console.log(this.props)
+   // console.log(this.state.is_admin)
     this.getRuinResult();
     this.getApprovalList();
   }
 
   handleDeleteclick = async (user_code) => {
-    console.log(user_code)
+   // console.log(user_code)
     // const code = this.state.items[index].user_code
     // console.log(code);
-    console.log("sadasd")
+    //console.log("sadasd")
     try {
       const response = await Http.delete('userresponse/', {
         data: qs.stringify({
@@ -30,24 +30,24 @@ class UserManagement extends Component {
         })
       }
       );
-      console.log(response)
+      //console.log(response)
       if (response.status === 200) {
         alert("delete success")
         window.location.reload()
       } else if (response.status) {
         alert("delete fail")
-        console.log(response)
+      //  console.log(response)
       }
 
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       alert("delete fail, server error")
     }
   }
 
 
   handleApprove = async (user_code) => {
-    console.log(user_code)
+   // console.log(user_code)
     try {
       const response = await Http.patch('userresponse/', qs.stringify({
         'mode': 'USER_management', 'mode_type': 'check_USER',
@@ -63,7 +63,7 @@ class UserManagement extends Component {
         window.location.reload()
         alert("success")
       } else {
-        console.log(response)
+       // console.log(response)
       }
 
     } catch (error) {
@@ -81,12 +81,12 @@ class UserManagement extends Component {
         }
       }
       );
-      console.log(response)
+      //console.log(response)
       if (response.status === 201) {
         const singleItem = response.data.info[response.data.info.length - 1]
-        console.log(response)
+        //console.log(response)
         let date = new Date(singleItem.ruintime)
-        console.log(date.toString())
+       // console.log(date.toString())
         const item = []
         for (var i = 0; i < response.data.info.length; i++) {
           item.push({
@@ -95,9 +95,9 @@ class UserManagement extends Component {
           })
         }
         this.setState({ waitingItems: item })
-        console.log(this.state.waitingItems)
+      //  console.log(this.state.waitingItems)
       } else if (response.status) {
-        console.log(response)
+       // console.log(response)
       }
 
     } catch (error) {
@@ -116,9 +116,9 @@ class UserManagement extends Component {
       );
       if (response.status === 201) {
         const singleItem = response.data.info[response.data.info.length - 1]
-        console.log(response.data)
+       // console.log(response.data)
         let date = new Date(singleItem.ruintime)
-        console.log(date.toString())
+       // console.log(date.toString())
         const item = []
         for (var i = 0; i < response.data.info.length; i++) {
           item.push({
@@ -127,9 +127,9 @@ class UserManagement extends Component {
           })
         }
         this.setState({ items: item })
-        console.log(this.state.items)
+        //console.log(this.state.items)
       } else if (response.status) {
-        console.log(response)
+       // console.log(response)
       }
 
     } catch (error) {
@@ -145,7 +145,7 @@ class UserManagement extends Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.value)
+   // console.log(e.target.value)
     this.setState({ search: e.target.value });
   }
 
@@ -157,7 +157,7 @@ class UserManagement extends Component {
     if (inputword.length > 0) {
       //const namelist = this.state.items;
       nameitems = nameitems.filter(val => val.name.toLowerCase().match(inputword))
-      console.log(inputword)
+      //console.log(inputword)
       //this.setState({items:this.state.items.filter(val => val.name.toLowerCase().match(inputword))}) 
     }
     const { t } = this.props;

@@ -62,7 +62,7 @@ class PersonalSetting extends Component {
             })
             );
 
-            console.log(response2)
+           // console.log(response2)
             if (response2.status === 201) {
                 localStorage.password = JSON.stringify(this.state.password)
                 alert(this.props.t("notice.ChangeSuccess"))
