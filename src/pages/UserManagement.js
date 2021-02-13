@@ -179,6 +179,9 @@ class UserManagement extends Component {
         <p className="usercode">({item.userWebId})</p>
         <button class="x-box" onClick={() => handleApprove(item.user_code)}>
           {t("member.approve")}
+        </button> &nbsp;
+        <button onClick={() => handleDeleteclick(item.user_code)}>
+          {t("member.disapprove")}
         </button>
       </div>
 

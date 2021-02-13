@@ -14,3 +14,5 @@ export { default as Roktest } from './Roktest';
 export { default as Etcmenu } from './Etcmenu';
 export { default as Etcset } from './Etcset';
 export { default as Error } from './Error';
+export { default as Update } from './Update';
+export { default as Update_content } from './Update_content';

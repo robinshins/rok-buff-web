@@ -16,8 +16,11 @@ class Error extends Component {
         const { t } = this.props;
         return(
             <Fragment>
-            <div style={{fontSize:'3.5rem', fontWeight:'bold',textAlign:'center',verticalAlign:'middle',marginTop:'15rem'}}>{t('errorpage.title')} </div>
-            <div style={{fontSize:'1.5rem', textAlign:'center', color:'#969696'}}> {t('errorpage.body')} </div>
+            <div style={{margin:"0 auto" ,textAlign:'center'}}>
+            <img src="https://ifh.cc/g/nKgNZi.jpg"/>
+            <div style={{fontSize:'3.5rem', fontWeight:'bold',verticalAlign:'middle',marginTop:'15rem'}}>{t('errorpage.title')} </div>
+            <div style={{fontSize:'1.5rem', color:'#969696'}}> {t('errorpage.body')} </div>
+            </div>
             </Fragment>
         )
     }

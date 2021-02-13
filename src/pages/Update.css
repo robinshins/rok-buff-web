@@ -1,0 +1,19 @@
+.margin_table{
+  width: 100%;
+  position: relative;
+  max-width: 1200px;
+  min-height: 100vh;
+  overflow: auto;
+  margin-top: 60px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1rem;
+}
+
+table tr:hover {
+  background-color: #e0dede;
+}
+
+thead{
+ pointer-events: none;
+}

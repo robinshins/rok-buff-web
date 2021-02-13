@@ -1,7 +1,7 @@
 
-import React, { Component, Children } from 'react';
+import React, { Component, Children, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { Home, Register,Etcmenu,Roktest ,Error,BuffMain, RuinResult, SetBuff,Etcset, ScreenshotInvest,BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement,ScreenshotInven } from './pages';
+import { Home, Register,Etcmenu,Roktest ,Error,BuffMain,Update,Update_content ,RuinResult, SetBuff,Etcset, ScreenshotInvest,BuffResult, RuinRegister, PersonalSetting,AllianceSetting,UserManagement,ScreenshotInven } from './pages';
 import Header from './components/Headers';
 import { withTranslation, useTranslation } from "react-i18next";
 import i18n from "i18next";
@@ -15,6 +15,8 @@ import qs from 'qs';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
 import { Notifications } from 'react-push-notification';
+import "./App.css"
+// import Adstxt from "./ads.txt"
 
 
 
@@ -86,6 +88,7 @@ componentDidMount(){
     console.log(sessionStorage.islogin)
     if(!this.state.loading){
     return (
+      <Fragment>
       <Router>
         {/* <Notifications /> */}
         <Header></Header>
@@ -93,21 +96,49 @@ componentDidMount(){
         <Route exact path='/' component={Home} />
         <Switch>
           <Route path='/register/' component={Register} />
-          <AuthRoute  authenticated = {sessionStorage.islogin} path='/buffmain/' component={BuffMain} />
+          <Route path='/board' component={Update} />
+          <Route path='/board_content/:boardnum' component={Update_content} />
           <Route   path='/screenshotcalculator/' component={ScreenshotInven} />
           <Route   path='/roktest/' component={Roktest} />
+          <Route path='/ruinresult/:ruintimecode' component={RuinResult} /> */}
+          {/* <Route path='/ads.txt' component={Adstxt} />
+          {/* ----------------Route------ */}
+
+          <AuthRoute  authenticated = {sessionStorage.islogin} path='/buffmain/' component={BuffMain} />
           <AuthRoute  authenticated = {sessionStorage.islogin} path='/sidemenu/' component={Etcmenu} />
-          <Route path='/ruinresult/:ruintimecode' component={RuinResult} />
-          <AdminRoute  authenticated = {sessionStorage.islogin} path='/setbuff/' component={SetBuff} />
-          <AdminRoute  authenticated = {sessionStorage.islogin} path='/etcset/' component={Etcset} />
           <AuthRoute authenticated = {sessionStorage.islogin}  path='/buffresult/' component={BuffResult} />
           <AuthRoute  authenticated = {sessionStorage.islogin} path='/ruinregister/' component={RuinRegister} />
           <AuthRoute authenticated = {sessionStorage.islogin} path='/personalsetting/' component={PersonalSetting} />
+          <AuthRoute authenticated = {sessionStorage.islogin} path='/screenshotinvest/' component={ScreenshotInvest} />
+
+          {/* -------------AuthRoute ------------------ */}
+
+          <AdminRoute  authenticated = {sessionStorage.islogin} path='/setbuff/' component={SetBuff} />
+          <AdminRoute  authenticated = {sessionStorage.islogin} path='/setbuff/' component={SetBuff} />
+          <AdminRoute  authenticated = {sessionStorage.islogin} path='/etcset/' component={Etcset} />
           <AdminRoute  authenticated = {sessionStorage.islogin} path='/alliancesetting/' component={AllianceSetting} />
           <AdminRoute authenticated = {sessionStorage.islogin} path='/usermanagement/' component={UserManagement} />
-          <AuthRoute authenticated = {sessionStorage.islogin} path='/screenshotinvest/' component={ScreenshotInvest} />
-        </Switch>   
+
+          {/* ----------------------AdminRoute---------------------- */}
+
+        </Switch> 
+
       </Router>
+              <div style={{textAlign:'center'}}>
+              <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+              <ins class="adsbygoogle"
+               
+                  data-ad-client="ca-pub-7375020502573164"
+                  data-ad-slot="5360005871"
+                  data-ad-format="auto"
+                  data-full-width-responsive="true"></ins>
+              <script>
+                  (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+              </div>
+      <br/>
+      </Fragment>
+     
     )
   }else{
     return(

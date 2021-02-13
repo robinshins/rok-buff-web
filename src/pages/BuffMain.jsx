@@ -42,8 +42,8 @@ class BuffMain extends Component {
     state = {
         ruinitems: [], flag: -2,
         tabno: 0, lasttime: NaN, name: localStorage.username, x: localStorage.xcoor, code: localStorage.usercode,
-        y: localStorage.ycoor, lostkingdom: false, redirect: 0, ruin_selected: -1,
-        backgroundColor: '', textcolor: '', titleType: -1, is_kvk: 0, duke_wait: null, scientist_wait: null, architecture_wait: null, register_check: -1,
+        y: localStorage.ycoor, lostkingdom: localStorage.lostkingdom === undefined ||localStorage.lostkingdom === JSON.stringify(false) ? false : true , redirect: 0, ruin_selected: -1,
+        backgroundColor: '', textcolor: '', titleType: -1, is_kvk: localStorage.lostkingdom === undefined ||localStorage.lostkingdom === JSON.stringify(false) ? 0 : 1, duke_wait: null, scientist_wait: null, architecture_wait: null, register_check: -1,
         notice: "", sever_status: -1, account_status: sessionStorage.account_status,clickable:true,
     };
 
@@ -57,6 +57,7 @@ class BuffMain extends Component {
 
 
     componentDidMount() {
+        console.log(localStorage.lostkingdom === JSON.stringify(false))
         this.getServerStat();
         this.getDukewait();
         this.getSciwait();
@@ -79,7 +80,7 @@ class BuffMain extends Component {
 
             if (response.status === 201) {
 
-               // console.log(response)
+               console.log(response)
                 if (response.data.info.length === 0) {
                     this.setState({ flag: -1 })
                 } else {
@@ -336,9 +337,11 @@ class BuffMain extends Component {
     handleKingdomChange = (e, newValue) => {
         if (newValue === 1) {
             this.setState({ lostkingdom: true, is_kvk: 1 });
+            localStorage.lostkingdom = true
             //this.setState({Userid: e.target.value});
         }
         else {
+            localStorage.lostkingdom = false
             this.setState({ lostkingdom: false, is_kvk: 0 });
         }
     }
@@ -562,6 +565,7 @@ class BuffMain extends Component {
                 </div>
 
             </main>
+
             </Fragment>
 
         )

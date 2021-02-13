@@ -1,0 +1,26 @@
+.containerbox{
+    min-height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    margin-bottom: 5%;
+    border: #969696 solid 1px;
+    padding: 20px;
+}
+
+.cardTitle{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.h1{
+    color:black;
+}
+
+.h2{
+    color:black;
+}
+
+.img{
+    width: 100%;
+}

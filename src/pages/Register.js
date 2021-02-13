@@ -13,6 +13,7 @@ class Register extends Component{
     
     onClickRegister = async text => {
         try{
+
         const response = await Http.post('userresponse/', qs.stringify({
              'server_number': this.state.server_number, 'password': this.state.Userpassword, 
              'account':this.state.Userid,'user_ingamecode':this.state.user_ingamecode , 'user_ingameID':this.state.user_ingameID
@@ -44,8 +45,7 @@ class Register extends Component{
       }
 
       handleEmailChange = (e) => {
-     
-        const idReg =  /^[a-z0-9]*$/ ;  
+        const idReg = /^[A-Za-z0-9]*$/ ;  
         if (e.target.value === '' || idReg.test(e.target.value)) {
             this.setState({Userid: e.target.value});
          }
@@ -84,7 +84,7 @@ class Register extends Component{
             onClickRegister,handleEmailChange,handlePasswordChange,handleIngameCodeChange,handleIngameNameChange,handleServerNumberChange
                 } = this
     return (
-
+        <div className="center">
         <main className="Register">
             <div className="registerTitle">
             {t("register")}
@@ -114,6 +114,7 @@ class Register extends Component{
             { this.state.flag === 3 && <p style = {{color:'#ff4040', textAlign:'center'}}>Server error</p>}
             </section>
         </main>
+        </div>
 
     )
 }

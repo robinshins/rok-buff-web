@@ -200,14 +200,6 @@ class Home extends Component {
 
     return (
       <Fragment>
-      {/* <div style={{textAlign:"center", marginTop:"10px",fontSize:"20px",color:"#E00000",fontWeight:"bolder"}}>
-      {t("urlchange")}
-      <br/>
-      <button className="homebtn info" onClick={()=>{ window.location.href = "https://gamerbox.kr"}}>
-        Try in our new Website!
-        </button>
-      </div> */}
-
       <main className="testhome">
         <div className="hometitle">
           {t("login")}
@@ -234,7 +226,23 @@ class Home extends Component {
       </div>
           {this.state.flag === 2 && <p style={{ color: '#ff4040', textAlign: 'center' }}> {t("error.wrongid")}</p>}
         </section>
-        <div textAlign="center" verticalAlign="middle">
+
+      <div style={{display:'inline-block',textAlign:'center'}}>
+      <div className="directMenu" onClick={event => window.location.href = '/screenshotcalculator/'}>
+      <i class="fa fa-calculator fa-3x"  style={{verticalAlign:'middle'}} aria-hidden="true"></i>&nbsp;
+        {t("screenshot_calculator")}
+          </div>
+          <div className="directMenu" onClick={event => window.location.href = '/roktest/'}>
+          <i class="fa fa-graduation-cap fa-3x" style={{verticalAlign:'middle', marginLeft:'-40px'}}></i> &nbsp;
+          {t("rok.test")}
+          </div>
+          <div className="directMenu" onClick={event => window.location.href = '/board/'}>
+          <i class="fa fa-book fa-3x"  style={{verticalAlign:'middle'}}></i>&nbsp;
+          {t("board")}
+          </div>
+          <br/>
+      </div>
+      <div  style={{textAlign:"center", verticalAlign:"middle"}}>
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" textAlign="center">
                 <input type="hidden" name="cmd" value="_s-xclick" />
                 <input type="hidden" name="hosted_button_id" value="G3P53UTQE4P46" />
@@ -246,6 +254,11 @@ class Home extends Component {
       <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 
       </main>
+
+
+              
+
+             
       </Fragment>
     );
   }

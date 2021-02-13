@@ -96,14 +96,14 @@
   "alliance":"allicance",
 
   "server_status":"system status",
-  "server_status.sleep":"sleep",
+  "server_status.sleep":"Waiting request",
   "server_status.running":"running",
   "server_status.rebooting":"rebooting",
   "server_status.errorRebooting":"error rebooting",
   "server_status.starting":"app starting",
   "server_status.authentication":"Authentication popup generated",
 
-  "server_explain.sleep":"Titlebot is offline. If you request title, it will reboot.",
+  "server_explain.sleep":"Waiting request",
   "server_explain.rebooting":"Titlebot is rebooting due to error. It takes 1minute",
   "server_explain.errorRebooting":"Titlebot is recovering due to error. It takes 1minute",
   "server_explain.starting":"Titlebot is rebooting from offline state. ",
@@ -130,11 +130,11 @@
   "th":"th",
   "order":"order",
 
-  "Done.fail":"Done fail, your turn already passed",
+  "Done.fail":"Already done.",
   "Done.explain" : "If you click DONE, you will be deleted from queue",
   "chat.start":"Enjoy chat while waiting buff! We'll soon assign english random nick:) it's currently korean only.",
   "setbufftime.info":"If you set waiting time 0 sec, the title will be stopped",
-
+  "member.disapprove":"disapprove",
   "speedup.arch":"Build",
   "speedup.research":"Research",
   "speedup.heal":"Heal",
@@ -207,6 +207,6 @@
 "etcset":"ETC Set",
 "screenshotinvest download":"Screenshot power/kill/deaths/aid investigation result download",
 "errorpage.title":"System maintenance.",
-  "errorpage.body":"Sorry for the inconvenience. We will recover it soon. "
+  "errorpage.body":"Sorry, We are rebuilding the program(UTC 11/14~11/15). "
 
 }

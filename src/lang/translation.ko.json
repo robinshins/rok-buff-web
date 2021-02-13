@@ -78,7 +78,7 @@
   "notice.ServerNotConnect": "서버와의 통신에 실패하였습니다. 세션 만료 일 수 있으니 재로그인 해주세요. https://www.gamerbox.kr/ 주소가 맞는지 확인해주세요 (https를 주의깊게 확인해주세요).",
   "notice.ServerNotExisting": "존재하지 않는 서버입니다",
   "errorpage.title":"시스템 점검중입니다.",
-  "errorpage.body":"일리즈의 업데이트에 대응중입니다. 빠른 시일내에 복구하도록 하겠습니다. 불편을 끼쳐드려 죄송합니다.",
+  "errorpage.body":"프로그램 수정 중입니다. 토~일 중 재개예정입니다. 불편을 끼쳐드려 죄송합니다.",
   "allianceList":"연맹 목록",
   "allianceList_none":"등록된 연맹이 없습니다",
   "findmember.info":"ctrl + F 를 통해 특정 회원을 찾아주세요. 자체 검색 기능을 곧 업데이트 하겠습니다.",
@@ -94,14 +94,14 @@
   "alliance":"연맹",
 
   "server_status":"시스템 상태",
-  "server_status.sleep":"비활성화",
+  "server_status.sleep":"대기중",
   "server_status.running":"정상작동중",
   "server_status.rebooting":"재부팅중",
   "server_status.errorRebooting":"에러로 인한 재시작중",
   "server_status.starting":"켜지는 중",
   "server_status.authentication":"인증이 떴습니다",
 
-  "server_explain.sleep":"장기간 사용자가 없어서 칭호봇이 꺼져있습니다. 칭호를 요청하시면 다시 켜집니다.",
+  "server_explain.sleep":"칭호가 들어오길 대기중입니다.",
   "server_explain.rebooting":"칭호봇에 문제가 생겨 자동으로 재시작중입니다. 1분정도 소요됩니다",
   "server_explain.errorRebooting":"칭호봇에 문제가 생겨 자동으로 복구중입니다. 1분정도 소요됩니다.",
   "server_explain.starting":"꺼져있던 칭호봇이 다시 켜지는 중입니다.",
@@ -130,7 +130,7 @@
   "th":"번째",
   "order":"순서입니다",
 
-  "Done.fail":"잘못된 요청입니다. 이미 칭호사용 완료 처리되었습니다.",
+  "Done.fail":"칭호사용 완료 처리되었습니다.",
   "Done.explain" : "DONE을 누르시면 대기열에서 제외됩니다",
 
   "chat.start":"버프를 기다리시는 동안 채팅을 즐겨보세요!",
@@ -145,6 +145,7 @@
   "resource.wood":"나무",
   "resource.rock":"석재",
   "resource.gold":"금",
+  "member.disapprove":"거절",
 
   "speedup":"가속",
   "resources":"자원",
@@ -207,5 +208,6 @@
 "death":"전사",
 "aid resources":"자원 원조량",
 "etcset":"부가 설정",
-"screenshotinvest download":"스크린샷 투력/처치수/전사자/자원원조 조사 결과 다운"
+"screenshotinvest download":"스크린샷 투력/처치수/전사자/자원원조 조사 결과 다운",
+"board":"게시판(설명서)"
 }

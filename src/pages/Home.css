@@ -1,12 +1,38 @@
+
+.center{
+  margin: 0;
+  text-align: center;
+}
 .testhome{
     background: white;
     width:  330px;
+    margin: 0 auto;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* 그림자 */ 
-    margin: 0 auto; /* 페이지 중앙 정렬 */
     margin-top: 4rem;
+    overflow: hidden;
   }
 
-  main{display: block!important;}
+  .directMenu{
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 900;
+    vertical-align: middle;
+    border: solid 2px #222222;
+    box-shadow: 5px 5px 5px;
+    padding: 10px;
+    width: 200px;
+    margin: 50px;
+    line-height: 50px;
+    height: 50px;
+    border-radius: 10px;
+  }  .directMenu:hover{
+    background-color: #c5c2c2;
+  }
+
+  
+
+
   .homebtn {
     border: none;
     color: white;
@@ -109,3 +135,16 @@
       border: none;
       border-bottom: 1px solid #c5f6fa;
     }
+    @media only screen and (max-width: 500px) {
+    .directMenu{
+      border: solid 2px #222222;
+      box-shadow: 5px 5px 5px;
+      padding: 10px;
+      width: 200px;
+      margin: 50px;
+      height: 50px;
+      border-radius: 10px;
+  
+    }
+
+  }

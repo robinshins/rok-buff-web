@@ -18,7 +18,25 @@ import Image from 'react-bootstrap/Image'
 import Card from 'react-bootstrap/Card'
 import './Headers.css';
 import addNotification from 'react-push-notification';
+import { Helmet } from "react-helmet";
 
+var ReactDOMServer = require('react-dom/server');
+var HtmlToReactParser = require('html-to-react').Parser;
+
+var htmlInput = `
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7375020502573164"
+     data-ad-slot="5360005871"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>`;
+var htmlToReactParser = new HtmlToReactParser();
+var reactElement = htmlToReactParser.parse(htmlInput);
+var reactHtml = ReactDOMServer.renderToStaticMarkup(reactElement);
 
 
 
@@ -32,7 +50,7 @@ const Header = () => {
     const [waitItems, setWaitingItems] = useState();
     const [name, setName] = useState(sessionStorage.user_name);
     const [myrank, setMyRank] = useState(-1);
-   // console.log(sessionStorage.title_type)
+    // console.log(sessionStorage.title_type)
     // state = { language: "", notice_title: "", notice_article: "", apply_success: sessionStorage.apply_success, 
     // title_type: "", waiting_order: -1,waitItems:[],
     // name:'', myrank:0 }
@@ -74,13 +92,13 @@ const Header = () => {
             i18n.changeLanguage("en");
         } else if (language === JSON.stringify("ja")) {
             i18n.changeLanguage("ja");
-        }else if (language === JSON.stringify("VN")) {
+        } else if (language === JSON.stringify("VN")) {
             i18n.changeLanguage("vm");
-        }else if (language === JSON.stringify("PO")) {
+        } else if (language === JSON.stringify("PO")) {
             i18n.changeLanguage("po");
-        }else if (language === JSON.stringify("DE")) {
+        } else if (language === JSON.stringify("DE")) {
             i18n.changeLanguage("gm");
-        }else if (language === JSON.stringify("IN")) {
+        } else if (language === JSON.stringify("IN")) {
             i18n.changeLanguage("in");
         }
         return () => {
@@ -98,7 +116,7 @@ const Header = () => {
                 }
             }
             );
-           // console.log(response.data.info[response.data.info.length - 1])
+            // console.log(response.data.info[response.data.info.length - 1])
             if (response.status === 201) {
                 setNoticeTitle(response.data.info[response.data.info.length - 1].title)
                 setNoticeArticle(response.data.info[response.data.info.length - 1].article)
@@ -146,16 +164,16 @@ const Header = () => {
         } else if (countryCode == 'JP') {
             i18n.changeLanguage('ja');
             localStorage.language = JSON.stringify('ja')
-        }else if (countryCode == 'VN') {
+        } else if (countryCode == 'VN') {
             localStorage.language = JSON.stringify('VN')
             i18n.changeLanguage("vm");
-        }else if (countryCode == 'PO') {
+        } else if (countryCode == 'PO') {
             localStorage.language = JSON.stringify('PO')
             i18n.changeLanguage("po");
-        }else if (countryCode == 'DE') {
+        } else if (countryCode == 'DE') {
             localStorage.language = JSON.stringify('DE')
             i18n.changeLanguage("gm");
-        }else if (countryCode == 'IN') {
+        } else if (countryCode == 'IN') {
             localStorage.language = JSON.stringify('IN')
             i18n.changeLanguage("in");
         }
@@ -363,7 +381,7 @@ const Header = () => {
                             {title_type === 3 && t("buff.architecture")}/{myrank}{t('th')}
                         </div>
                     }
-                    <headertitle> ROK MANAGER</headertitle>
+                    <headertitle onClick={event => window.location.href = '/'}> ROK MANAGER</headertitle>
                     {location.pathname !== "/" && location.pathname !== "/register/" && location.pathname !== "/register"
                         && sessionStorage.is_login === JSON.stringify('true') && <headerlogout type="button" onClick={() => onclickLogout()}> Logout</headerlogout>}
                 </div>
@@ -383,19 +401,44 @@ const Header = () => {
                         <MenuItem to={'/usermanagement/'}>{t("header.membermanage")}</MenuItem>
                         <MenuItem to={'/etcset/'}>{t("etcset")}</MenuItem>
                     </div>}
+
+                {/* {location.pathname.search("board_content") === -1 && <div className="desktopHeaderDiv">
+                    <img className='desktopHeader' src='https://ifh.cc/g/XrB5tB.jpg' />
+                </div>}
+                <img className='mobileHeader' src='https://ifh.cc/g/eE4GpN.jpg' /> */}
+                {/* 
+                <ins class="kakao_ad_area"
+                    data-ad-unit="DAN-uve7st00ub1h"
+                    data-ad-width="320"
+                    data-ad-height="100"></ins>
+                <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script> */}
+                {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> */}
+
+<div style={{textAlign:'center'}}>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <ins class="adsbygoogle"
+                    style={{ display: "block" }}
+                    data-ad-client="ca-pub-7375020502573164"
+                    data-ad-slot="5360005871"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+</div>
+                <br />
+
                 <ReactFlagsSelect
                     className="menu-flags"
-                    countries={["US", "KR", "JP","VN",'DE','IN','PO']}
+                    countries={["US", "KR", "JP", "VN", 'DE', 'IN', 'PO']}
                     onSelect={onSelectFlag}
                     alignOptions="right"
                     selectedSize={15}
                     optionsSize={10}
                 />
-                <ins class="kakao_ad_area"
-                    data-ad-unit="DAN-uve7st00ub1h"
-                    data-ad-width="320"
-                    data-ad-height="100"></ins>
-                <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+
+
+
                 {/* <ins class="kakao_ad_area"
                     data-ad-unit="DAN-1h84s2np9jckm"
                     data-ad-width="320"

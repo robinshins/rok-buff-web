@@ -3,6 +3,9 @@ api_version: 1
 service: default
 threadsafe: true
 handlers:
+  - url: /ads.txt
+    static_files: build/ads.txt
+    upload: build/ads.txt
   - url: /static/js/(.*)
     static_files: build/static/js/\1
     upload: build/static/js/(.*)
